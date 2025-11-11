@@ -5,12 +5,48 @@ format: html
 
 # 1. Background
 
+The human vaginal microbiome plays an important role in reproductive health and protection against infections. It is usually dominated by Lactobacillus species, which keep the environment acidic and prevent the growth of harmful microorganisms. However, the vaginal microbiome can differ between people and across health states. Other bacteria such as Gardnerella, Atopobium, and Prevotella often appear during dysbiosis or bacterial vaginosis.
+
+Recent advances in metagenomic sequencing allow researchers to rebuild individual microbial genomes from complex microbial communities. These reconstructed genomes are called metagenome-assembled genomes (MAGs). MAGs give new insight into the genetic makeup and functions of microorganisms that cannot easily be grown in the lab. Databases such as MGnify collect MAGs from many human and environmental microbiomes, including the vaginal microbiome, and provide useful but often unstandardised metadata.
+
+The dataset used in this project, called `genomes-all_metadata.tsv`, comes from MGnify’s vaginal microbiome genome catalogue. It contains thousands of bacterial MAGs with information on assembly quality (genome length, N50, GC content, completeness, contamination), taxonomic classification, and limited geographical data. Like many real biological datasets, it includes inconsistencies, missing values, and mixed formats.
+
 # 2. Aim
+
+The aim of this project is to clean, explore, and analyse the genome meta-data-set from the human vaginal microbiome. With this project we aim to uncover patterns in genome quality, taxonomic composition, and ecological characteristics, while demonstrating the principles of reproducible and collaborative data science in R.
+
+In this project we will:
+
+1.  Tidy and standardise the raw meta-data-set by addressing missing values, harmonising column formats, and parsing the hierarchical taxonomic lineage into separate levels (phylum to species).
+2.  Investigate genome quality metrics such as completeness, contamination, GC content, and genome length to identify potential biases or systematic differences among bacterial groups.
+3.  Explore taxonomic composition, visualising which phyla and genera dominate the vaginal microbiome MAG catalogue.
+4.  Assess ecological trends, such as whether smaller or low-GC genomes correspond to specific bacterial taxa or ecological roles within the vaginal environment.
+5.  Examine geographical metadata to identify sampling biases or gaps across studies or regions.
+
+Through these analyses, we aim to gain a deeper understanding of the genomic diversity of the vaginal microbiome, while showcasing the entire data science workflow using the tidyverse systems in R.
 
 # 3. Load Libraries
 
 # 4. Load Data
 
-# 5. Data Description
+`01_load.qmd`: Loads your data, e.g. combining multiple sheets from an excel file
 
-# 6. Analysis
+# 5. Clean data
+
+`02_clean.qmd`: Cleans your data per your specifications and converts to tidy format
+
+# 6. Augment
+
+`03_augment.qmd`: Adds new variables, like e.g. computing a BMI
+
+# 7. Describe
+
+`04_describe.qmd`: Descriptive statistics, how many in each group, etc.
+
+# 8. Analysis 1
+
+`05_analysis_1.qmd`: Here goes your first analysis
+
+# 9. Analysis 2
+
+`06_analysis_2.qmd`: Here goes your second analysis and so on
