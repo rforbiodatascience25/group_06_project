@@ -30,7 +30,7 @@ github-username: sigridfrandsen
 
 student-id: s215098
 
-github-username:
+github-username: s215098
 
 ## Direct link to presentation
 
@@ -38,9 +38,7 @@ Be sure to include a direct link to your presentation, e.g. the direct link to 
 
 ## Data retrieval
 
-
 Since we are not putting data on GitHub, use the README to supply information on data retrieval
-
 
 **Important: This entails, that the entire project as put on GitHub, can be cloned and then executed end-to-end. Since, we are not putting data on GitHub, if possible included programmatic retrieval of data and/or data instructions on how to easily retrieve the data, e.g. via login, in your GitHub repository README file**
 
