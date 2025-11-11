@@ -3,6 +3,14 @@ title: "Load data"
 format: html
 ---
 
+## Load packages
+
+```{r}
+#| message: false
+#| warning: false
+library("tidyverse")
+```
+
 ## Download data
 
 First of all, we create directories data and data/\_raw if they don't already exist. Then we download the data from the EBI website below into the raw data directory:
