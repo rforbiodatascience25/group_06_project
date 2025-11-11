@@ -24,7 +24,7 @@ github-username:
 
 student-id: s205875
 
-github-username:
+github-username: sigridfrandsen
 
 **Kristine Johansen**
 
