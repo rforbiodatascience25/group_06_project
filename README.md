@@ -39,3 +39,9 @@ Be sure to include a direct link to your presentation, e.g. the direct link to 
 ## Data retrieval
 
 Since we are not putting data on GitHub, use the README to supply information on data retrieval
+
+**Important: This entails, that the entire project as put on GitHub, can be cloned and then executed end-to-end. Since, we are not putting data on GitHub, if possible included programmatic retrieval of data and/or data instructions on how to easily retrieve the data, e.g. via login, in your GitHub repository README file**
+
+#### But How???
+
+Yes, we are not putting the data on GitHub, so either include programmatic retrieval of the data or state in your [GitHub README file](https://quarto.org/docs/output-formats/gfm.html), how you retrieved the data forming the base of the project.
