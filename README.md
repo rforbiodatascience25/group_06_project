@@ -18,7 +18,7 @@ github-username:
 
 student-id: s215111
 
-github-username:
+github-username: LineWintherGormsen
 
 **Sigrid Frandsen**
 
