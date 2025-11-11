@@ -3,7 +3,7 @@ title: "Load data"
 format: html
 ---
 
-## Load packages
+## Load libraries
 
 ```{r}
 #| message: false
