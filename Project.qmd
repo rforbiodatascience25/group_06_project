@@ -3,4 +3,14 @@ title: "Project"
 format: html
 ---
 
-# Info
+# 1. Background
+
+# 2. Aim
+
+# 3. Load Libraries
+
+# 4. Load Data
+
+# 5. Data Description
+
+# 6. Analysis
