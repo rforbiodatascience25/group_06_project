@@ -12,7 +12,7 @@ github-username: albedamm
 
 student-id: s215063
 
-github-username:
+github-username: MathildeDue
 
 **Line Winther Gormsen**
 
