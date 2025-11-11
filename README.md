@@ -24,7 +24,7 @@ github-username:
 
 student-id: s205875
 
-github-username:
+github-username: sigridfrandsen
 
 **Kristine Johansen**
 
@@ -32,7 +32,7 @@ student-id: s215098
 
 github-username:
 
-## Direct link to your presentation
+## Direct link to presentation
 
 Be sure to include a direct link to your presentation, e.g. the direct link to the lecture in lab 3 is: [`https://raw.githack.com/r4bds/r4bds.github.io/main/lecture_lab03.html`](https://raw.githack.com/r4bds/r4bds.github.io/main/lecture_lab03.html)
 
