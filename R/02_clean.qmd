@@ -2,3 +2,64 @@
 title: "Clean dataset"
 format: html
 ---
+
+# Load libraries
+
+```{r}
+#| message: false
+#| warning: false
+library("tidyverse")
+```
+
+# Data preparation
+
+Using the `str` command to investigate, what the data looks like:
+
+```{r}
+str(genome_metadata)
+```
+
+The data consist of a dataframe with 618 observations and 20 variables. We recognize that observations with no value found has the identifier "not provided". Additionally one variable contains phylogenetic information that can be split into different variable containing information about the different classes of the evolutionary history.
+
+## Split data
+
+We want to split the data in the "lineage" variable into multiple variables to store the information about each of the phylogenetic classes individually. First we investigate the data in the lineage variable:
+
+```{r}
+genome_metadata |>
+  select(Lineage) |>
+  slice_sample(n = 10)
+```
+
+By investigating the data it is seen that each string of phylogenetic information consist of identifiers for each of the different classes in the taxonomic rank. These identifiers are:
+
+-   d = domain
+
+-   p = phylum
+
+-   c = class
+
+-   o = order
+
+-   f = family
+
+-   g = genus
+
+-   s = species
+
+We then split the data into the individual taxonomy class ranks.
+
+```{r}
+genome_metadata_clean <- genome_metadata |>
+  mutate(
+    Domain = case_when(str_detect(Lineage, "d__") ~ str_remove(str_extract(Lineage, "d__[^;]*"), "d__")),
+    Phylum = case_when(str_detect(Lineage, "p__") ~ str_remove(str_extract(Lineage, "p__[^;]*"), "p__")),
+    Class  = case_when(str_detect(Lineage, "c__") ~ str_remove(str_extract(Lineage, "c__[^;]*"), "c__")),
+    Order  = case_when(str_detect(Lineage, "o__") ~ str_remove(str_extract(Lineage, "o__[^;]*"), "o__")),
+    Family = case_when(str_detect(Lineage, "f__") ~ str_remove(str_extract(Lineage, "f__[^;]*"), "f__")),
+    Genus  = case_when(str_detect(Lineage, "g__") ~ str_remove(str_extract(Lineage, "g__[^;]*"), "g__")),
+    Species = case_when(str_detect(Lineage, "s__") ~ str_remove(str_extract(Lineage, "s__[^;]*"), "s__"))
+  )
+```
+
+## Missing values
