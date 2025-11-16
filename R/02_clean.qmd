@@ -62,4 +62,29 @@ genome_metadata_clean <- genome_metadata |>
   )
 ```
 
+*Another suggestion for how the data can be split. Also added a code chunk that writes NA if there is no data*
+
+```{r}
+genome_metadata_clean_2 <- genome_metadata |>
+  mutate(
+    # Split the Lineage column into 7 taxonomic ranks
+    split_lineage = str_split_fixed(Lineage, ";", 7),
+
+    Domain  = str_remove(split_lineage[, 1], "d__"),
+    Phylum  = str_remove(split_lineage[, 2], "p__"),
+    Class   = str_remove(split_lineage[, 3], "c__"),
+    Order   = str_remove(split_lineage[, 4], "o__"),
+    Family  = str_remove(split_lineage[, 5], "f__"),
+    Genus   = str_remove(split_lineage[, 6], "g__"),
+    Species = str_remove(split_lineage[, 7], "s__")
+  ) |>
+  mutate(
+    across(
+      c(Domain, Phylum, Class, Order, Family, Genus, Species),
+      ~ na_if(.x, "")
+    )
+  )|>
+  select(-split_lineage) # removing the helper column
+```
+
 ## Missing values
