@@ -42,7 +42,5 @@ if( !file.exists(str_c(raw_dir, data_file)) ){
 The data is a tab separated file separated, so it is loaded into R using read_tsv from the read_r library:
 
 ```{r}
-readr::read_tsv(file = "../data/_raw/genomes-all_metadata.tsv")
+genome_metadata <- readr::read_tsv(file = "../data/_raw/genomes-all_metadata.tsv")
 ```
-
-# 
