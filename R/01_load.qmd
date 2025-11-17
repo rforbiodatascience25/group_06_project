@@ -44,3 +44,11 @@ The data is a tab separated file separated, so it is loaded into R using read_ts
 ```{r}
 genome_metadata <- readr::read_tsv(file = "../data/_raw/genomes-all_metadata.tsv")
 ```
+
+## Saving the data
+
+Saving the loaded data into 01_dat_load.tsv file located in the data directory.
+
+```{r}
+readr::write_tsv(genome_metadata, "../data/01_dat_load.tsv")
+```

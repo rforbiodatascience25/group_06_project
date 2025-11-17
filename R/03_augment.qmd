@@ -2,3 +2,19 @@
 title: "Augment data"
 format: html
 ---
+
+# Load libraries
+
+```{r}
+#| message: false
+#| warning: false
+library("tidyverse")
+```
+
+# Load data
+
+Loading the data saved in the 02_dat_clean.tsv file
+
+```{r}
+genome_metadata_clean <- readr::read_tsv("../data/02_dat_clean.tsv")
+```
