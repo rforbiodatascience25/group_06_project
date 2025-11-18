@@ -58,5 +58,5 @@ genome_metadata_final <- genome_metadata_clean |>
 Saving the cleaned data into 03_dat_aug.tsv file located in the data directory.
 
 ```{r}
-readr::write_tsv(genome_metadata_clean, "../data/03_dat_aug.tsv")
+readr::write_tsv(genome_metadata_final, "../data/03_dat_aug.tsv")
 ```
