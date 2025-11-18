@@ -97,10 +97,7 @@ genome_metadata_clean <- genome_metadata |>
   ) |>
   
   select(
-    -split_lineage   # Remove the helper column
-    ) |>
-  
-  select(
+  -split_lineage,   # Remove the helper column
   -Genome_accession,
   -Species_rep,
   -Lineage,
