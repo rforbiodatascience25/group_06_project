@@ -18,3 +18,45 @@ Loading the data saved in the 02_dat_clean.tsv file
 ```{r}
 genome_metadata_clean <- readr::read_tsv("../data/02_dat_clean.tsv")
 ```
+
+```{r}
+quality_table <- genome_metadata_clean |>
+  select(Genome, Completeness, Contamination) |>
+  mutate(
+    Completeness_quality = case_when(
+      Completeness > 90                    ~ "High",
+      Completeness >= 50 & Completeness <= 90 ~ "Medium",
+      Completeness < 50                    ~ "Low",
+      TRUE                                 ~ NA_character_
+    ),
+    
+    Contamination_quality = case_when(
+      Contamination < 5                    ~ "High",
+      Contamination < 10                   ~ "Medium",
+      Contamination >= 10                  ~ "Low",
+      TRUE                                 ~ NA_character_
+    ),
+    
+    Overall_quality = case_when(
+      Completeness > 90  & Contamination < 5   ~ "High",
+      Completeness >= 50 & Contamination < 10  ~ "Medium",
+      Completeness < 50  & Contamination >= 10 ~ "Low",
+      TRUE                                     ~ "Other"
+    )
+  ) |>
+  
+  select(Genome, Completeness_quality, Contamination_quality, Overall_quality)
+```
+
+```{r}
+genome_metadata_final <- genome_metadata_clean |>
+  left_join(quality_table, by = "Genome")
+```
+
+## Saving the data
+
+Saving the cleaned data into 03_dat_aug.tsv file located in the data directory.
+
+```{r}
+readr::write_tsv(genome_metadata_clean, "../data/03_dat_aug.tsv")
+```
