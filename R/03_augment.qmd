@@ -17,7 +17,10 @@ Loading the data saved in the 02_dat_clean.tsv file
 
 ```{r}
 genome_metadata_clean <- readr::read_tsv("../data/02_dat_clean.tsv")
+
 ```
+
+Laver ny tabel med imformation omrking completenes og contamination
 
 ```{r}
 quality_table <- genome_metadata_clean |>
@@ -48,8 +51,10 @@ quality_table <- genome_metadata_clean |>
   select(Genome, Completeness_quality, Contamination_quality, Overall_quality)
 ```
 
+Left join til final dataframe:
+
 ```{r}
-genome_metadata_final <- genome_metadata_clean |>
+genome_metadata_aug <- genome_metadata_clean |>
   left_join(quality_table, by = "Genome")
 ```
 
@@ -58,5 +63,5 @@ genome_metadata_final <- genome_metadata_clean |>
 Saving the cleaned data into 03_dat_aug.tsv file located in the data directory.
 
 ```{r}
-readr::write_tsv(genome_metadata_final, "../data/03_dat_aug.tsv")
+readr::write_tsv(genome_metadata_aug, "../data/03_dat_aug.tsv")
 ```
