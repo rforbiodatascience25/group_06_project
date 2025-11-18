@@ -20,7 +20,9 @@ genome_metadata_clean <- readr::read_tsv("../data/02_dat_clean.tsv")
 
 ```
 
-Laver ny tabel med imformation omrking completenes og contamination
+## Augment data
+
+A new table is created, containing info on the quality of the MAGs. This includes completeness quality, contamination quality as well as overall genome quality.
 
 ```{r}
 quality_table <- genome_metadata_clean |>
@@ -51,7 +53,7 @@ quality_table <- genome_metadata_clean |>
   select(Genome, Completeness_quality, Contamination_quality, Overall_quality)
 ```
 
-Left join til final dataframe:
+The new data table is then joined with the cleaned data frame using left join.
 
 ```{r}
 genome_metadata_aug <- genome_metadata_clean |>
