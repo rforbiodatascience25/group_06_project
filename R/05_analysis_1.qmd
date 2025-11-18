@@ -3,7 +3,7 @@ title: "First data analysis"
 format: html
 ---
 
-\<\<\<\<\<\<\< HEAD \# Phylogenetic tree
+# Phylogenetic tree
 
 The dataset contains information the different phylogenetic classes, which can be used to plot the phylogenetic tree.
 
@@ -44,6 +44,13 @@ tax <- genome_metadata_clean |>
   mutate(across(everything(), as.factor))
 ```
 
+```{r}
+metadata_species <- genome_metadata_clean |>
+  select(Species, Country) |>
+  distinct() |>
+  rename(label = Species)
+```
+
 Using the as.phylo functions to translate the data into a tree. The hierachy of the data is defined inside the function:
 
 ```{r}
@@ -59,9 +66,20 @@ ggtree(tree) +
 ```
 
 ```{r}
-ggtree(tree, layout = "circular") +
+ggtree(tree, layout = "circular") %<+% metadata_species +
+  geom_tippoint(aes(color = Country), size = 1) +
   geom_tiplab(size = 1, offset = 0.05) +
-  theme_tree()
+  theme_tree() +
+   guides(color = guide_legend(override.aes = list(size = 2)))
+```
+
+```{r}
+genome_metadata_clean |>
+  count(Species, Country) |>
+  group_by(Species) |>
+  summarise(n_countries = n()) |>
+  count(n_countries) 
+
 ```
 
 ```{r}
@@ -81,4 +99,8 @@ ggtree(tree_genus) +
   theme_tree()
 ```
 
-\`\`\`{r} ggtree(tree_genus, layout = "circular") + geom_tiplab(size = 2, offset = 0.05) + theme_tree()
+```{r}
+ggtree(tree_genus, layout = "circular") + 
+  geom_tiplab(size = 2, offset = 0.05) + 
+  theme_tree()
+```
