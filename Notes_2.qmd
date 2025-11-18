@@ -1,0 +1,42 @@
+---
+title: "Notes"
+format: html
+---
+
+# Praktisk
+
+Vi vil gerne være færdige med indholdet efter næste tirsdag.
+
+Hav god tid til at sætte alt sammen
+
+Husk funktioner skal defineres inde i functions.R
+
+# Plan:
+
+Alle laver hver deres script (kaldet deres navne) og skriver kun i dem her til at starte med.
+
+Vi laver de ting der er skrevet på to do
+
+hvis man finder på andre ting som er nice at undersøge så skriv det på to do og skriv ud i gruppen.
+
+# TO DO
+
+-   PCA af bakteriesammensætning i forskellige lande (KRIS)
+
+-   Finde data på om der er nogen af vores lande som har mere endometriose end andre. (Kris=
+
+-   Find data på hvilke bakterier er mere abundant i folk med endometriose. (Line)
+
+-   Completeness vs contamination (Mathilde)
+
+-   Hvordan kan man ellers kigge kvaliteten af datasættet - er data på kvinders sundhed god nok (Alberte)
+
+-   Finde formålet med phylogenetisk træ + skrive noget til det.
+
+-   Få skrevet overblik over data rent - basically færdig (Sigrid)
+
+-   Skriv noget om GC content - hvorfor er det relevant? (Sigrid???)
+
+    -   identificere atypiske genomer
+
+-   Find data på "normal" GC content. (Sigrid???)
