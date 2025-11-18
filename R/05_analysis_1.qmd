@@ -3,6 +3,104 @@ title: "First data analysis"
 format: html
 ---
 
-ideer:
+# Phylogenetic tree
 
-Hvordan er data sammensat geographic (abundance)
+The dataset contains information the different phylogenetic classes, which can be used to plot the phylogenetic tree.
+
+## Load libraries
+
+```{r}
+#| message: false
+#| warning: false
+library("tidyverse")
+library("ggtree")
+library("ape")
+```
+
+## Load data
+
+Loading the data into a variable from the `02_dat_clean.tsv` file
+
+```{r}
+genome_metadata_clean <- readr::read_tsv("../data/02_dat_clean.tsv")
+```
+
+## Prepare data for plot
+
+First the different ranks in the phylogenetic are defined:
+
+```{r}
+ranks <- c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+```
+
+Then the NA values are replaced with unclassified to be able to show them in the plot. Additionally the data is changed into factors as it is required for using the .phylo command.
+
+```{r}
+tax <- genome_metadata_clean |>
+  select(all_of(ranks)) |>
+  distinct() |> 
+  mutate(across(everything(),
+                ~ replace_na(., "unclassified"))) |>
+  mutate(across(everything(), as.factor))
+```
+
+```{r}
+metadata_species <- genome_metadata_clean |>
+  select(Species, Country) |>
+  distinct() |>
+  rename(label = Species)
+```
+
+Using the as.phylo functions to translate the data into a tree. The hierachy of the data is defined inside the function:
+
+```{r}
+tree <- as.phylo(~ Domain/Phylum/Class/Order/Family/Genus/Species, data = tax)
+```
+
+## Plot of phylogenetic tree
+
+```{r}
+ggtree(tree) +
+  geom_tiplab(size = 1) +
+  theme_tree()
+```
+
+```{r}
+ggtree(tree, layout = "circular") %<+% metadata_species +
+  geom_tippoint(aes(color = Country), size = 1) +
+  geom_tiplab(size = 1, offset = 0.05) +
+  theme_tree() +
+   guides(color = guide_legend(override.aes = list(size = 2)))
+```
+
+```{r}
+genome_metadata_clean |>
+  count(Species, Country) |>
+  group_by(Species) |>
+  summarise(n_countries = n()) |>
+  count(n_countries) 
+
+```
+
+```{r}
+# genus-level taxonomy (unique rows)
+ranks_genus <- c("Domain","Phylum","Class","Order","Family","Genus")
+
+tax_genus <- genome_metadata_clean |>
+  select(all_of(ranks_genus)) |>
+  distinct() |>
+  mutate(across(everything(), as.factor))
+
+tree_genus <- as.phylo(~ Domain/Phylum/Class/Order/Family/Genus,
+                       data = tax_genus)
+
+ggtree(tree_genus) +
+  geom_tiplab(size = 1) +      # bigger, readable labels
+  theme_tree()
+```
+
+```{r}
+ggtree(tree_genus, layout = "circular") + 
+  geom_tiplab(size = 2, offset = 0.05) + 
+  theme_tree()
+```
