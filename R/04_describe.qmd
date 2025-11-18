@@ -3,6 +3,8 @@ title: "Description of data"
 format: html
 ---
 
+\<\<\<\<\<\<\< HEAD
+
 # 1. Load libraries
 
 ```{r}
