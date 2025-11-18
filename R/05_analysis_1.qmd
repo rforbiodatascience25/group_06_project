@@ -3,7 +3,7 @@ title: "First data analysis"
 format: html
 ---
 
-# Phylogenetic tree
+\<\<\<\<\<\<\< HEAD \# Phylogenetic tree
 
 The dataset contains information the different phylogenetic classes, which can be used to plot the phylogenetic tree.
 
@@ -17,7 +17,7 @@ library("ggtree")
 library("ape")
 ```
 
-## Load data 
+## Load data
 
 Loading the data into a variable from the `02_dat_clean.tsv` file
 
@@ -81,8 +81,4 @@ ggtree(tree_genus) +
   theme_tree()
 ```
 
-```{r}
-ggtree(tree_genus, layout = "circular") +
-  geom_tiplab(size = 2, offset = 0.05) +
-  theme_tree()
-```
+\`\`\`{r} ggtree(tree_genus, layout = "circular") + geom_tiplab(size = 2, offset = 0.05) + theme_tree()
