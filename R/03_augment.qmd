@@ -18,3 +18,11 @@ Loading the data saved in the 02_dat_clean.tsv file
 ```{r}
 genome_metadata_clean <- readr::read_tsv("../data/02_dat_clean.tsv")
 ```
+
+## Saving the data
+
+Saving the cleaned data into 03_dat_aug.tsv file located in the data directory.
+
+```{r}
+readr::write_tsv(genome_metadata_clean, "../data/03_dat_aug.tsv")
+```

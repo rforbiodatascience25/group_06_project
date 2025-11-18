@@ -55,52 +55,12 @@ By investigating the data it is seen that each string of phylogenetic informatio
 
 -   s = species
 
-We then split the data into the individual taxonomy class ranks.
+We want to start with converting all "not provided" to NA across all character columns. Then we want to split the "lineage" variable into its seven taxonomic ranks to store the information about each of the phylogenetic classes individually. Then we want to extract each taxonomic rank and remove prefixes. And convert empty strings to NA in the new taxonomy columns.
+
+We then remove the GTDB suffixes (e.g. "\_A") to streamline taxonomies. Lastly we remove columns that will not be used in our analysis.
 
 ```{r}
 genome_metadata_clean <- genome_metadata |>
-  mutate(
-    Domain = case_when(str_detect(Lineage, "d__") ~ str_remove(str_extract(Lineage, "d__[^;]*"), "d__")),
-    Phylum = case_when(str_detect(Lineage, "p__") ~ str_remove(str_extract(Lineage, "p__[^;]*"), "p__")),
-    Class  = case_when(str_detect(Lineage, "c__") ~ str_remove(str_extract(Lineage, "c__[^;]*"), "c__")),
-    Order  = case_when(str_detect(Lineage, "o__") ~ str_remove(str_extract(Lineage, "o__[^;]*"), "o__")),
-    Family = case_when(str_detect(Lineage, "f__") ~ str_remove(str_extract(Lineage, "f__[^;]*"), "f__")),
-    Genus  = case_when(str_detect(Lineage, "g__") ~ str_remove(str_extract(Lineage, "g__[^;]*"), "g__")),
-    Species = case_when(str_detect(Lineage, "s__") ~ str_remove(str_extract(Lineage, "s__[^;]*"), "s__"))
-  )
-```
-
-*Another suggestion for how the data can be split. Also added a code chunk that writes NA if there is no dat*
-
-```{r}
-genome_metadata_clean_2 <- genome_metadata |>
-  mutate(
-    # Split the Lineage column into 7 taxonomic ranks
-    split_lineage = str_split_fixed(Lineage, ";", 7),
-
-    Domain  = str_remove(split_lineage[, 1], "d__"),
-    Phylum  = str_remove(split_lineage[, 2], "p__"),
-    Class   = str_remove(split_lineage[, 3], "c__"),
-    Order   = str_remove(split_lineage[, 4], "o__"),
-    Family  = str_remove(split_lineage[, 5], "f__"),
-    Genus   = str_remove(split_lineage[, 6], "g__"),
-    Species = str_remove(split_lineage[, 7], "s__")
-  ) |>
-  mutate(
-    across(
-      c(Domain, Phylum, Class, Order, Family, Genus, Species),
-      ~ na_if(.x, "")
-    )
-  )|>
-  select(-split_lineage) # removing the helper column
-```
-
-***Another suggestion for how the data can be split. Inkludere at den laver alt "not provided" om til NA***
-
-We want to start with converting all "not provided" to NA across all character columns. Then we want to split the "lineage" variable into its seven taxonomic ranks to store the information about each of the phylogenetic classes individually. Then we want to extract each taxonomic rank and remove prefixes. And convert empty strings to NA in the new taxonomy columns.
-
-```{r}
-genome_metadata_clean_3 <- genome_metadata |>
   
   mutate(
     across(
@@ -128,23 +88,43 @@ genome_metadata_clean_3 <- genome_metadata |>
       ~ na_if(.x, "")
     )
   ) |>
-
-  select(-split_lineage) # removing the helper column
+  
+  mutate(
+    across(
+      Phylum:Species,
+      ~ str_remove_all(as.character(.x), "_[A-Za-z0-9]+")
+    )
+  ) |>
+  
+  select(
+    -split_lineage   # Remove the helper column
+    ) |>
+  
+  select(
+  -Genome_accession,
+  -Species_rep,
+  -Lineage,
+  -Sample_accession,
+  -Study_accession,
+  -FTP_download
+)
 
 ```
 
+We then remove the GTDB suffixes (e.g. "\_A") to streamline taxonomies. We also remove the
+
 ## Viewing the data
 
-Veweing the top 10 rows of the splitted data to see the new structure.
+Vieweing the top 10 rows of the split data to see the new structure.
 
 ```{r}
-genome_metadata_clean_3 |> 
+genome_metadata_clean |> 
   select(Genome, Domain:Species) |> 
   slice_head(n = 10)
 ```
 
 ```{r}
-view(genome_metadata_clean_3)
+view(genome_metadata_clean)
 ```
 
 ## Saving the data
@@ -152,5 +132,5 @@ view(genome_metadata_clean_3)
 Saving the cleaned data into 02_dat_clean.tsv file located in the data directory.
 
 ```{r}
-readr::write_tsv(genome_metadata_clean_3, "../data/02_dat_clean.tsv")
+readr::write_tsv(genome_metadata_clean, "../data/02_dat_clean.tsv")
 ```
