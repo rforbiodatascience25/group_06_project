@@ -47,7 +47,7 @@ genome_metadata <- readr::read_tsv(file = "../data/_raw/genomes-all_metadata.tsv
 
 ## Saving the data
 
-Saving the loaded data into 01_dat_load.tsv file located in the data directory.
+Saving the loaded data again into "01_dat_load.tsv"-file located in the data directory, to keep a consistent overview/naming of data through the project.
 
 ```{r}
 readr::write_tsv(genome_metadata, "../data/01_dat_load.tsv")
