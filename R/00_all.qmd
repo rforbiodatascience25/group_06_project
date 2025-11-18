@@ -38,6 +38,7 @@ library("tidyverse")
 Below we run the loading script that downloads the raw data and writes `01_dat_load.tsv.`
 
 ```{r}
+#| echo: false
 #| child: "01_load.qmd"
 ```
 
@@ -54,14 +55,34 @@ Cleans the loaded data and writes it to `02_dat_clean.tsv`.
 
 `03_augment.qmd`: Adds new variables, like e.g. computing a BMI
 
+```{r}
+#| echo: false
+#| child: "03_augment.qmd"
+```
+
 # 7. Describe
 
 `04_describe.qmd`: Descriptive statistics, how many in each group, etc.
+
+```{r}
+#| echo: false
+#| child: "04_describe.qmd"
+```
 
 # 8. Analysis 1
 
 `05_analysis_1.qmd`: Here goes your first analysis
 
+```{r}
+#| echo: false
+#| child: "05_analysis_1.qmd"
+```
+
 # 9. Analysis 2
 
 `06_analysis_2.qmd`: Here goes your second analysis and so on
+
+```{r}
+#| echo: false
+#| child: "06_analysis_2.qmd"
+```

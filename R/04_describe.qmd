@@ -2,3 +2,92 @@
 title: "Description of data"
 format: html
 ---
+
+# 1. Load libraries
+
+```{r}
+#| message: false
+#| warning: false
+library("tidyverse")
+```
+
+# 2. Load data
+
+Loading the data saved in the 03_dat_aug.tsv file
+
+```{r}
+genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
+```
+
+# 3. Data overview
+
+## 3.1 Structure of the dataset
+
+Using the str command to investigate, what the data looks like:
+
+```{r}
+glimpse(genome_metadata_aug)
+```
+
+From the overview of the data structure, there are 618 rows and 21 columns. The data Includes assembly metrics, rRNA/tRNA counts, taxonomy, and geography.
+
+## 3.2 Missing values in key variables
+
+We summarize missing values for the data fields to see where there are most missing values.
+
+```{r}
+genome_metadata_aug |>
+  summarise(across(everything(), ~ sum(is.na(.x)))) |>
+  pivot_longer(
+    everything(),
+    names_to = "variable",
+    values_to = "n_missing"
+  ) |>
+  arrange(desc(n_missing)) |>
+  slice_head(n = 6)
+```
+
+There are four variables with missing data in the cleaned dataset. *Species* has by far the most missing values (138), followed by *Country* and *Continent* (56 each), while *Genus* has only a small number of missing entries (6). All other variables are fully complete.
+
+# 4. Taxonomic composition
+
+## 4.1 Phylum counts
+
+Counting the different Phylums in the dataset
+
+```{r}
+genome_metadata_aug |>
+count(Phylum, sort = TRUE)
+```
+
+## 4.2 Barplot of phyla
+
+```{r}
+genome_metadata_aug |>
+count(Phylum) |>
+ggplot(aes(x = fct_reorder(Phylum, n), y = n)) +
+geom_col() +
+coord_flip() +
+labs(
+x = "Phylum",
+y = "Number of genomes",
+title = "Number of genomes per phylum"
+)
+```
+
+From the plit it is seen that the data contains MAGs from several bacterial phyla commonly found in the vaginal microbiome.\
+The most abundant phyla include Bacillota, Actinobacteriota, and Bacteroidota, while others such as Synergistota appear less frequently.\
+
+# 5. Genome quality
+
+## 5.1 Completeness and contamination
+
+Barplot af inddeling af forskellige Phylum
+
+Hvordan er datasammensat
+
+Hordan er data sammen sat geographic (abundance)
+
+Hvilke typer af bakterier ser man mest på continent/land
+
+## 5.2 Quality categories (not created yet)

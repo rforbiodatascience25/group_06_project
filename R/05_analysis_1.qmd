@@ -2,3 +2,7 @@
 title: "First data analysis"
 format: html
 ---
+
+ideer:
+
+Hvordan er data sammensat geographic (abundance)

@@ -121,10 +121,7 @@ Vieweing the top 10 rows of the split data to see the new structure.
 genome_metadata_clean |> 
   select(Genome, Domain:Species) |> 
   slice_head(n = 10)
-```
 
-```{r}
-view(genome_metadata_clean)
 ```
 
 ## Saving the data
