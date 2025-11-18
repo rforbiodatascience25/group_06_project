@@ -1,0 +1,22 @@
+---
+title: "Group_06_presentation"
+subtitle: "Subheader"
+author:
+  - Alberte Englund
+  - Mathilde Due
+  - Line Winther Gormsen
+  - Sigrid Frandsen
+  - Kristine Johansen
+  
+format: revealjs
+---
+
+## Getting up
+
+-   Turn off alarm
+-   Get out of bed
+
+## Going to sleep
+
+-   Get in bed
+-   Count sheep
