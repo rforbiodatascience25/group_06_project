@@ -11,12 +11,45 @@ author:
 format: revealjs
 ---
 
-## Getting up
+## Data Description
 
--   Turn off alarm
--   Get out of bed
+-   Something about our data
+-   nogle distributions og måske plots til overview af vores data.
 
-## Going to sleep
+## What we did - briefly???
 
--   Get in bed
--   Count sheep
+en lille smule om hvad vi har ændret på dataen i det hele taget - kort
+
+## Results 1
+
+måske nogle plots
+
+## Results 2
+
+måske nogle plots
+
+## Results 3
+
+måske nogle plots
+
+## Results 4
+
+måske nogle plots
+
+## Results 5
+
+måske nogle plots
+
+## Discussion
+
+Hvis vi har nogle punkter her
+
+Fx noget vi skulle have gjort anderledes
+
+eller mangler/begrænsninger i datasættet
+
+## Future Perspectives
+
+Hvad kan det bruges til
+
+Hvad kunne have været nice at lave ellers.
