@@ -51,9 +51,9 @@ hvis man finder på andre ting som er nice at undersøge så skriv det på to do
 
 -   Få skrevet overblik over data rent - basically færdig (Sigrid)
 
--   Skriv noget om GC content - hvorfor er det relevant? (Sigrid???)
+-   Skriv noget om GC content - hvorfor er det relevant? (Sigrid)
 
     -   identificere atypiske genomer
     -   GC vs Completion/contamination
 
--   Find data på "normal" GC content. (Sigrid???)
+-   Find data på "normal" GC content. (Sigrid)
