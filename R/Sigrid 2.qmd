@@ -1,6 +1,7 @@
 ---
 title: "Sigrid 2"
 format: html
+output-dir: results
 ---
 
 # Analysis X
