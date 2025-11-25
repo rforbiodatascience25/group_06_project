@@ -1,6 +1,7 @@
 ---
 title: "Description of data"
 format: html
+output-dir: results
 ---
 
 # 1. Load libraries
