@@ -62,13 +62,13 @@ hvis man finder på andre ting som er nice at undersøge så skriv det på to do
 
 -   00_all.qmd
 
--   01_load.qmd
+-   01_load.qmd (Done)
 
 -   02_clean.qmd
 
 -   03_augment.qmd
 
--   04_describe.qmd
+-   04_describe.qmd (Done)
 
 -   05_analysis_1.qmd
 

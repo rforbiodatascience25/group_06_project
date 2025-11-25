@@ -13,14 +13,9 @@ format:
     theme: moon
 ---
 
-## Examples: 
+## Examples:
 
-Bare for at vide de ting vi kan bruge i præsentations-dokumentet.
-Her skriver jeg i **bold**. 
-Her skriver jeg i *kursiv*. 
-Her skriver jeg i ***bold og kursiv***. 
-Her skriver jeg i <span style="color: red;">rød</span>
-
+Bare for at vide de ting vi kan bruge i præsentations-dokumentet. Her skriver jeg i **bold**. Her skriver jeg i *kursiv*. Her skriver jeg i ***bold og kursiv***. Her skriver jeg i [rød]{style="color: red;"}
 
 ### Mindre titel
 
@@ -37,12 +32,11 @@ content before the pause
 
 content after the pause
 
-## Examples: 
+## Examples:
 
 ### Several columns
 
-:::: {.columns}
-
+::::: columns
 ::: {.column width="40%"}
 Left column
 :::
@@ -50,12 +44,11 @@ Left column
 ::: {.column width="60%"}
 Right column
 :::
-
-::::
+:::::
 
 ## Examples: smaller text on slide {.smaller}
-slide so you can make things smaller if content can not fit.
--   Bullet Point 1
+
+slide so you can make things smaller if content can not fit. - Bullet Point 1
 
 -   Bullet Point 2
 
@@ -67,10 +60,9 @@ slide so you can make things smaller if content can not fit.
 
 -   Bullet Point 6
 
-
 ## Examples: scrollable slide {.scrollable}
-slide so you can scroll to see the rest of the content if to much.
--   Bullet Point 1
+
+slide so you can scroll to see the rest of the content if to much. - Bullet Point 1
 
 -   Bullet Point 2
 
@@ -99,52 +91,55 @@ slide so you can scroll to see the rest of the content if to much.
 ## Asides and footnotes
 
 ### Asides
+
 Slide content
-
-::: aside
-Some additional commentary of more peripheral interest.
-::: 
-
-### Footnotes
-- Green ^[A footnote]
-- Brown
-- Purple
 
 ::: aside
 Some additional commentary of more peripheral interest.
 :::
 
+### Footnotes
 
-## About the data set
+-   Green [^1]
+-   Brown
+-   Purple
+
+[^1]: A footnote
+
+::: aside
+Some additional commentary of more peripheral interest.
+:::
+
+## About the data set / project
+
 Meta-data from MGnify’s **vaginal microbiome** genome catalogue
-
-
-
 
 -   Something about our data
 -   nogle distributions og måske plots til overview af vores data.
 
-## What we did - briefly???
+## Cleaning of data
 
 en lille smule om hvad vi har ændret på dataen i det hele taget - kort
 
-## Results 1
+## Description of data
+
+## Analysis 1
 
 måske nogle plots
 
-## Results 2
+## Analysis 2
 
 måske nogle plots
 
-## Results 3
+## Analysis 3
 
 måske nogle plots
 
-## Results 4
+## Analysis 4
 
 måske nogle plots
 
-## Results 5
+## Analysis 5
 
 måske nogle plots
 
