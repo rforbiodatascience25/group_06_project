@@ -52,7 +52,7 @@ tree <- as.phylo(~ Domain/Phylum/Class/Order/Family/Genus/Species, data = tax)
 
 ## Plot of phylogenetic tree
 
-```{r, fig.width=10, fig.height=10}
+```{r, fig.width=9.5, fig.height=9.5}
 tax_tip <- tax |>
   select(Species, Phylum) |>
   distinct() |>
