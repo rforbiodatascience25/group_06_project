@@ -1,9 +1,9 @@
 ---
-title: "Sigrid 2"
+title: "Analysis Comparative Genomic Analysis of Endometriosis-Associated vs Non-Associated "
 format: html
 ---
 
-# Analysis X - MAGs with endometriosis-associated genera
+# Analysis 3 - Comparative Genomic Analysis of Endometriosis-Associated vs Non-Associated MAGs
 
 ## Load libraries
 
