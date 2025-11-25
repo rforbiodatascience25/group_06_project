@@ -118,536 +118,314 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="load-libraries" class="level1">
 <h1>3. Load Libraries</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"quarto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-data" class="level1">
 <h1>4. Load Data</h1>
 <p>Below we run the loading script that downloads the raw data and writes <code>01_dat_load.tsv.</code></p>
-<section id="load-libraries-1" class="level2">
-<h2 class="anchored" data-anchor-id="load-libraries-1">1. Load libraries</h2>
-</section>
-<section id="download-data" class="level2">
-<h2 class="anchored" data-anchor-id="download-data">2. Download data</h2>
-<p>First of all, we create directories data and data/_raw if they don’t already exist. Then we download the data from the EBI website below into the raw data directory:</p>
-<p><a href="https://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/genomes-all_metadata.tsv" class="uri">https://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/genomes-all_metadata.tsv</a></p>
-</section>
-<section id="load-data-1" class="level2">
-<h2 class="anchored" data-anchor-id="load-data-1">3. Load data</h2>
-<p>The data is a tab separated file separated, so it is loaded into R using read_tsv from the read_r library:</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 618 Columns: 20
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (10): Genome, Genome_type, Genome_accession, Species_rep, Lineage, Sampl...
-dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
+<div class="cell-output cell-output-stdout">
+<pre><code>[31m
 
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+processing file: 01_load.qmd
+[39m
+  |                                                          
+  |                                                    |   0%
+  |                                                          
+  |......                                              |  11%                  
+  |                                                          
+  |............                                        |  22% [unnamed-chunk-1]
+  |                                                          
+  |.................                                   |  33%                  
+  |                                                          
+  |.......................                             |  44% [unnamed-chunk-2]
+  |                                                          
+  |.............................                       |  56%                  
+  |                                                          
+  |...................................                 |  67% [unnamed-chunk-3]
+  |                                                          
+  |........................................            |  78%                  
+  |                                                          
+  |..............................................      |  89% [unnamed-chunk-4]
+  |                                                          
+  |....................................................| 100%                  
+                                                                                                            
+[31moutput file: 01_load.knit.md
+
+[39m[31mWarning message:
+In png(..., res = dpi, units = "in") :
+  unable to open connection to X11 display ''
+[39m[1mpandoc [22m
+  to: html
+  output-file: 01_load.html
+  standalone: true
+  section-divs: true
+  html-math-method: mathjax
+  wrap: none
+  default-image-extension: png
+  
+[1mmetadata[22m
+  document-css: false
+  link-citations: true
+  date-format: long
+  lang: en
+  title: Load data
+  
+Output created: ../results/R/01_load.html</code></pre>
 </div>
 </div>
-</section>
-<section id="saving-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="saving-the-data">4. Saving the data</h2>
-<p>Saving the loaded data again into “01_dat_load.tsv”-file located in the data directory, to keep a consistent overview/naming of data through the project.</p>
-</section>
 </section>
 <section id="clean-data" class="level1">
 <h1>5. Clean data</h1>
 <p>Cleans the loaded data and writes it to <code>02_dat_clean.tsv</code>.</p>
-</section>
-<section id="load-libraries-2" class="level1">
-<h1>Load libraries</h1>
-</section>
-<section id="load-data-2" class="level1">
-<h1>Load data</h1>
-<p>Loading the data saved in the 01_dat_load.tsv file</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 618 Columns: 20
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (10): Genome, Genome_type, Genome_accession, Species_rep, Lineage, Sampl...
-dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
+<div class="cell-output cell-output-stdout">
+<pre><code>[31m
 
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+processing file: 02_clean.qmd
+[39m
+  |                                                          
+  |                                                    |   0%
+  |                                                          
+  |...                                                 |   6%                  
+  |                                                          
+  |......                                              |  12% [unnamed-chunk-1]
+  |                                                          
+  |.........                                           |  18%                  
+  |                                                          
+  |............                                        |  24% [unnamed-chunk-2]
+  |                                                          
+  |...............                                     |  29%                  
+  |                                                          
+  |..................                                  |  35% [unnamed-chunk-3]
+  |                                                          
+  |.....................                               |  41%                  
+  |                                                          
+  |........................                            |  47% [unnamed-chunk-4]
+  |                                                          
+  |............................                        |  53%                  
+  |                                                          
+  |...............................                     |  59% [unnamed-chunk-5]
+  |                                                          
+  |..................................                  |  65%                  
+  |                                                          
+  |.....................................               |  71% [unnamed-chunk-6]
+  |                                                          
+  |........................................            |  76%                  
+  |                                                          
+  |...........................................         |  82% [unnamed-chunk-7]
+  |                                                          
+  |..............................................      |  88%                  
+  |                                                          
+  |.................................................   |  94% [unnamed-chunk-8]
+  |                                                          
+  |....................................................| 100%                  
+                                                                                                            
+[31moutput file: 02_clean.knit.md
+
+[39m[31mWarning message:
+In png(..., res = dpi, units = "in") :
+  unable to open connection to X11 display ''
+[39m[1mpandoc [22m
+  to: html
+  output-file: 02_clean.html
+  standalone: true
+  section-divs: true
+  html-math-method: mathjax
+  wrap: none
+  default-image-extension: png
+  
+[1mmetadata[22m
+  document-css: false
+  link-citations: true
+  date-format: long
+  lang: en
+  title: Clean dataset
+  
+Output created: ../results/R/02_clean.html</code></pre>
 </div>
 </div>
-</section>
-<section id="data-preparation" class="level1">
-<h1>Data preparation</h1>
-<p>Using the <code>str</code> command to investigate, what the data looks like:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>spc_tbl_ [618 × 20] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ Genome          : chr [1:618] "MGYG000303700" "MGYG000303701" "MGYG000303702" "MGYG000303703" ...
- $ Genome_type     : chr [1:618] "MAG" "MAG" "MAG" "MAG" ...
- $ Length          : num [1:618] 678213 1500176 1210062 1706016 703182 ...
- $ N_contigs       : num [1:618] 2 18 44 27 7 112 185 90 12 57 ...
- $ N50             : num [1:618] 466332 112881 48790 89653 111709 ...
- $ GC_content      : num [1:618] 47.8 42.4 26.4 44.6 47.8 ...
- $ Completeness    : num [1:618] 63.7 87.8 94.8 93.7 63.7 ...
- $ Contamination   : num [1:618] 0 0 0.55 1.06 0 0.36 0.72 0.09 0 0.85 ...
- $ rRNA_5S         : num [1:618] 0 0 0 0 0 0 0 0 0 0 ...
- $ rRNA_16S        : num [1:618] 99.7 0 0 0 99.7 ...
- $ rRNA_23S        : num [1:618] 99.6 0 0 0 99.6 ...
- $ tRNAs           : num [1:618] 20 20 9 20 20 19 7 18 20 20 ...
- $ Genome_accession: chr [1:618] "CAMPLK01" "CAMPLL01" "CAMPLM01" "CAMPLN01" ...
- $ Species_rep     : chr [1:618] "MGYG000303700" "MGYG000303918" "MGYG000303789" "MGYG000304079" ...
- $ Lineage         : chr [1:618] "d__Bacteria;p__Patescibacteria;c__Saccharimonadia;o__Saccharimonadales;f__Nanoperiomorbaceae;g__Nanoperiomorbus"| __truncated__ "d__Bacteria;p__Bacillota_A;c__Clostridia;o__Saccharofermentanales;f__Fastidiosipilaceae;g__KA00274;s__KA00274 sp902373515" "d__Bacteria;p__Bacillota;c__Bacilli;o__Staphylococcales;f__Gemellaceae;g__Gemella;s__Gemella asaccharolytica" "d__Bacteria;p__Bacillota_A;c__Clostridia;o__Saccharofermentanales;f__Fastidiosipilaceae;g__Mageeibacillus;s__Ma"| __truncated__ ...
- $ Sample_accession: chr [1:618] "SAMEA111346158" "SAMEA111346148" "SAMEA111346137" "SAMEA111346154" ...
- $ Study_accession : chr [1:618] "ERP138373" "ERP138373" "ERP138373" "ERP138373" ...
- $ Country         : chr [1:618] "not provided" "not provided" "not provided" "not provided" ...
- $ Continent       : chr [1:618] "not provided" "not provided" "not provided" "not provided" ...
- $ FTP_download    : chr [1:618] "ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/all_genomes/MGYG0003037/MGYG00"| __truncated__ "ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/all_genomes/MGYG0003039/MGYG00"| __truncated__ "ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/all_genomes/MGYG0003037/MGYG00"| __truncated__ "ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/all_genomes/MGYG0003040/MGYG00"| __truncated__ ...
- - attr(*, "spec")=
-  .. cols(
-  ..   Genome = col_character(),
-  ..   Genome_type = col_character(),
-  ..   Length = col_double(),
-  ..   N_contigs = col_double(),
-  ..   N50 = col_double(),
-  ..   GC_content = col_double(),
-  ..   Completeness = col_double(),
-  ..   Contamination = col_double(),
-  ..   rRNA_5S = col_double(),
-  ..   rRNA_16S = col_double(),
-  ..   rRNA_23S = col_double(),
-  ..   tRNAs = col_double(),
-  ..   Genome_accession = col_character(),
-  ..   Species_rep = col_character(),
-  ..   Lineage = col_character(),
-  ..   Sample_accession = col_character(),
-  ..   Study_accession = col_character(),
-  ..   Country = col_character(),
-  ..   Continent = col_character(),
-  ..   FTP_download = col_character()
-  .. )
- - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
-</div>
-</div>
-<p>The data consist of a data-frame with 618 observations and 20 variables. We recognize that observations with no value found has the identifier “not provided”. Additionally one variable contains phylogenetic information that can be split into different variable containing information about the different classes of the evolutionary history.</p>
-<section id="split-data" class="level2">
-<h2 class="anchored" data-anchor-id="split-data">Split data</h2>
-<p>We want to split the data in the “lineage” variable into multiple variables to store the information about each of the phylogenetic classes individually. First we investigate the data in the lineage variable:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 1
-   Lineage                                                                      
-   &lt;chr&gt;                                                                        
- 1 d__Bacteria;p__Bacillota_A;c__Clostridia;o__Tissierellales;f__Peptoniphilace…
- 2 d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Burkholderiales;f__B…
- 3 d__Bacteria;p__Bacillota_A;c__Clostridia;o__Saccharofermentanales;f__DTU023;…
- 4 d__Bacteria;p__Bacteroidota;c__Bacteroidia;o__Bacteroidales;f__UBA932;g__Cry…
- 5 d__Bacteria;p__Fusobacteriota;c__Fusobacteriia;o__Fusobacteriales;f__Leptotr…
- 6 d__Bacteria;p__Bacillota_C;c__Negativicutes;o__Veillonellales;f__Dialisterac…
- 7 d__Bacteria;p__Bacillota_A;c__Clostridia;o__Tissierellales;f__Peptoniphilace…
- 8 d__Bacteria;p__Bacillota_A;c__Clostridia;o__Saccharofermentanales;f__Fastidi…
- 9 d__Bacteria;p__Bacillota;c__Bacilli;o__Lactobacillales;f__Aerococcaceae;g__A…
-10 d__Bacteria;p__Bacteroidota;c__Bacteroidia;o__Bacteroidales;f__Bacteroidacea…</code></pre>
-</div>
-</div>
-<p>By investigating the data it is seen that each string of phylogenetic information consist of identifiers for each of the different classes in the taxonomic rank. These identifiers are:</p>
-<ul>
-<li><p>d = domain</p></li>
-<li><p>p = phylum</p></li>
-<li><p>c = class</p></li>
-<li><p>o = order</p></li>
-<li><p>f = family</p></li>
-<li><p>g = genus</p></li>
-<li><p>s = species</p></li>
-</ul>
-<p>We want to start with converting all “not provided” to NA across all character columns. Then we want to split the “lineage” variable into its seven taxonomic ranks to store the information about each of the phylogenetic classes individually. Then we want to extract each taxonomic rank and remove prefixes. And convert empty strings to NA in the new taxonomy columns.</p>
-<p>We then remove the GTDB suffixes (e.g.&nbsp;“_A”) to streamline taxonomies. Lastly we remove columns that will not be used in our analysis.</p>
-<p>We then remove the GTDB suffixes (e.g.&nbsp;“_A”) to streamline taxonomies. We also remove the</p>
-</section>
-<section id="viewing-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="viewing-the-data">Viewing the data</h2>
-<p>Vieweing the top 10 rows of the split data to see the new structure.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 8
-   Genome        Domain   Phylum          Class       Order Family Genus Species
-   &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  
- 1 MGYG000303700 Bacteria Patescibacteria Saccharimo… Sacc… Nanop… Nano… Nanope…
- 2 MGYG000303701 Bacteria Bacillota       Clostridia  Sacc… Fasti… KA00… KA0027…
- 3 MGYG000303702 Bacteria Bacillota       Bacilli     Stap… Gemel… Geme… Gemell…
- 4 MGYG000303703 Bacteria Bacillota       Clostridia  Sacc… Fasti… Mage… Mageei…
- 5 MGYG000303704 Bacteria Patescibacteria Saccharimo… Sacc… Nanop… Nano… Nanope…
- 6 MGYG000303705 Bacteria Bacteroidota    Bacteroidia Bact… Bacte… Prev… &lt;NA&gt;   
- 7 MGYG000303706 Bacteria Bacillota       Clostridia  Tiss… Pepto… Pept… Pepton…
- 8 MGYG000303707 Bacteria Bacillota       Bacilli     Lact… Lacto… Lact… Lactob…
- 9 MGYG000303708 Bacteria Bacillota       Clostridia  Sacc… Fasti… KA00… KA0027…
-10 MGYG000303709 Bacteria Patescibacteria Saccharimo… Sacc… Nanop… Nano… Nanope…</code></pre>
-</div>
-</div>
-</section>
-<section id="saving-the-data-1" class="level2">
-<h2 class="anchored" data-anchor-id="saving-the-data-1">Saving the data</h2>
-<p>Saving the cleaned data into 02_dat_clean.tsv file located in the data directory.</p>
-</section>
 </section>
 <section id="augment" class="level1">
 <h1>6. Augment</h1>
-<p>Added agumentation the cleaned data and writes it to <code>03_dat_aug.tsv</code>.</p>
-</section>
-<section id="load-libraries-3" class="level1">
-<h1>Load libraries</h1>
-</section>
-<section id="load-data-3" class="level1">
-<h1>Load data</h1>
-<p>Loading the data saved in the 02_dat_clean.tsv file</p>
+<p>Added augmentation the cleaned data and writes it to <code>03_dat_aug.tsv</code>.</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 618 Columns: 21
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (11): Genome, Genome_type, Country, Continent, Domain, Phylum, Class, Or...
-dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
+<div class="cell-output cell-output-stdout">
+<pre><code>[31m
 
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+processing file: 03_augment.qmd
+[39m
+  |                                                          
+  |                                                    |   0%
+  |                                                          
+  |.....                                               |   9%                  
+  |                                                          
+  |.........                                           |  18% [unnamed-chunk-1]
+  |                                                          
+  |..............                                      |  27%                  
+  |                                                          
+  |...................                                 |  36% [unnamed-chunk-2]
+  |                                                          
+  |........................                            |  45%                  
+  |                                                          
+  |............................                        |  55% [unnamed-chunk-3]
+  |                                                          
+  |.................................                   |  64%                  
+  |                                                          
+  |......................................              |  73% [unnamed-chunk-4]
+  |                                                          
+  |...........................................         |  82%                  
+  |                                                          
+  |...............................................     |  91% [unnamed-chunk-5]
+  |                                                          
+  |....................................................| 100%                  
+                                                                                                            
+[31moutput file: 03_augment.knit.md
+
+[39m[31mWarning message:
+In png(..., res = dpi, units = "in") :
+  unable to open connection to X11 display ''
+[39m[1mpandoc [22m
+  to: html
+  output-file: 03_augment.html
+  standalone: true
+  section-divs: true
+  html-math-method: mathjax
+  wrap: none
+  default-image-extension: png
+  
+[1mmetadata[22m
+  document-css: false
+  link-citations: true
+  date-format: long
+  lang: en
+  title: Augment data
+  
+Output created: ../results/R/03_augment.html</code></pre>
 </div>
 </div>
-<section id="augment-data" class="level2">
-<h2 class="anchored" data-anchor-id="augment-data">Augment data</h2>
-<p>A new table is created, containing info on the quality of the MAGs. This includes completeness quality, contamination quality as well as overall genome quality.</p>
-<p>The new data table is then joined with the cleaned data frame using left join.</p>
-</section>
-<section id="saving-the-data-2" class="level2">
-<h2 class="anchored" data-anchor-id="saving-the-data-2">Saving the data</h2>
-<p>Saving the cleaned data into 03_dat_aug.tsv file located in the data directory.</p>
-</section>
 </section>
 <section id="describe" class="level1">
 <h1>7. Describe</h1>
 <p>Described the cleaned data.</p>
-</section>
-<section id="load-libraries-4" class="level1">
-<h1>1. Load libraries</h1>
-</section>
-<section id="load-data-4" class="level1">
-<h1>2. Load data</h1>
-<p>Loading the data saved in the 03_dat_aug.tsv file</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 618 Columns: 24
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (14): Genome, Genome_type, Country, Continent, Domain, Phylum, Class, Or...
-dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
+<div class="cell-output cell-output-stdout">
+<pre><code>[31m
 
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+processing file: 04_describe.qmd
+[39m
+  |                                                         
+  |                                                   |   0%
+  |                                                         
+  |.                                                  |   2%                   
+  |                                                         
+  |..                                                 |   5% [unnamed-chunk-1] 
+  |                                                         
+  |....                                               |   7%                   
+  |                                                         
+  |.....                                              |  10% [unnamed-chunk-2] 
+  |                                                         
+  |......                                             |  12%                   
+  |                                                         
+  |.......                                            |  15% [unnamed-chunk-3] 
+  |                                                         
+  |.........                                          |  17%                   
+  |                                                         
+  |..........                                         |  20% [unnamed-chunk-4] 
+  |                                                         
+  |...........                                        |  22%                   
+  |                                                         
+  |............                                       |  24% [unnamed-chunk-5] 
+  |                                                         
+  |..............                                     |  27%                   
+  |                                                         
+  |...............                                    |  29% [unnamed-chunk-6] 
+  |                                                         
+  |................                                   |  32%                   
+  |                                                         
+  |.................                                  |  34% [unnamed-chunk-7] 
+  |                                                         
+  |...................                                |  37%                   
+  |                                                         
+  |....................                               |  39% [unnamed-chunk-8] 
+  |                                                         
+  |.....................                              |  41%                   
+  |                                                         
+  |......................                             |  44% [unnamed-chunk-9] 
+  |                                                         
+  |........................                           |  46%                   
+  |                                                         
+  |.........................                          |  49% [unnamed-chunk-10]
+  |                                                         
+  |..........................                         |  51%                   
+  |                                                         
+  |...........................                        |  54% [unnamed-chunk-11]
+  |                                                         
+  |.............................                      |  56%                   
+  |                                                         
+  |..............................                     |  59% [unnamed-chunk-12]
+  |                                                         
+  |...............................                    |  61%                   
+  |                                                         
+  |................................                   |  63% [unnamed-chunk-13]
+  |                                                         
+  |..................................                 |  66%                   
+  |                                                         
+  |...................................                |  68% [unnamed-chunk-14]
+  |                                                         
+  |....................................               |  71%                   
+  |                                                         
+  |.....................................              |  73% [unnamed-chunk-15]
+  |                                                         
+  |.......................................            |  76%                   
+  |                                                         
+  |........................................           |  78% [unnamed-chunk-16]
+  |                                                         
+  |.........................................          |  80%                   
+  |                                                         
+  |..........................................         |  83% [unnamed-chunk-17]
+  |                                                         
+  |............................................       |  85%                   
+  |                                                         
+  |.............................................      |  88% [unnamed-chunk-18]
+  |                                                         
+  |..............................................     |  90%                   
+  |                                                         
+  |...............................................    |  93% [unnamed-chunk-19]
+  |                                                         
+  |.................................................  |  95%                   
+  |                                                         
+  |.................................................. |  98% [unnamed-chunk-20]
+  |                                                         
+  |...................................................| 100%                   
+                                                                                                             
+[31moutput file: 04_describe.knit.md
+
+[39m[31mWarning message:
+In png(..., res = dpi, units = "in") :
+  unable to open connection to X11 display ''
+[39m[1mpandoc [22m
+  to: html
+  output-file: 04_describe.html
+  standalone: true
+  section-divs: true
+  html-math-method: mathjax
+  wrap: none
+  default-image-extension: png
+  
+[1mmetadata[22m
+  document-css: false
+  link-citations: true
+  date-format: long
+  lang: en
+  title: Description of data
+  output-dir: results
+  
+Output created: ../results/R/04_describe.html</code></pre>
 </div>
 </div>
-</section>
-<section id="data-overview" class="level1">
-<h1>3. Data overview</h1>
-<section id="structure-of-the-dataset" class="level2">
-<h2 class="anchored" data-anchor-id="structure-of-the-dataset">3.1 Structure of the dataset</h2>
-<p>Using the str command to investigate, what the data looks like:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 618
-Columns: 24
-$ Genome                &lt;chr&gt; "MGYG000303700", "MGYG000303701", "MGYG000303702…
-$ Genome_type           &lt;chr&gt; "MAG", "MAG", "MAG", "MAG", "MAG", "MAG", "MAG",…
-$ Length                &lt;dbl&gt; 678213, 1500176, 1210062, 1706016, 703182, 25420…
-$ N_contigs             &lt;dbl&gt; 2, 18, 44, 27, 7, 112, 185, 90, 12, 57, 18, 86, …
-$ N50                   &lt;dbl&gt; 466332, 112881, 48790, 89653, 111709, 34925, 101…
-$ GC_content            &lt;dbl&gt; 47.78, 42.36, 26.37, 44.60, 47.82, 48.00, 34.83,…
-$ Completeness          &lt;dbl&gt; 63.68, 87.83, 94.84, 93.74, 63.68, 97.92, 85.20,…
-$ Contamination         &lt;dbl&gt; 0.00, 0.00, 0.55, 1.06, 0.00, 0.36, 0.72, 0.09, …
-$ rRNA_5S               &lt;dbl&gt; 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, …
-$ rRNA_16S              &lt;dbl&gt; 99.74, 0.00, 0.00, 0.00, 99.74, 0.00, 0.00, 0.00…
-$ rRNA_23S              &lt;dbl&gt; 99.56, 0.00, 0.00, 0.00, 99.56, 0.00, 0.00, 0.00…
-$ tRNAs                 &lt;dbl&gt; 20, 20, 9, 20, 20, 19, 7, 18, 20, 20, 20, 18, 20…
-$ Country               &lt;chr&gt; NA, NA, NA, NA, "China", NA, NA, "China", "China…
-$ Continent             &lt;chr&gt; NA, NA, NA, NA, "Asia", NA, NA, "Asia", "Asia", …
-$ Domain                &lt;chr&gt; "Bacteria", "Bacteria", "Bacteria", "Bacteria", …
-$ Phylum                &lt;chr&gt; "Patescibacteria", "Bacillota", "Bacillota", "Ba…
-$ Class                 &lt;chr&gt; "Saccharimonadia", "Clostridia", "Bacilli", "Clo…
-$ Order                 &lt;chr&gt; "Saccharimonadales", "Saccharofermentanales", "S…
-$ Family                &lt;chr&gt; "Nanoperiomorbaceae", "Fastidiosipilaceae", "Gem…
-$ Genus                 &lt;chr&gt; "Nanoperiomorbus", "KA00274", "Gemella", "Mageei…
-$ Species               &lt;chr&gt; "Nanoperiomorbus sp004136275", "KA00274 sp902373…
-$ Completeness_quality  &lt;chr&gt; "Medium", "Medium", "High", "High", "Medium", "H…
-$ Contamination_quality &lt;chr&gt; "High", "High", "High", "High", "High", "High", …
-$ Overall_quality       &lt;chr&gt; "Medium", "Medium", "High", "High", "Medium", "H…</code></pre>
-</div>
-</div>
-<p>The dataset contains 618 metagenome-assembled genomes (MAGs) and 24 variables. These span assembly statistics, taxonomic annotation, genomic features, geographical metadata, and derived quality metrics. Inspecting the structure helps confirm that the dataset is tidy (each variable is a column, each observation is a row).</p>
-</section>
-<section id="missing-values-in-key-variables" class="level2">
-<h2 class="anchored" data-anchor-id="missing-values-in-key-variables">3.2 Missing values in key variables</h2>
-<p>A key step in data description is identifying missing values. Here we summarize how many missing entries each variable contains.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-  variable    n_missing
-  &lt;chr&gt;           &lt;int&gt;
-1 Species           138
-2 Country            56
-3 Continent          56
-4 Genus               6
-5 Genome              0
-6 Genome_type         0</code></pre>
-</div>
-</div>
-<p>Missing data is concentrated in four variables: Species, Country, Continent, and Genus. Species-level taxonomy is often unavailable for MAGs, explaining the high degree of missingness. Geographical metadata is also sparse in many public datasets, reflecting inconsistent reporting in the source studies. All other variables, including assembly metrics and higher taxonomic ranks, are fully complete.</p>
-</section>
-</section>
-<section id="taxonomic-composition" class="level1">
-<h1>4. Taxonomic composition</h1>
-<p>Understanding taxonomic composition helps describe the microbial diversity represented in the MAG catalogue. We summarize the number of genomes assigned to each phylum and visualise their distribution.</p>
-<section id="phylum-counts" class="level2">
-<h2 class="anchored" data-anchor-id="phylum-counts">4.1 Phylum counts</h2>
-<p>Counting the different Phylums in the dataset</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 × 2
-  Phylum               n
-  &lt;chr&gt;            &lt;int&gt;
-1 Bacillota          253
-2 Actinomycetota     212
-3 Bacteroidota        97
-4 Pseudomonadota      19
-5 Fusobacteriota      14
-6 Patescibacteria     14
-7 Campylobacterota     6
-8 Synergistota         3</code></pre>
-</div>
-</div>
-</section>
-<section id="barplot-of-phyla" class="level2">
-<h2 class="anchored" data-anchor-id="barplot-of-phyla">4.2 Barplot of phyla</h2>
-<p>Plotting the different Phylums in the dataset</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-50-1.svg" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The most represented phyla reflect the typical composition of the human vaginal microbiome (Bacillota, Actinobacteriota). Less common phyla such as Patescibacteria appear at lower frequencies and may represent niche taxa or poorly sampled lineages.<br>
-</p>
-</section>
-</section>
-<section id="mag-quality" class="level1">
-<h1>6. MAG quality</h1>
-<p>In metagenomics, the reliability of a reconstructed genome depends on two key metrics: completeness (how much of the genome is recovered) and contamination (how much foreign DNA is incorrectly included). To facilitate interpretation, we also use categorical quality variables derived from these continuous measures: Completeness_quality, Contamination_quality, and Overall_quality. Together, these metrics provide an overview of the assembly reliability and the overall quality of the MAG catalogue.</p>
-<section id="distribution-of-completeness" class="level2">
-<h2 class="anchored" data-anchor-id="distribution-of-completeness">6.1 Distribution of completeness</h2>
-<p>We first examine the distribution of completeness values across all MAGs. Completeness estimates the proportion of the genome recovered during assembly, with higher values indicating more complete and reliable genomes.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-51-1.svg" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The distribution shows that genome completeness is generally high, with many MAGs exceeding 80–90%. This suggests that the majority of genomes in the dataset are sufficiently complete for downstream biological analyses.</p>
-</section>
-<section id="distribution-of-contamination" class="level2">
-<h2 class="anchored" data-anchor-id="distribution-of-contamination">6.2 Distribution of contamination</h2>
-<p>Next, we assess contamination levels, which reflect how much non-target DNA is mistakenly included in each MAG. Low contamination is essential for ensuring that each genome represents a single biological organism.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-52-1.svg" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Contamination values are generally very low, with most MAGs showing contamination close to 0%.<br>
-This indicates strong assembly quality and suggests that the majority of genomes fall within accepted thresholds for medium to high MAG quality.</p>
-</section>
-<section id="completeness-based-quality-categories" class="level2">
-<h2 class="anchored" data-anchor-id="completeness-based-quality-categories">6.3 Completeness-based quality categories</h2>
-<p>To simplify interpretation, completeness values are grouped into categorical quality assignments (e.g., high, medium, low).<br>
-</p>
-<p>These categories help summarize the distribution of assembly completeness across the dataset.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  Completeness_quality     n
-  &lt;chr&gt;                &lt;int&gt;
-1 High                   429
-2 Medium                 189</code></pre>
-</div>
-</div>
-<p>We visualize the distribution of completeness categories to assess the overall completeness profile of the dataset.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-54-1.svg" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Most genomes fall into the medium and high completeness categories, confirming the generally strong completeness characteristics observed in the continuous distribution.</p>
-</section>
-<section id="contamination-based-quality-categories" class="level2">
-<h2 class="anchored" data-anchor-id="contamination-based-quality-categories">6.4 Contamination-based quality categories</h2>
-<p>Similar to completeness, contamination values are grouped into quality categories. This provides a simplified overview of how many MAGs fall above or below contamination thresholds commonly used in MAG quality standards.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
-  Contamination_quality     n
-  &lt;chr&gt;                 &lt;int&gt;
-1 High                    618</code></pre>
-</div>
-</div>
-<p>All the genomes fall into the <em>high</em> contamination-quality category (very low contamination), reinforcing the observation that contamination levels are generally well-controlled in this dataset.</p>
-</section>
-<section id="overall-mag-quality-category" class="level2">
-<h2 class="anchored" data-anchor-id="overall-mag-quality-category">6.5 Overall MAG quality category</h2>
-<p>The overall quality category combines both completeness and contamination thresholds into a single metric. This provides the most useful summary when determining which genomes are suitable for specific downstream analyses.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  Overall_quality     n
-  &lt;chr&gt;           &lt;int&gt;
-1 High              429
-2 Medium            189</code></pre>
-</div>
-</div>
-<p>We visualize the number of genomes in each overall quality category.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-57-1.svg" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Most genomes fall into the medium and high overall quality categories, while only a small number are classified as low quality. This confirms that the dataset contains predominantly reliable MAGs that are suitable for biological interpretation. These quality categories can later be used to filter or stratify analyses depending on the research question.</p>
-</section>
-</section>
-<section id="assembly-statistics" class="level1">
-<h1>7 Assembly statistics</h1>
-<p>Assembly statistics provide insight into the structural properties of metagenome-assembled genomes (MAGs). Characteristics such as genome length and contig count reflect the degree of completeness and fragmentation of each assembly, and they help assess whether the reconstructed genomes are biologically plausible and suitable for further interpretation.</p>
-<p>Here, we explore three key aspects: genome size, contig count, and the relationship between genome length and fragmentation.</p>
-<section id="genome-length-distribution" class="level2">
-<h2 class="anchored" data-anchor-id="genome-length-distribution">7.1 Genome length distribution</h2>
-<p>Genome length is a basic but informative assembly metric. It varies across bacterial taxa due to differences in genome reduction, metabolic capabilities, ecological specialization, and evolutionary history. Examining the distribution of genome lengths allows us to understand the range of genome sizes represented in the dataset and identify unusual or outlier assemblies.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-58-1.svg" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Genome sizes range from roughly 0.6 Mbp to more than 3 Mbp, which is typical for bacterial taxa found in the vaginal microbiome. Smaller genomes often reflect host-adapted or metabolically reduced bacteria, whereas larger genomes may indicate more metabolically versatile organisms. The observed range therefore aligns with expectations for vaginal microbial diversity and suggests no major abnormalities in genome size distributions.</p>
-</section>
-<section id="number-of-contigs" class="level2">
-<h2 class="anchored" data-anchor-id="number-of-contigs">7.2 Number of contigs</h2>
-<p>The number of contigs in a MAG reflects how fragmented the assembly is. A low number of contigs indicates a more complete, contiguous assembly, while higher contig counts indicate fragmentation, often reflecting assembly challenges such as low coverage, strain heterogeneity, or complex genomic regions.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-59-1.svg" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The distribution shows substantial variation in contig counts across MAGs. While some genomes are assembled into relatively few contigs, others remain highly fragmented - a common characteristic of metagenomic assemblies. This variation highlights the importance of considering assembly fragmentation when interpreting genome structure and gene content.</p>
-</section>
-<section id="length-vs-number-of-contigs" class="level2">
-<h2 class="anchored" data-anchor-id="length-vs-number-of-contigs">7.3 Length vs number of contigs</h2>
-<p>To further understand assembly quality, we explore the relationship between genome length and assembly fragmentation. Longer genomes may naturally require more contigs, but excessively high fragmentation for a given genome size may indicate problematic or low-confidence assemblies.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-60-1.svg" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The scatterplot shows a loose association between genome length and the number of contigs, as expected. However, several outliers exhibit unusually high fragmentation relative to their genome size, which may indicate assembly challenges.</p>
-</section>
-</section>
-<section id="gc-content" class="level1">
-<h1>8. GC content</h1>
-<p>GC content represents the proportion of guanine (G) and cytosine (C) bases in a genome. It is an important genomic characteristic linked to evolutionary lineage, genome stability, mutational patterns, host adaptation, and environmental niche.</p>
-<p>Examining the GC content distribution across the MAG catalogue provides insight into the diversity of bacterial taxa present in the vaginal microbiome and can help identify unusual or atypical genomes.</p>
-<section id="gc-content-distribution" class="level2">
-<h2 class="anchored" data-anchor-id="gc-content-distribution">8.1 GC content distribution</h2>
-<p>We begin by visualizing the distribution of GC content across all genomes. MAGs originating from different bacterial phyla typically exhibit distinct GC signatures, making this metric useful for broadly comparing genome characteristics across the dataset.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-61-1.svg" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>GC content across the genomes spans a broad range-from approximately 25% up to more than 70%, indicating substantial genomic diversity within the vaginal microbiome. Most genomes cluster in the intermediate GC range (35–50%), which is typical for many common vaginal taxa, including Lactobacillus, Gardnerella, and Prevotella.</p>
-<p>The presence of both low-GC and high-GC genomes reflects the contribution of multiple phylogenetic groups and suggests distinct evolutionary and ecological strategies among community members. Extreme GC values may point to highly specialized or unusual taxa and could be explored in later analyses.</p>
-</section>
-</section>
-<section id="geographic-metadata" class="level1">
-<h1>9. Geographic metadata</h1>
-<p>Geographic metadata provides important ecological and epidemiological context for metagenomic studies. It can reveal where samples were collected, help identify potential biogeographic patterns, and highlight sampling gaps or biases in the dataset.</p>
-<section id="availability-of-geographic-information" class="level2">
-<h2 class="anchored" data-anchor-id="availability-of-geographic-information">9.1 Availability of geographic information</h2>
-<p>We first examine how many genomes include a recorded continent of origin. This allows us to quantify the completeness of the geographic metadata and determine how representative the dataset may be across global regions.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  has_geography     n
-  &lt;lgl&gt;         &lt;int&gt;
-1 FALSE            56
-2 TRUE            562</code></pre>
-</div>
-</div>
-<p>Only a subset of genomes includes geographic information, indicating incomplete metadata coverage. This is common in public metagenomic datasets, where sample-associated metadata is often missing or inconsistently reported. The absence of geographic context for many genomes limits the extent to which biogeographical conclusions can be drawn.</p>
-</section>
-<section id="genomes-per-continent" class="level2">
-<h2 class="anchored" data-anchor-id="genomes-per-continent">9.2 Genomes per continent</h2>
-<p>For genomes where geographic information is available, we summarize the number of genomes contributed from each continent</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  Continent         n
-  &lt;chr&gt;         &lt;int&gt;
-1 North America   435
-2 Asia             99
-3 &lt;NA&gt;             56
-4 Europe           28</code></pre>
-</div>
-</div>
-<p>We visualize the distribution of genomes across continents to highlight sampling imbalances.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-64-1.svg" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The geographic distribution of genomes is uneven, with certain continents (USA and Asia) contributing the majority of available data. This reflects sampling bias, where research efforts and sequencing initiatives are concentrated in specific regions.</p>
-</section>
-</section>
-<section id="descriptive-summary" class="level1">
-<h1>10. Descriptive summary</h1>
-<p>Overall, the dataset contains 618 vaginal MAGs with high completeness, low contamination, and diverse taxonomic representation. Genome features such as size and GC content fall within biologically plausible ranges. Missing values are limited primarily to species-level taxonomy and geographical metadata. The dataset is therefore well-suited for downstream comparative analyses, including quality assessment across taxa, genome feature correlations, and ecological interpretation.</p>
 </section>
 <section id="analysis-1" class="level1">
 <h1>8. Analysis 1</h1>
