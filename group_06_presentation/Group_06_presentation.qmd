@@ -150,6 +150,15 @@ Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 print(readr::read_tsv(here("data/_raw/genomes-all_metadata.tsv")))
 ```
 
+## About the data set / project
+
+Meta-data from MGnify’s **vaginal microbiome** genome catalogue
+
+-   Something about our data
+-   nogle distributions og måske plots til overview af vores data.
+
+## Cleaning of data
+
 ### Tidy data after augmentation
 
 ```{r}
@@ -161,23 +170,27 @@ print(readr::read_tsv(here("data/03_dat_aug.tsv")))
 ## Results
 
 ::: panel-tabset
-## Results 1
+# \## Results 1
+
+## Description of data
+
+## Analysis 1
 
 måske nogle plots
 
-## Results 2
+## Analysis 2
 
 måske nogle plots
 
-## Results 3
+## Analysis 3
 
 måske nogle plots
 
-## Results 4
+## Analysis 4
 
 måske nogle plots
 
-## Results 5
+## Analysis 5
 
 måske nogle plots
 
