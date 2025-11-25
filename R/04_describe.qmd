@@ -29,7 +29,7 @@ Using the str command to investigate, what the data looks like:
 glimpse(genome_metadata_aug)
 ```
 
-The dataset contains 618 metagenome-assembled genomes (MAGs) and 24 variables. These span assembly statistics, taxonomic annotation, genomic features, geographical metadata, and derived quality metrics. Inspecting the structure helps confirm that the dataset is tidy (each variable is a column, each observation is a row).
+The dataset contains 618 metagenome-assembled genomes (MAGs) and 25 variables. These span assembly statistics, taxonomic annotation, genomic features, geographical metadata, derived quality metrics and stated is endometriosis associated or not. Inspecting the structure helps confirm that the dataset is tidy (each variable is a column, each observation is a row).
 
 ## 3.2 Missing values in key variables
 

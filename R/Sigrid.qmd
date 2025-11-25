@@ -3,7 +3,7 @@ title: "Sigrid"
 format: html
 ---
 
-# Analysis X - GC content
+# Analysis GC content
 
 GC content provides insight into both the biological identity and the technical characteristics of MAGs. Because GC content is shaped by long-term evolutionary history, different bacterial groups tend to exhibit characteristic GC signatures. This makes this feature useful for examining taxonomic structure within the dataset. At the same time, extreme GC values can influence sequencing performance and assembly quality, which means that GC content is also relevant when evaluating the reliability of MAGs.
 
@@ -142,9 +142,7 @@ The Pearson correlation coefficient of 0.32 indicates a weak positive relationsh
 
 ## **3.** GC content and MAG quality
 
-### 
-
-3.1 GC vs completeness
+### 3.1 GC vs completeness
 
 We test whether genomes with extreme GC content tend to have lower completeness.
 
@@ -162,7 +160,7 @@ genome_metadata_aug |>
 
 The scatterplot shows that MAG completeness remains high across the entire GC-content range, with most genomes clustering close to 95–100% completeness regardless of whether their GC content is low or high. Although a few moderately complete genomes occur throughout the GC spectrum, there is no visible pattern suggesting that completeness systematically decreases at extreme GC values. This indicates that GC content does not meaningfully influence the completeness of genomes in this dataset.
 
-### 3.2 GC content vs contamination
+### 3.2 GC vs contamination
 
 Similarly, we check if contamination increases at very low or high GC values.
 
@@ -221,4 +219,22 @@ gc_outliers
 
 Although we identified 67 genomes with atypical GC content relative to their phylum, a detailed examination of each outlier is beyond the scope of this dataset, as it would require contig-level GC profiles, coverage information, and independent taxonomic validation tools such as GTDB-Tk or CheckM. In a full genomic analysis, these additional checks would allow us to determine whether each outlier reflects a misassembled or mis-binned genome, or whether it represents genuine biological variation. In this project, the outliers therefore serve primarily as indicators of MAGs that would merit closer investigation if deeper quality assessment resources were available.
 
-making a barplot for visualization:
+Making a barplot for visualization:
+
+```{r}
+gc_outliers |>
+  count(Phylum) |>
+  ggplot(aes(x = fct_reorder(Phylum, n), 
+             y = n, 
+             fill = Phylum)) +
+  geom_col() +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set3") +
+  labs(
+    x = "Phylum",
+    y = "Number of GC outlier genomes",
+    title = "GC-content outlier genomes per phylum"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```

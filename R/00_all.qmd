@@ -41,7 +41,7 @@ Below we run the loading script that downloads the raw data and writes `01_dat_l
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render(normalizePath("/net/pupil1/home/people/s215067/projects/group_06_project/R/01_load.qmd"))
+quarto_render("01_load.qmd")
 ```
 
 # 5. Clean data
@@ -51,7 +51,7 @@ Cleans the loaded data and writes it to `02_dat_clean.tsv`.
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render(normalizePath("/net/pupil1/home/people/s215067/projects/group_06_project/R/02_clean.qmd"))
+quarto_render("02_clean.qmd")
 ```
 
 # 6. Augment
@@ -61,7 +61,7 @@ Added augmentation the cleaned data and writes it to `03_dat_aug.tsv`.
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render(normalizePath("/net/pupil1/home/people/s215067/projects/group_06_project/R/03_augment.qmd"))
+quarto_render("03_augment.qmd")
 ```
 
 # 7. Describe
@@ -71,7 +71,7 @@ Described the cleaned data.
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render(normalizePath("/net/pupil1/home/people/s215067/projects/group_06_project/R/04_describe.qmd"))
+quarto_render("04_describe.qmd")
 ```
 
 # 8. Analysis 1

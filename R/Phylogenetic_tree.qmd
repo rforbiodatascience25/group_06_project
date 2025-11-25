@@ -38,6 +38,15 @@ Then the NA values are replaced with unclassified to be able to show them in the
 genome_phylo_data <- genome_metadata_aug |>
     drop_na()
 
+# Then the observations containing NA values in all the variables related to the phylogenetic taxonomy ranks. The `drop_na` command is used, but it is specified which columns it should remove NA values from. If it was not specifed, then all NA observations would be removed and then observations having NA values in different variables would have been lost.
+
+genome_phylo_data <- genome_metadata_aug |>
+    drop_na(all_of(ranks))
+```
+
+The data needs to be changed into factors as it is required for the .phylo command.
+
+```{r}
 tax <- genome_phylo_data|>
   select(all_of(ranks)) |>         
   distinct() |>
@@ -46,6 +55,8 @@ tax <- genome_phylo_data|>
 
 Using the as.phylo functions to translate the data into a tree. The hierachy of the data is defined inside the function:
 
+Using the as.phylo functions to translate the data into a tree. The hierachy of the data is defined in the function:
+
 ```{r}
 tree <- as.phylo(~ Domain/Phylum/Class/Order/Family/Genus/Species, data = tax)
 ```
@@ -53,6 +64,8 @@ tree <- as.phylo(~ Domain/Phylum/Class/Order/Family/Genus/Species, data = tax)
 ## Plot of phylogenetic tree
 
 ```{r, fig.width=9.5, fig.height=9.5}
+# Then the specific tips of the tree of interest is defined to be able to color the tree by phylum:
+
 tax_tip <- tax |>
   select(Species, Phylum) |>
   distinct() |>
@@ -81,6 +94,43 @@ ggtree(tree_grp, layout = "circular",
     plot.caption = element_text(hjust = 0.5, size = 8, color = "grey40"
   ))
 
+```
 
+Then the tip labels (the species) added to a list for each phylum:
 
+```{r}
+phylum_list <- split(tax_tip$label, tax_tip$Phylum)
+```
+
+Then the information about each of the phylum groups are added to the tree using the groupOTU command:
+
+```{r}
+tree_grp <- groupOTU(tree, phylum_list)
+```
+
+The phylogenetic tree is then plotted and the edges of the plot is colored by the different phyla, to see the representation of the gene phyla present.
+
+```{r, fig.width=9.5, fig.height=9.5}
+phylogenetic_tree_plot <- ggtree(
+  tree_grp, 
+  layout = "circular",
+  aes(color = factor(group)), 
+  size = 0.4) %<+% tax_tip +
+  geom_tiplab(size = 1.5, 
+              offset = 0.05, 
+              align = TRUE) +
+  scale_color_discrete(
+    name   = "Phylum",
+    labels = names(phylum_list)) +
+  labs(
+    title   = "Phylogenetic tree colored by phylum",
+    caption = "Note: NA values were removed before constructing the tree") +
+  theme_tree() +
+  theme(
+    plot.title   = element_text(hjust = 0.5, face = "bold"),
+    plot.caption = element_text(hjust = 0.5, size = 6, color = "grey40"),
+    legend.title = element_text(face = "bold"))
+
+phylogenetic_tree_plot
+ggsave("../results/phylogenetic_tree_plot.png", phylogenetic_tree_plot, width = 10, height = 10, dpi = 300)
 ```
