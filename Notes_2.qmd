@@ -31,12 +31,29 @@ hvis man finder på andre ting som er nice at undersøge så skriv det på to do
 
 -   Hvordan kan man ellers kigge kvaliteten af datasættet - er data på kvinders sundhed god nok (Alberte)
 
+    -   Hvordan er completeness fordelt på forskellige phyla? er nogle "bedre" end andre?
+
+    -   Er der forskel på high abundance taxa og low abundance taxa ift kvalitet?
+
+    -   N_contigs: få = god assembly
+
+        -   Correlation mellem N_contigs og completeness?
+
+    -   N50: høj = længere contigs og god assembly
+
+        -   Correlation mellem N50 og genom længde?
+
+    -   Er der forskel på completeness/contamination mellem de meget common (lactobacillus) og mere rare/uncultured (atopobium, gardnerella)?
+
+    -   Completeness/contamination på tværs af geografi
+
 -   Finde formålet med phylogenetisk træ + skrive noget til det.
 
 -   Få skrevet overblik over data rent - basically færdig (Sigrid)
 
--   Skriv noget om GC content - hvorfor er det relevant? (Sigrid???)
+-   Skriv noget om GC content - hvorfor er det relevant? (Sigrid)
 
     -   identificere atypiske genomer
+    -   GC vs Completion/contamination
 
--   Find data på "normal" GC content. (Sigrid???)
+-   Find data på "normal" GC content. (Sigrid)

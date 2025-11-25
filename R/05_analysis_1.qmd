@@ -19,10 +19,10 @@ library("ape")
 
 ## Load data
 
-Loading the data into a variable from the `02_dat_clean.tsv` file
+Loading the data into a variable from the `03_dat_aug.tsv` file
 
 ```{r}
-genome_metadata_clean <- readr::read_tsv("../data/02_dat_clean.tsv")
+genome_metadata_clean <- readr::read_tsv("../data/03_dat_aug.tsv")
 ```
 
 ## Prepare data for plot
