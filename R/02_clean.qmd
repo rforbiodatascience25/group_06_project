@@ -1,6 +1,7 @@
 ---
 title: "Clean dataset"
 format: html
+output-dir: results
 ---
 
 # Load libraries
@@ -61,18 +62,15 @@ We then remove the GTDB suffixes (e.g. "\_A") to streamline taxonomies. Lastly w
 
 ```{r}
 genome_metadata_clean <- genome_metadata |>
-  
   mutate(
     across(
-      where(is.character),
-      ~ na_if(.x, "not provided")
+      .cols = where(is.character),
+      .fns  = ~ na_if(.x, "not provided")
     )
   ) |>
- 
-  # Split the Lineage column into 7 taxonomic ranks
   mutate(
     split_lineage = str_split_fixed(Lineage, ";", 7),
-    
+
     Domain  = str_remove(split_lineage[, 1], "d__"),
     Phylum  = str_remove(split_lineage[, 2], "p__"),
     Class   = str_remove(split_lineage[, 3], "c__"),
@@ -81,30 +79,28 @@ genome_metadata_clean <- genome_metadata |>
     Genus   = str_remove(split_lineage[, 6], "g__"),
     Species = str_remove(split_lineage[, 7], "s__")
   ) |>
-
   mutate(
     across(
-      c(Domain, Phylum, Class, Order, Family, Genus, Species),
-      ~ na_if(.x, "")
+      .cols = c(Domain, Phylum, Class, Order, Family, Genus, Species),
+      .fns  = ~ na_if(.x, "")
     )
   ) |>
-  
   mutate(
     across(
-      Phylum:Species,
-      ~ str_remove_all(as.character(.x), "_[A-Za-z0-9]+")
+      .cols = Phylum:Species,
+      .fns  = ~ str_remove_all(as.character(.x), "_[A-Za-z0-9]+")
     )
   ) |>
-  
   select(
-  -split_lineage,   # Remove the helper column
-  -Genome_accession,
-  -Species_rep,
-  -Lineage,
-  -Sample_accession,
-  -Study_accession,
-  -FTP_download
-)
+    -split_lineage,
+    -Genome_accession,
+    -Species_rep,
+    -Lineage,
+    -Sample_accession,
+    -Study_accession,
+    -FTP_download
+  )
+
 
 ```
 
@@ -129,5 +125,8 @@ view(genome_metadata_clean)
 Saving the cleaned data into 02_dat_clean.tsv file located in the data directory.
 
 ```{r}
-readr::write_tsv(genome_metadata_clean, "../data/02_dat_clean.tsv")
+readr::write_tsv(
+  x    = genome_metadata_clean,
+  file = "../data/02_dat_clean.tsv"
+)
 ```
