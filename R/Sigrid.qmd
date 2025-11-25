@@ -3,7 +3,7 @@ title: "Sigrid"
 format: html
 ---
 
-# Analysis X - GC content
+# Analysis GC content
 
 GC content provides insight into both the biological identity and the technical characteristics of MAGs. Because GC content is shaped by long-term evolutionary history, different bacterial groups tend to exhibit characteristic GC signatures. This makes this feature useful for examining taxonomic structure within the dataset. At the same time, extreme GC values can influence sequencing performance and assembly quality, which means that GC content is also relevant when evaluating the reliability of MAGs.
 
