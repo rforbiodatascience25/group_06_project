@@ -3,23 +3,7 @@ title: "Sigrid 2"
 format: html
 ---
 
-# Analysis X
-
-1)  Endobiota Study 2019, "The endobiota study: comparison of vaginal, cervical and gut microbiota between women with stage 3/4 endometriosis and healthy controls" (<https://www.nature.com/articles/s41598-019-39700-6>)
-
-Across these vaginal datasets, the most consistently reported endometriosis-associated genera are:
-
--   Anaerococcus
-
--   Gardnerella
-
--   Streptococcus
-
--   Escherichia/Shigella
-
--   Ureaplasma
-
--   Alloprevotella
+# Analysis X - MAGs with endometriosis-associated genera
 
 ## Load libraries
 
@@ -35,56 +19,9 @@ library("tidyverse")
 genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
 ```
 
-## 1. Annotating MAGs with endometriosis-associated genera.
-
-We add a new column to the MAG dataset that flags whether each MAG belongs to a genus repeatedly associated with endometriosis in the vaginal microbiome. Labeling True or False
-
--   Anaerococcus
-
--   Ureaplasma
-
--   Gardnerella
-
--   Veillonella
-
--   Corynebacterium
-
--   Peptoniphilus
-
--   Candida albicans
-
--   Alloscardovia
-
-```{r}
-
-endo_genera <- c(
-  "Anaerococcus",
-  "Ureaplasma",
-  "Gardnerella",
-  "Veillonella",
-  "Corynebacterium",
-  "Peptoniphilus",
-  "Candida albicans", 
-  "Alloscardovia"
-)
-
-
-genome_metadata_aug <- genome_metadata_aug |>
-  dplyr::mutate(
-    endometriosis_associated = Genus %in% endo_genera
-  )
-
-
-genome_metadata_aug |>
-  dplyr::count(endometriosis_associated)
-
-```
-
-There are 542 MAGs marked a non-endometriosis associated and 76 MAGs marked as endometriosis associated.
-
 ## 2. GC content of endometriosis-associated genera
 
-We compare GC content between associated and non-associated groups.
+We compare GC content between associated and non-associated endometriosis groups
 
 ```{r}
 genome_metadata_aug |>
