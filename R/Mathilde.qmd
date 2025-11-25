@@ -1,0 +1,79 @@
+---
+title: "Mathilde"
+format: html
+---
+
+# Completeness vs. contamination
+
+This analysis will evaluate the relationship between the completeness and contamination levels. Completeness is a measure for how much of the organism’s full genome has been recovered in this assembly. On the other hand, contamination is a measures of how much foreign DNA (from other organisms or strains) is mixed into the assembled genome. These measures can be used to evaluate the quality of the assembled DNA genome.
+
+## Load libraries
+
+```{r}
+#| message: false
+#| warning: false
+library("tidyverse")
+```
+
+## Load data
+
+```{r}
+genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
+```
+
+## Plot completeness vs. contamination
+
+Scatterplot to show the distribution between the completeness and contamination:
+
+```{r}
+ggplot(genome_metadata_aug, 
+       aes(Completeness, Contamination)) +
+  geom_point() +
+  labs(
+    x = "Completeness (%)",
+    y = "Contamination (%)",
+    title = "Completeness vs Contamination of MAGs"
+  ) +
+  theme_minimal()
+```
+
+Color by phylum
+
+```{r}
+ggplot(genome_metadata_aug, 
+       aes(Completeness, Contamination, color = Phylum)) +
+  geom_point() +
+  geom_vline(xintercept = 90, linetype = "dashed") +
+  geom_hline(yintercept = 5, linetype = "dashed") +
+  labs(
+    x = "Completeness (%)",
+    y = "Contamination (%)",
+    title = "Completeness vs Contamination of MAGs"
+  ) +
+  theme_minimal()
+```
+
+Color by quality
+
+```{r}
+ggplot(
+  data = genome_metadata_aug,
+  aes(x = Completeness, y = Contamination, color = Overall_quality)) +
+  geom_point(size = 2, alpha = 0.8) +
+  scale_color_manual(
+    values = c(
+      "Low" = "red",
+      "Medium" = "sienna2",
+      "High" = "palegreen4"
+    )
+  ) +
+  labs(
+    title = "Completeness vs Contamination",
+    x = "Completeness (%)",
+    y = "Contamination (%)",
+    color = "Quality"
+  ) +
+  theme_minimal()
+```
+
+This plot shows that the majority of the genes have a low contamination between 0 and 1% which indicates that the dataset contains mainly clean bins. Additionally the completeness levels are high. It ranges between 50 and 100% and a big cluster of the genes are between 90 and 100% completeness. This indicates that the dataset assembles are high-quality and that the MAGs are nearly complete. A common standard threshold for the contamination/completeness levels are that high-quality data have a completeness above 90% and a contamination below 5%. In our dataset, a large cluster of genomes fall into this category.

@@ -31,6 +31,7 @@ Through these analyses, we aim to gain a deeper understanding of the genomic div
 #| message: false
 #| warning: false
 library("tidyverse")
+library("quarto")
 ```
 
 # 4. Load Data
@@ -38,7 +39,9 @@ library("tidyverse")
 Below we run the loading script that downloads the raw data and writes `01_dat_load.tsv.`
 
 ```{r}
-#| child: "01_load.qmd"
+#| echo: false
+#| eval: true
+quarto_render(normalizePath("/net/pupil1/home/people/s215067/projects/group_06_project/R/01_load.qmd"))
 ```
 
 # 5. Clean data
@@ -47,16 +50,18 @@ Cleans the loaded data and writes it to `02_dat_clean.tsv`.
 
 ```{r}
 #| echo: false
-#| child: "02_clean.qmd"
+#| eval: true
+quarto_render(normalizePath("/net/pupil1/home/people/s215067/projects/group_06_project/R/02_clean.qmd"))
 ```
 
 # 6. Augment
 
-Added agumentation the cleaned data and writes it to `03_dat_aug.tsv`.
+Added augmentation the cleaned data and writes it to `03_dat_aug.tsv`.
 
 ```{r}
 #| echo: false
-#| child: "03_augment.qmd"
+#| eval: true
+quarto_render(normalizePath("/net/pupil1/home/people/s215067/projects/group_06_project/R/03_augment.qmd"))
 ```
 
 # 7. Describe
@@ -65,7 +70,8 @@ Described the cleaned data.
 
 ```{r}
 #| echo: false
-#| child: "04_describe.qmd"
+#| eval: true
+quarto_render(normalizePath("/net/pupil1/home/people/s215067/projects/group_06_project/R/04_describe.qmd"))
 ```
 
 # 8. Analysis 1

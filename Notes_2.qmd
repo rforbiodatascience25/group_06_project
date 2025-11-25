@@ -76,4 +76,4 @@ hvis man finder på andre ting som er nice at undersøge så skriv det på to do
 
 -   Analysis - GC content
 
--   Analysis  - MAGs with endometriosis-associated genera
+-   Analysis - MAGs with endometriosis-associated genera

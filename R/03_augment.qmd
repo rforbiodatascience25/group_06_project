@@ -1,7 +1,6 @@
 ---
 title: "Augment data"
 format: html
-output-dir: results
 ---
 
 # Load libraries

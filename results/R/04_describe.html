@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Project</title>
+<title>Description of data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="00_all_files/libs/clipboard/clipboard.min.js"></script>
-<script src="00_all_files/libs/quarto-html/quarto.js"></script>
-<script src="00_all_files/libs/quarto-html/popper.min.js"></script>
-<script src="00_all_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="00_all_files/libs/quarto-html/anchor.min.js"></script>
-<link href="00_all_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="00_all_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="00_all_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="00_all_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="00_all_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="04_describe_files/libs/clipboard/clipboard.min.js"></script>
+<script src="04_describe_files/libs/quarto-html/quarto.js"></script>
+<script src="04_describe_files/libs/quarto-html/popper.min.js"></script>
+<script src="04_describe_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="04_describe_files/libs/quarto-html/anchor.min.js"></script>
+<link href="04_describe_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="04_describe_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="04_describe_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="04_describe_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="04_describe_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Project</h1>
+<h1 class="title">Description of data</h1>
 </div>
 
 
@@ -96,242 +96,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="background" class="level1">
-<h1>1. Background</h1>
-<p>The human vaginal microbiome plays an important role in reproductive health and protection against infections. It is usually dominated by <em>Lactobacillus</em> species, which keep the environment acidic and prevent the growth of harmful microorganisms. However, the vaginal microbiome can differ between people and across health states. Other bacteria such as <em>Gardnerella, Atopobium</em>, and <em>Prevotella</em> often appear during dysbiosis or bacterial vaginosis.</p>
-<p>Recent advances in metagenomic sequencing allow researchers to rebuild individual microbial genomes from complex microbial communities. These reconstructed genomes are called metagenome-assembled genomes (MAGs). MAGs give new insight into the genetic makeup and functions of microorganisms that cannot easily be grown in the lab. Databases such as MGnify collect MAGs from many human and environmental microbiomes, including the vaginal microbiome, and provide useful but often un-standardized metadata.</p>
-<p>The dataset used in this project, called <code>genomes-all_metadata.tsv</code>, comes from MGnify’s vaginal microbiome genome catalogue. It contains thousands of bacterial MAGs with information on assembly quality (genome length, N50, GC content, completeness, contamination), taxonomic classification, and limited geographical data. Like many real biological datasets, it includes inconsistencies, missing values, and mixed formats.</p>
-</section>
-<section id="aim" class="level1">
-<h1>2. Aim</h1>
-<p>The aim of this project is to clean, explore, and analyse the genome meta-data-set from the human vaginal microbiome. With this project we aim to uncover patterns in genome quality, taxonomic composition, and ecological characteristics, while demonstrating the principles of reproducible and collaborative data science in R.</p>
-<p>In this project we will:</p>
-<ol type="1">
-<li>Tidy and standardize the raw meta-data-set by addressing missing values, harmonizing column formats, and parsing the hierarchical taxonomic lineage into separate levels (phylum to species).</li>
-<li>Investigate genome quality metrics such as completeness, contamination, GC content, and genome length to identify potential biases or systematic differences among bacterial groups.</li>
-<li>Explore taxonomic composition, visualizing which phyla and genera dominate the vaginal microbiome MAG catalogue.</li>
-<li>Assess ecological trends, such as whether smaller or low-GC genomes correspond to specific bacterial taxa or ecological roles within the vaginal environment.</li>
-<li>Examine geographical metadata to identify sampling biases or gaps across studies or regions.</li>
-</ol>
-<p>Through these analyses, we aim to gain a deeper understanding of the genomic diversity of the vaginal microbiome, while showcasing the entire data science workflow using the tidyverse systems in R.</p>
-</section>
 <section id="load-libraries" class="level1">
-<h1>3. Load Libraries</h1>
+<h1>1. Load libraries</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-data" class="level1">
-<h1>4. Load Data</h1>
-<p>Below we run the loading script that downloads the raw data and writes <code>01_dat_load.tsv.</code></p>
-<section id="load-libraries-1" class="level2">
-<h2 class="anchored" data-anchor-id="load-libraries-1">1. Load libraries</h2>
-</section>
-<section id="download-data" class="level2">
-<h2 class="anchored" data-anchor-id="download-data">2. Download data</h2>
-<p>First of all, we create directories data and data/_raw if they don’t already exist. Then we download the data from the EBI website below into the raw data directory:</p>
-<p><a href="https://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/genomes-all_metadata.tsv" class="uri">https://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/genomes-all_metadata.tsv</a></p>
-</section>
-<section id="load-data-1" class="level2">
-<h2 class="anchored" data-anchor-id="load-data-1">3. Load data</h2>
-<p>The data is a tab separated file separated, so it is loaded into R using read_tsv from the read_r library:</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 618 Columns: 20
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (10): Genome, Genome_type, Genome_accession, Species_rep, Lineage, Sampl...
-dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
-</section>
-<section id="saving-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="saving-the-data">4. Saving the data</h2>
-<p>Saving the loaded data again into “01_dat_load.tsv”-file located in the data directory, to keep a consistent overview/naming of data through the project.</p>
-</section>
-</section>
-<section id="clean-data" class="level1">
-<h1>5. Clean data</h1>
-<p>Cleans the loaded data and writes it to <code>02_dat_clean.tsv</code>.</p>
-</section>
-<section id="load-libraries-2" class="level1">
-<h1>Load libraries</h1>
-</section>
-<section id="load-data-2" class="level1">
-<h1>Load data</h1>
-<p>Loading the data saved in the 01_dat_load.tsv file</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 618 Columns: 20
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (10): Genome, Genome_type, Genome_accession, Species_rep, Lineage, Sampl...
-dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
-</section>
-<section id="data-preparation" class="level1">
-<h1>Data preparation</h1>
-<p>Using the <code>str</code> command to investigate, what the data looks like:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>spc_tbl_ [618 × 20] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ Genome          : chr [1:618] "MGYG000303700" "MGYG000303701" "MGYG000303702" "MGYG000303703" ...
- $ Genome_type     : chr [1:618] "MAG" "MAG" "MAG" "MAG" ...
- $ Length          : num [1:618] 678213 1500176 1210062 1706016 703182 ...
- $ N_contigs       : num [1:618] 2 18 44 27 7 112 185 90 12 57 ...
- $ N50             : num [1:618] 466332 112881 48790 89653 111709 ...
- $ GC_content      : num [1:618] 47.8 42.4 26.4 44.6 47.8 ...
- $ Completeness    : num [1:618] 63.7 87.8 94.8 93.7 63.7 ...
- $ Contamination   : num [1:618] 0 0 0.55 1.06 0 0.36 0.72 0.09 0 0.85 ...
- $ rRNA_5S         : num [1:618] 0 0 0 0 0 0 0 0 0 0 ...
- $ rRNA_16S        : num [1:618] 99.7 0 0 0 99.7 ...
- $ rRNA_23S        : num [1:618] 99.6 0 0 0 99.6 ...
- $ tRNAs           : num [1:618] 20 20 9 20 20 19 7 18 20 20 ...
- $ Genome_accession: chr [1:618] "CAMPLK01" "CAMPLL01" "CAMPLM01" "CAMPLN01" ...
- $ Species_rep     : chr [1:618] "MGYG000303700" "MGYG000303918" "MGYG000303789" "MGYG000304079" ...
- $ Lineage         : chr [1:618] "d__Bacteria;p__Patescibacteria;c__Saccharimonadia;o__Saccharimonadales;f__Nanoperiomorbaceae;g__Nanoperiomorbus"| __truncated__ "d__Bacteria;p__Bacillota_A;c__Clostridia;o__Saccharofermentanales;f__Fastidiosipilaceae;g__KA00274;s__KA00274 sp902373515" "d__Bacteria;p__Bacillota;c__Bacilli;o__Staphylococcales;f__Gemellaceae;g__Gemella;s__Gemella asaccharolytica" "d__Bacteria;p__Bacillota_A;c__Clostridia;o__Saccharofermentanales;f__Fastidiosipilaceae;g__Mageeibacillus;s__Ma"| __truncated__ ...
- $ Sample_accession: chr [1:618] "SAMEA111346158" "SAMEA111346148" "SAMEA111346137" "SAMEA111346154" ...
- $ Study_accession : chr [1:618] "ERP138373" "ERP138373" "ERP138373" "ERP138373" ...
- $ Country         : chr [1:618] "not provided" "not provided" "not provided" "not provided" ...
- $ Continent       : chr [1:618] "not provided" "not provided" "not provided" "not provided" ...
- $ FTP_download    : chr [1:618] "ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/all_genomes/MGYG0003037/MGYG00"| __truncated__ "ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/all_genomes/MGYG0003039/MGYG00"| __truncated__ "ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/all_genomes/MGYG0003037/MGYG00"| __truncated__ "ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/all_genomes/MGYG0003040/MGYG00"| __truncated__ ...
- - attr(*, "spec")=
-  .. cols(
-  ..   Genome = col_character(),
-  ..   Genome_type = col_character(),
-  ..   Length = col_double(),
-  ..   N_contigs = col_double(),
-  ..   N50 = col_double(),
-  ..   GC_content = col_double(),
-  ..   Completeness = col_double(),
-  ..   Contamination = col_double(),
-  ..   rRNA_5S = col_double(),
-  ..   rRNA_16S = col_double(),
-  ..   rRNA_23S = col_double(),
-  ..   tRNAs = col_double(),
-  ..   Genome_accession = col_character(),
-  ..   Species_rep = col_character(),
-  ..   Lineage = col_character(),
-  ..   Sample_accession = col_character(),
-  ..   Study_accession = col_character(),
-  ..   Country = col_character(),
-  ..   Continent = col_character(),
-  ..   FTP_download = col_character()
-  .. )
- - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
-</div>
-</div>
-<p>The data consist of a data-frame with 618 observations and 20 variables. We recognize that observations with no value found has the identifier “not provided”. Additionally one variable contains phylogenetic information that can be split into different variable containing information about the different classes of the evolutionary history.</p>
-<section id="split-data" class="level2">
-<h2 class="anchored" data-anchor-id="split-data">Split data</h2>
-<p>We want to split the data in the “lineage” variable into multiple variables to store the information about each of the phylogenetic classes individually. First we investigate the data in the lineage variable:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 1
-   Lineage                                                                      
-   &lt;chr&gt;                                                                        
- 1 d__Bacteria;p__Bacillota_A;c__Clostridia;o__Tissierellales;f__Peptoniphilace…
- 2 d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Burkholderiales;f__B…
- 3 d__Bacteria;p__Bacillota_A;c__Clostridia;o__Saccharofermentanales;f__DTU023;…
- 4 d__Bacteria;p__Bacteroidota;c__Bacteroidia;o__Bacteroidales;f__UBA932;g__Cry…
- 5 d__Bacteria;p__Fusobacteriota;c__Fusobacteriia;o__Fusobacteriales;f__Leptotr…
- 6 d__Bacteria;p__Bacillota_C;c__Negativicutes;o__Veillonellales;f__Dialisterac…
- 7 d__Bacteria;p__Bacillota_A;c__Clostridia;o__Tissierellales;f__Peptoniphilace…
- 8 d__Bacteria;p__Bacillota_A;c__Clostridia;o__Saccharofermentanales;f__Fastidi…
- 9 d__Bacteria;p__Bacillota;c__Bacilli;o__Lactobacillales;f__Aerococcaceae;g__A…
-10 d__Bacteria;p__Bacteroidota;c__Bacteroidia;o__Bacteroidales;f__Bacteroidacea…</code></pre>
-</div>
-</div>
-<p>By investigating the data it is seen that each string of phylogenetic information consist of identifiers for each of the different classes in the taxonomic rank. These identifiers are:</p>
-<ul>
-<li><p>d = domain</p></li>
-<li><p>p = phylum</p></li>
-<li><p>c = class</p></li>
-<li><p>o = order</p></li>
-<li><p>f = family</p></li>
-<li><p>g = genus</p></li>
-<li><p>s = species</p></li>
-</ul>
-<p>We want to start with converting all “not provided” to NA across all character columns. Then we want to split the “lineage” variable into its seven taxonomic ranks to store the information about each of the phylogenetic classes individually. Then we want to extract each taxonomic rank and remove prefixes. And convert empty strings to NA in the new taxonomy columns.</p>
-<p>We then remove the GTDB suffixes (e.g.&nbsp;“_A”) to streamline taxonomies. Lastly we remove columns that will not be used in our analysis.</p>
-<p>We then remove the GTDB suffixes (e.g.&nbsp;“_A”) to streamline taxonomies. We also remove the</p>
-</section>
-<section id="viewing-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="viewing-the-data">Viewing the data</h2>
-<p>Vieweing the top 10 rows of the split data to see the new structure.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 8
-   Genome        Domain   Phylum          Class       Order Family Genus Species
-   &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  
- 1 MGYG000303700 Bacteria Patescibacteria Saccharimo… Sacc… Nanop… Nano… Nanope…
- 2 MGYG000303701 Bacteria Bacillota       Clostridia  Sacc… Fasti… KA00… KA0027…
- 3 MGYG000303702 Bacteria Bacillota       Bacilli     Stap… Gemel… Geme… Gemell…
- 4 MGYG000303703 Bacteria Bacillota       Clostridia  Sacc… Fasti… Mage… Mageei…
- 5 MGYG000303704 Bacteria Patescibacteria Saccharimo… Sacc… Nanop… Nano… Nanope…
- 6 MGYG000303705 Bacteria Bacteroidota    Bacteroidia Bact… Bacte… Prev… &lt;NA&gt;   
- 7 MGYG000303706 Bacteria Bacillota       Clostridia  Tiss… Pepto… Pept… Pepton…
- 8 MGYG000303707 Bacteria Bacillota       Bacilli     Lact… Lacto… Lact… Lactob…
- 9 MGYG000303708 Bacteria Bacillota       Clostridia  Sacc… Fasti… KA00… KA0027…
-10 MGYG000303709 Bacteria Patescibacteria Saccharimo… Sacc… Nanop… Nano… Nanope…</code></pre>
-</div>
-</div>
-</section>
-<section id="saving-the-data-1" class="level2">
-<h2 class="anchored" data-anchor-id="saving-the-data-1">Saving the data</h2>
-<p>Saving the cleaned data into 02_dat_clean.tsv file located in the data directory.</p>
-</section>
-</section>
-<section id="augment" class="level1">
-<h1>6. Augment</h1>
-<p>Added agumentation the cleaned data and writes it to <code>03_dat_aug.tsv</code>.</p>
-</section>
-<section id="load-libraries-3" class="level1">
-<h1>Load libraries</h1>
-</section>
-<section id="load-data-3" class="level1">
-<h1>Load data</h1>
-<p>Loading the data saved in the 02_dat_clean.tsv file</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 618 Columns: 21
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (11): Genome, Genome_type, Country, Continent, Domain, Phylum, Class, Or...
-dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
-<section id="augment-data" class="level2">
-<h2 class="anchored" data-anchor-id="augment-data">Augment data</h2>
-<p>A new table is created, containing info on the quality of the MAGs. This includes completeness quality, contamination quality as well as overall genome quality.</p>
-<p>The new data table is then joined with the cleaned data frame using left join.</p>
-</section>
-<section id="saving-the-data-2" class="level2">
-<h2 class="anchored" data-anchor-id="saving-the-data-2">Saving the data</h2>
-<p>Saving the cleaned data into 03_dat_aug.tsv file located in the data directory.</p>
-</section>
-</section>
-<section id="describe" class="level1">
-<h1>7. Describe</h1>
-<p>Described the cleaned data.</p>
-</section>
-<section id="load-libraries-4" class="level1">
-<h1>1. Load libraries</h1>
-</section>
-<section id="load-data-4" class="level1">
 <h1>2. Load data</h1>
 <p>Loading the data saved in the 03_dat_aug.tsv file</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"../data/03_dat_aug.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 618 Columns: 24
 ── Column specification ────────────────────────────────────────────────────────
@@ -350,6 +125,7 @@ dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
 <h2 class="anchored" data-anchor-id="structure-of-the-dataset">3.1 Structure of the dataset</h2>
 <p>Using the str command to investigate, what the data looks like:</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(genome_metadata_aug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 618
 Columns: 24
@@ -385,6 +161,15 @@ $ Overall_quality       &lt;chr&gt; "Medium", "Medium", "High", "High", "Medium"
 <h2 class="anchored" data-anchor-id="missing-values-in-key-variables">3.2 Missing values in key variables</h2>
 <p>A key step in data description is identifying missing values. Here we summarize how many missing entries each variable contains.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols      =</span> <span class="fu">everything</span>(),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to  =</span> <span class="st">"variable"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"n_missing"</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_missing)) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   variable    n_missing
@@ -407,6 +192,8 @@ $ Overall_quality       &lt;chr&gt; "Medium", "Medium", "High", "High", "Medium"
 <h2 class="anchored" data-anchor-id="phylum-counts">4.1 Phylum counts</h2>
 <p>Counting the different Phylums in the dataset</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Phylum, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 2
   Phylum               n
@@ -426,10 +213,22 @@ $ Overall_quality       &lt;chr&gt; "Medium", "Medium", "High", "High", "Medium"
 <h2 class="anchored" data-anchor-id="barplot-of-phyla">4.2 Barplot of phyla</h2>
 <p>Plotting the different Phylums in the dataset</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Phylum =</span> <span class="fu">str_trim</span>(<span class="fu">as.character</span>(Phylum))) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Phylum)) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Phylum, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(Phylum, n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Phylum"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of genomes"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Number of genomes per phylum"</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-50-1.svg" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_describe_files/figure-html/unnamed-chunk-6-1.svg" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -445,10 +244,18 @@ $ Overall_quality       &lt;chr&gt; "Medium", "Medium", "High", "High", "Medium"
 <h2 class="anchored" data-anchor-id="distribution-of-completeness">6.1 Distribution of completeness</h2>
 <p>We first examine the distribution of completeness values across all MAGs. Completeness estimates the proportion of the genome recovered during assembly, with higher values indicating more complete and reliable genomes.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Completeness)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Completeness (%)"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of genomes"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of genome completeness"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-51-1.svg" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_describe_files/figure-html/unnamed-chunk-7-1.svg" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -459,10 +266,18 @@ $ Overall_quality       &lt;chr&gt; "Medium", "Medium", "High", "High", "Medium"
 <h2 class="anchored" data-anchor-id="distribution-of-contamination">6.2 Distribution of contamination</h2>
 <p>Next, we assess contamination levels, which reflect how much non-target DNA is mistakenly included in each MAG. Low contamination is essential for ensuring that each genome represents a single biological organism.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Contamination)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Contamination (%)"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of genomes"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of genome contamination"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-52-1.svg" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_describe_files/figure-html/unnamed-chunk-8-1.svg" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -476,6 +291,8 @@ This indicates strong assembly quality and suggests that the majority of genomes
 </p>
 <p>These categories help summarize the distribution of assembly completeness across the dataset.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Completeness_quality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   Completeness_quality     n
@@ -486,10 +303,19 @@ This indicates strong assembly quality and suggests that the majority of genomes
 </div>
 <p>We visualize the distribution of completeness categories to assess the overall completeness profile of the dataset.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Completeness_quality) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Completeness_quality, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Completeness quality category"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of genomes"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"MAGs by completeness quality"</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-54-1.svg" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_describe_files/figure-html/unnamed-chunk-10-1.svg" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -500,6 +326,8 @@ This indicates strong assembly quality and suggests that the majority of genomes
 <h2 class="anchored" data-anchor-id="contamination-based-quality-categories">6.4 Contamination-based quality categories</h2>
 <p>Similar to completeness, contamination values are grouped into quality categories. This provides a simplified overview of how many MAGs fall above or below contamination thresholds commonly used in MAG quality standards.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Contamination_quality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   Contamination_quality     n
@@ -513,6 +341,8 @@ This indicates strong assembly quality and suggests that the majority of genomes
 <h2 class="anchored" data-anchor-id="overall-mag-quality-category">6.5 Overall MAG quality category</h2>
 <p>The overall quality category combines both completeness and contamination thresholds into a single metric. This provides the most useful summary when determining which genomes are suitable for specific downstream analyses.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Overall_quality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   Overall_quality     n
@@ -523,10 +353,19 @@ This indicates strong assembly quality and suggests that the majority of genomes
 </div>
 <p>We visualize the number of genomes in each overall quality category.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Overall_quality) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Overall_quality, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Overall MAG quality"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of genomes"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Overall MAG quality categories"</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-57-1.svg" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_describe_files/figure-html/unnamed-chunk-13-1.svg" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -542,10 +381,18 @@ This indicates strong assembly quality and suggests that the majority of genomes
 <h2 class="anchored" data-anchor-id="genome-length-distribution">7.1 Genome length distribution</h2>
 <p>Genome length is a basic but informative assembly metric. It varies across bacterial taxa due to differences in genome reduction, metabolic capabilities, ecological specialization, and evolutionary history. Examining the distribution of genome lengths allows us to understand the range of genome sizes represented in the dataset and identify unusual or outlier assemblies.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Length)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Genome length (bp)"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of genomes"</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of genome lengths"</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-58-1.svg" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_describe_files/figure-html/unnamed-chunk-14-1.svg" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -556,10 +403,18 @@ This indicates strong assembly quality and suggests that the majority of genomes
 <h2 class="anchored" data-anchor-id="number-of-contigs">7.2 Number of contigs</h2>
 <p>The number of contigs in a MAG reflects how fragmented the assembly is. A low number of contigs indicates a more complete, contiguous assembly, while higher contig counts indicate fragmentation, often reflecting assembly challenges such as low coverage, strain heterogeneity, or complex genomic regions.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> N_contigs)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Number of contigs"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of genomes"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of contig counts"</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-59-1.svg" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_describe_files/figure-html/unnamed-chunk-15-1.svg" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -570,10 +425,18 @@ This indicates strong assembly quality and suggests that the majority of genomes
 <h2 class="anchored" data-anchor-id="length-vs-number-of-contigs">7.3 Length vs number of contigs</h2>
 <p>To further understand assembly quality, we explore the relationship between genome length and assembly fragmentation. Longer genomes may naturally require more contigs, but excessively high fragmentation for a given genome size may indicate problematic or low-confidence assemblies.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Length, <span class="at">y =</span> N_contigs)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Genome length (bp)"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of contigs"</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Genome length vs fragmentation"</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-60-1.svg" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_describe_files/figure-html/unnamed-chunk-16-1.svg" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -589,10 +452,18 @@ This indicates strong assembly quality and suggests that the majority of genomes
 <h2 class="anchored" data-anchor-id="gc-content-distribution">8.1 GC content distribution</h2>
 <p>We begin by visualizing the distribution of GC content across all genomes. MAGs originating from different bacterial phyla typically exhibit distinct GC signatures, making this metric useful for broadly comparing genome characteristics across the dataset.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> GC_content)) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"GC content (%)"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of genomes"</span>,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of GC content"</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-61-1.svg" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_describe_files/figure-html/unnamed-chunk-17-1.svg" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -608,6 +479,9 @@ This indicates strong assembly quality and suggests that the majority of genomes
 <h2 class="anchored" data-anchor-id="availability-of-geographic-information">9.1 Availability of geographic information</h2>
 <p>We first examine how many genomes include a recorded continent of origin. This allows us to quantify the completeness of the geographic metadata and determine how representative the dataset may be across global regions.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">has_geography =</span> <span class="sc">!</span><span class="fu">is.na</span>(Continent)) <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(has_geography)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   has_geography     n
@@ -622,6 +496,8 @@ This indicates strong assembly quality and suggests that the majority of genomes
 <h2 class="anchored" data-anchor-id="genomes-per-continent">9.2 Genomes per continent</h2>
 <p>For genomes where geographic information is available, we summarize the number of genomes contributed from each continent</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Continent, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   Continent         n
@@ -634,10 +510,19 @@ This indicates strong assembly quality and suggests that the majority of genomes
 </div>
 <p>We visualize the distribution of genomes across continents to highlight sampling imbalances.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>genome_metadata_aug <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Continent) <span class="sc">|&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Continent, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Continent"</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of genomes"</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Number of genomes per continent"</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="00_all_files/figure-html/unnamed-chunk-64-1.svg" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_describe_files/figure-html/unnamed-chunk-20-1.svg" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -648,14 +533,6 @@ This indicates strong assembly quality and suggests that the majority of genomes
 <section id="descriptive-summary" class="level1">
 <h1>10. Descriptive summary</h1>
 <p>Overall, the dataset contains 618 vaginal MAGs with high completeness, low contamination, and diverse taxonomic representation. Genome features such as size and GC content fall within biologically plausible ranges. Missing values are limited primarily to species-level taxonomy and geographical metadata. The dataset is therefore well-suited for downstream comparative analyses, including quality assessment across taxa, genome feature correlations, and ecological interpretation.</p>
-</section>
-<section id="analysis-1" class="level1">
-<h1>8. Analysis 1</h1>
-<p><code>05_analysis_1.qmd</code>: Here goes your first analysis</p>
-</section>
-<section id="analysis-2" class="level1">
-<h1>9. Analysis 2</h1>
-<p><code>06_analysis_2.qmd</code>: Here goes your second analysis and so on</p>
 </section>
 
 </main>
