@@ -3,7 +3,7 @@ title: "Load data"
 format: html
 ---
 
-## Load libraries
+## 1. Load libraries
 
 ```{r}
 #| message: false
@@ -11,44 +11,52 @@ format: html
 library("tidyverse")
 ```
 
-## Download data
+## 2. Download data
 
 First of all, we create directories data and data/\_raw if they don't already exist. Then we download the data from the EBI website below into the raw data directory:
 
 <https://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/genomes-all_metadata.tsv>
 
 ```{r}
-data_dir <- "../data/"
-raw_dir <- "../data/_raw/"
+data_dir  <- "../data/"
+raw_dir   <- "../data/_raw/"
 data_file <- "genomes-all_metadata.tsv"
-data_loc <- "https://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/"
 
-if( !dir.exists(data_dir)){
+data_loc  <- "https://ftp.ebi.ac.uk/pub/databases/metagenomics/" |>
+  str_c("mgnify_genomes/human-vaginal/v1.0/")
+
+if (!dir.exists(data_dir)) {
   dir.create(path = data_dir)
 }
-if( !dir.exists(raw_dir) ){
+
+if (!dir.exists(raw_dir)) {
   dir.create(path = raw_dir)
 }
-if( !file.exists(str_c(raw_dir, data_file)) ){
-  download.file(
-    url = str_c(data_loc, data_file),
-    destfile = str_c(raw_dir, data_file))
-}
 
+if (!file.exists(file.path(raw_dir, data_file))) {
+  download.file(
+    url      = str_c(data_loc, data_file),
+    destfile = file.path(raw_dir, data_file)
+  )
+}
 ```
 
-## Load data
+## 3. Load data
 
 The data is a tab separated file separated, so it is loaded into R using read_tsv from the read_r library:
 
 ```{r}
-genome_metadata <- readr::read_tsv(file = "../data/_raw/genomes-all_metadata.tsv")
+
+genome_metadata <- readr::read_tsv(file = file.path(raw_dir, data_file))
 ```
 
-## Saving the data
+## 4. Saving the data
 
 Saving the loaded data again into "01_dat_load.tsv"-file located in the data directory, to keep a consistent overview/naming of data through the project.
 
 ```{r}
-readr::write_tsv(genome_metadata, "../data/01_dat_load.tsv")
+readr::write_tsv(
+  x    = genome_metadata,
+  file = "../data/01_dat_load.tsv"
+)
 ```
