@@ -5,9 +5,7 @@ format: html
 
 # Analysis X
 
-1)  Perrotta et al. 2020, "The Vaginal Microbiome as a Tool to Predict rASRM Stage of Disease in Endometriosis" (<https://pmc.ncbi.nlm.nih.gov/articles/PMC7539818/?fbclid=IwY2xjawORmWpleHRuA2FlbQIxMABicmlkETFCNE1ORGh5R2I5YnFON3hIc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHudjra2Awb-P-2n_AX0jh0TL7QEB0GKUOySJCyv1Q4CSbPONZVzM8625g9ol_aem_YJVNc_QXBVb1QSZ846w_sg#notes2>)
-
-2)  Endobiota Study 2019, "The endobiota study: comparison of vaginal, cervical and gut microbiota between women with stage 3/4 endometriosis and healthy controls" (<https://www.nature.com/articles/s41598-019-39700-6>)
+1)  Endobiota Study 2019, "The endobiota study: comparison of vaginal, cervical and gut microbiota between women with stage 3/4 endometriosis and healthy controls" (<https://www.nature.com/articles/s41598-019-39700-6>)
 
 Across these vaginal datasets, the most consistently reported endometriosis-associated genera are:
 
