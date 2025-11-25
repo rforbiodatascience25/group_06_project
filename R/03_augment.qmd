@@ -3,7 +3,7 @@ title: "Augment data"
 format: html
 ---
 
-# Load libraries
+# 1. Load libraries
 
 ```{r}
 #| message: false
@@ -11,7 +11,7 @@ format: html
 library("tidyverse")
 ```
 
-# Load data
+# 2. Load data
 
 Loading the data saved in the 02_dat_clean.tsv file
 
@@ -20,7 +20,7 @@ genome_metadata_clean <- readr::read_tsv("../data/02_dat_clean.tsv")
 
 ```
 
-## Augment data
+# 3. Augment data
 
 A new table is created, containing info on the quality of the MAGs. This includes completeness quality, contamination quality as well as overall genome quality.
 
@@ -29,28 +29,31 @@ quality_table <- genome_metadata_clean |>
   select(Genome, Completeness, Contamination) |>
   mutate(
     Completeness_quality = case_when(
-      Completeness > 90                    ~ "High",
-      Completeness >= 50 & Completeness <= 90 ~ "Medium",
-      Completeness < 50                    ~ "Low",
-      TRUE                                 ~ NA_character_
+      Completeness > 90                          ~ "High",
+      Completeness >= 50 & Completeness <= 90    ~ "Medium",
+      Completeness < 50                          ~ "Low",
+      TRUE                                       ~ NA_character_
     ),
-    
     Contamination_quality = case_when(
-      Contamination < 5                    ~ "High",
-      Contamination < 10                   ~ "Medium",
-      Contamination >= 10                  ~ "Low",
-      TRUE                                 ~ NA_character_
+      Contamination < 5    ~ "High",
+      Contamination < 10   ~ "Medium",
+      Contamination >= 10  ~ "Low",
+      TRUE                 ~ NA_character_
     ),
-    
     Overall_quality = case_when(
-      Completeness > 90  & Contamination < 5   ~ "High",
-      Completeness >= 50 & Contamination < 10  ~ "Medium",
-      Completeness < 50  & Contamination >= 10 ~ "Low",
-      TRUE                                     ~ "Other"
+      Completeness > 90  & Contamination < 5    ~ "High",
+      Completeness >= 50 & Contamination < 10   ~ "Medium",
+      Completeness < 50  & Contamination >= 10  ~ "Low",
+      TRUE                                      ~ "Other"
     )
   ) |>
-  
-  select(Genome, Completeness_quality, Contamination_quality, Overall_quality)
+  select(
+    Genome,
+    Completeness_quality,
+    Contamination_quality,
+    Overall_quality
+  )
+
 ```
 
 The new data table is then joined with the cleaned data frame using left join.
@@ -60,10 +63,62 @@ genome_metadata_aug <- genome_metadata_clean |>
   left_join(quality_table, by = "Genome")
 ```
 
-## Saving the data
+# 4. Annotating MAGs with endometriosis-associated genera.
+
+1)  Endobiota Study 2019, "The endobiota study: comparison of vaginal, cervical and gut microbiota between women with stage 3/4 endometriosis and healthy controls" (<https://www.nature.com/articles/s41598-019-39700-6>)
+
+Across these vaginal datasets, the most consistently reported endometriosis-associated genera are:
+
+-   Anaerococcus
+
+-   Ureaplasma
+
+-   Gardnerella
+
+-   Veillonella
+
+-   Corynebacterium
+
+-   Peptoniphilus
+
+-   Candida albicans
+
+-   Alloscardovia
+
+We add a new column to the MAG dataset that flags whether each MAG belongs to a genus repeatedly associated with endometriosis in the vaginal microbiome. Labeling True or False
+
+```{r}
+
+endo_genera <- c(
+  "Anaerococcus",
+  "Ureaplasma",
+  "Gardnerella",
+  "Veillonella",
+  "Corynebacterium",
+  "Peptoniphilus",
+  "Candida albicans", 
+  "Alloscardovia"
+)
+
+
+genome_metadata_aug <- genome_metadata_aug |>
+  dplyr::mutate(
+    endometriosis_associated = Genus %in% endo_genera
+  )
+
+
+genome_metadata_aug |>
+  dplyr::count(endometriosis_associated)
+
+```
+
+# 6. Saving the data
 
 Saving the cleaned data into 03_dat_aug.tsv file located in the data directory.
 
 ```{r}
-readr::write_tsv(genome_metadata_aug, "../data/03_dat_aug.tsv")
+readr::write_tsv(
+  x    = genome_metadata_aug,
+  file = "../data/03_dat_aug.tsv"
+)
 ```

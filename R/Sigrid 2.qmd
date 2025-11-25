@@ -3,25 +3,7 @@ title: "Sigrid 2"
 format: html
 ---
 
-# Analysis X
-
-1)  Perrotta et al. 2020, "The Vaginal Microbiome as a Tool to Predict rASRM Stage of Disease in Endometriosis" (<https://pmc.ncbi.nlm.nih.gov/articles/PMC7539818/?fbclid=IwY2xjawORmWpleHRuA2FlbQIxMABicmlkETFCNE1ORGh5R2I5YnFON3hIc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHudjra2Awb-P-2n_AX0jh0TL7QEB0GKUOySJCyv1Q4CSbPONZVzM8625g9ol_aem_YJVNc_QXBVb1QSZ846w_sg#notes2>)
-
-2)  Endobiota Study 2019, "The endobiota study: comparison of vaginal, cervical and gut microbiota between women with stage 3/4 endometriosis and healthy controls" (<https://www.nature.com/articles/s41598-019-39700-6>)
-
-Across these vaginal datasets, the most consistently reported endometriosis-associated genera are:
-
--   Anaerococcus
-
--   Gardnerella
-
--   Streptococcus
-
--   Escherichia/Shigella
-
--   Ureaplasma
-
--   Alloprevotella
+# Analysis X - MAGs with endometriosis-associated genera
 
 ## Load libraries
 
@@ -37,53 +19,9 @@ library("tidyverse")
 genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
 ```
 
-## 1. Annotating MAGs with endometriosis-associated genera.
-
-We add a new column to the MAG dataset that flags whether each MAG belongs to a genus repeatedly associated with endometriosis in the vaginal microbiome. Labeling True or False
-
--   Anaerococcus
-
--   Gardnerella
-
--   Streptococcus
-
--   Escherichia/Shigella
-
--   Ureaplasma
-
--   Alloprevotella
-
-```{r}
-
-endo_genera <- c(
-  "Anaerococcus",
-  "Gardnerella",
-  "Streptococcus",
-  "Escherichia",
-  "Shigella",
-  "Ureaplasma",
-  "Alloprevotella" 
-)
-
-
-genome_metadata_aug <- genome_metadata_aug |>
-  dplyr::mutate(
-    endometriosis_associated = Genus %in% endo_genera
-  )
-
-
-genome_metadata_aug |>
-  dplyr::count(endometriosis_associated)
-
-```
-
-```{r}
-view(genome_metadata_aug)
-```
-
 ## 2. GC content of endometriosis-associated genera
 
-We compare GC content between associated and non-associated groups.
+We compare GC content between associated and non-associated endometriosis groups
 
 ```{r}
 genome_metadata_aug |>
@@ -97,7 +35,7 @@ genome_metadata_aug |>
 
 ```
 
-The GC-content distributions of endometriosis-associated and non-associated MAGs are largely overlapping, with only a small difference in median values. This indicates that GC content does not systematically distinguish genera linked to endometriosis from the rest of the vaginal microbiome. Overall, GC composition appears similar across both groups.
+Overall, the two groups show overlapping GC-content distributions, indicating no major genomic differences in GC composition between endometriosis-associated and non-associated taxa. MAGs annotated as endometriosis-associated span a fairly wide GC range, and their median GC content is slightly lower than that of non-associated genera, but the difference is modest and not indicative of a distinct GC signature. This suggests that GC content is not a distinguishing genomic feature of vaginal taxa associated with endometriosis, and that their relevance is likely driven by ecological or abundance differences rather than genome composition.
 
 ## 3. Genome length comparison
 

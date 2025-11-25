@@ -57,3 +57,23 @@ hvis man finder på andre ting som er nice at undersøge så skriv det på to do
     -   GC vs Completion/contamination
 
 -   Find data på "normal" GC content. (Sigrid)
+
+### Check list:
+
+-   00_all.qmd
+
+-   01_load.qmd (Done)
+
+-   02_clean.qmd (Done)
+
+-   03_augment.qmd (Done)
+
+-   04_describe.qmd (Done)
+
+-   05_analysis_1.qmd
+
+-   06_analysis_2.qmd
+
+-   Analysis - GC content (Done)
+
+-   Analysis - MAGs with endometriosis-associated genera (Done)
