@@ -52,11 +52,21 @@ Cleans the loaded data and writes it to `02_dat_clean.tsv`.
 
 # 6. Augment
 
-`03_augment.qmd`: Adds new variables, like e.g. computing a BMI
+Added agumentation the cleaned data and writes it to `03_dat_aug.tsv`.
+
+```{r}
+#| echo: false
+#| child: "03_augment.qmd"
+```
 
 # 7. Describe
 
-`04_describe.qmd`: Descriptive statistics, how many in each group, etc.
+Described the cleaned data.
+
+```{r}
+#| echo: false
+#| child: "04_describe.qmd"
+```
 
 # 8. Analysis 1
 
