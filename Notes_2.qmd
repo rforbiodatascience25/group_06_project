@@ -74,6 +74,6 @@ hvis man finder på andre ting som er nice at undersøge så skriv det på to do
 
 -   06_analysis_2.qmd
 
--   ...
+-   Analysis - GC content
 
--   
+-   Analysis  - MAGs with endometriosis-associated genera
