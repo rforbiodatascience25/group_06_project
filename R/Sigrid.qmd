@@ -28,7 +28,7 @@ genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
 
 GC content is often conserved within lineages and reflects long-term mutational biases, genome architecture, and ecological strategies. By comparing GC content across phyla represented in our dataset, we can evaluate whether the MAGs follow known biological patterns and identify potential outliers that has to be considering in further investigation.
 
-**Known biological patterns:**
+**Known biological patterns: (need source)**
 
 Across bacteria, GC content tends to be phylogenetically conserved, meaning that lineages often share similar GC levels due to long-term mutational and selective pressures.
 
@@ -46,7 +46,7 @@ Well-established trends include:
 
 -   Patescibacteria & Synergistota - often show intermediate but variable GC patterns, partly due to reduced genomes or niche-specific evolutionary pressures.
 
-### 1.1 GC content distributions across phyla
+### 1.1 GC content distributions across phyla (til præsentation)
 
 We first compare GC content between phyla visually to see whether different groups occupy distinct GC ranges.
 
@@ -104,7 +104,7 @@ TukeyHSD(gc_aov)
 
 The Tukey post-hoc test shows that most phyla differ significantly from one another, particularly in comparisons involving Actinomycetota, whose GC content is distinctly higher than most groups. Fusobacteriota also differ from nearly all other phyla due to their consistently low GC levels, and Campylobacterota show similar patterns relative to moderate- and high-GC groups. Bacillota differ significantly from both low- and high-GC phyla, reflecting their intermediate position. In contrast, comparisons involving Patescibacteria or Synergistota are often non-significant, either because their GC ranges overlap with other groups or because small sample sizes limit statistical resolution. Overall, the post-hoc test reveals a clear hierarchy of GC content, separating high-GC, mid-GC, and low-GC phyla and confirming GC content as a strong phylogenetic signal in this dataset.
 
-## 2. Relationship between GC content and genome length
+## 2. Relationship between GC content and genome length (til præsentation)
 
 ### 2.1 Scatterplot: GC vs genome length
 
@@ -197,7 +197,7 @@ genome_metadata_aug |>
 
 The correlation coefficients confirm the patterns seen in the scatterplots. GC content shows a very weak negative correlation with completeness (-0.08) and a weak positive correlation with contamination (0.19). Both values indicate that the relationships are extremely small and not biologically meaningful. These results support the conclusion that GC content does not systematically affect MAG quality in this dataset.
 
-## 4. GC-based outlier genomes within phyla
+## 4. GC-based outlier genomes within phyla (til præsentation)
 
 ### 4.1 Identify outliers relative to phylum-specific GC ranges
 
@@ -221,3 +221,5 @@ gc_outliers
 ```
 
 Although we identified 67 genomes with atypical GC content relative to their phylum, a detailed examination of each outlier is beyond the scope of this dataset, as it would require contig-level GC profiles, coverage information, and independent taxonomic validation tools such as GTDB-Tk or CheckM. In a full genomic analysis, these additional checks would allow us to determine whether each outlier reflects a misassembled or mis-binned genome, or whether it represents genuine biological variation. In this project, the outliers therefore serve primarily as indicators of MAGs that would merit closer investigation if deeper quality assessment resources were available.
+
+making a barplot for visualization:
