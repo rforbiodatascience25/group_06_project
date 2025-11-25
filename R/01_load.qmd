@@ -47,9 +47,7 @@ The data is a tab separated file separated, so it is loaded into R using read_ts
 
 ```{r}
 
-genome_metadata <- readr::read_tsv(
-  file = file.path(raw_dir, data_file)
-)
+genome_metadata <- readr::read_tsv(file = file.path(raw_dir, data_file))
 ```
 
 ## 4. Saving the data
