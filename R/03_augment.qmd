@@ -85,7 +85,7 @@ Across these vaginal datasets, the most consistently reported endometriosis-asso
 
 -   Alloscardovia
 
-We add a new column to the MAG dataset that flags whether each MAG belongs to a genus repeatedly associated with endometriosis in the vaginal microbiome. Labeling True or False
+We add a new column to the MAG dataset that flags whether each MAG belongs to a genus repeatedly associated with endometriosis in the vaginal microbiome. Labeling yes and no
 
 ```{r}
 
@@ -96,19 +96,21 @@ endo_genera <- c(
   "Veillonella",
   "Corynebacterium",
   "Peptoniphilus",
-  "Candida albicans", 
+  "Candida albicans",
   "Alloscardovia"
 )
 
-
 genome_metadata_aug <- genome_metadata_aug |>
   dplyr::mutate(
-    endometriosis_associated = Genus %in% endo_genera
+    endometriosis_associated = dplyr::case_when(
+      Genus %in% endo_genera ~ "Yes",
+      TRUE                   ~ "No"
+    )
   )
-
 
 genome_metadata_aug |>
   dplyr::count(endometriosis_associated)
+
 
 ```
 
