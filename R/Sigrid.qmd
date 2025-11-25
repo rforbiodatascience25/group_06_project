@@ -1,7 +1,6 @@
 ---
 title: "Sigrid"
 format: html
-output-dir: results
 ---
 
 # Analysis X - GC content

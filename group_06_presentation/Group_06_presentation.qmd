@@ -11,17 +11,31 @@ author:
 format: 
   revealjs:
     theme: moon
+    self-contained: true
+    code-line-numbers: true
+    smaller: true
+    scroll: true
+    transition: slide
+Editor: Visual
 ---
+
+```{r}
+library("tidyverse")
+library("readr")
+library("broom")
+library("here")
+library("ggrepel")
+```
 
 ## Examples:
 
 Bare for at vide de ting vi kan bruge i præsentations-dokumentet. Her skriver jeg i **bold**. Her skriver jeg i *kursiv*. Her skriver jeg i ***bold og kursiv***. Her skriver jeg i [rød]{style="color: red;"}
 
-### Mindre titel
+## Study Description
 
 ::: incremental
--   List
--   List
+-   Dataset: The genome meta-data-set from the human vaginal microbiome.
+-   Aim: Uncover patterns in genome quality, taxonomic composition, and ecological characteristics, while demonstrating the principles of reproducible and collaborative data science in R.
 :::
 
 ### Pause
@@ -110,6 +124,32 @@ Some additional commentary of more peripheral interest.
 Some additional commentary of more peripheral interest.
 :::
 
+## Study Description
+
+Meta-data from MGnify’s **vaginal microbiome** genome catalogue
+
+-   Uncover patterns in genome quality, taxonomic composition, and ecological characteristics.
+-   Uncover potential patterns for diagnosis of endometriosis via associated pathogens
+    -   Alloscardovia, Ureaplasma,
+
+## **Untidy –\> tidy data**
+
+:::: {style="margin-top: -15px; margin-bottom: -15px;"}
+::: {style="line-height: 1.1;"}
+1.  *Each variable is saved in its own column.*\
+2.  *Each observation is saved in its own row.*\
+3.  *Each "type" of observation is stored in a single table.*\
+:::
+::::
+
+::: panel-tabset
+### Untidy datafile
+
+```{r}
+#| echo: false   
+print(readr::read_tsv(here("data/_raw/genomes-all_metadata.tsv")))
+```
+
 ## About the data set / project
 
 Meta-data from MGnify’s **vaginal microbiome** genome catalogue
@@ -119,7 +159,18 @@ Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 
 ## Cleaning of data
 
-en lille smule om hvad vi har ændret på dataen i det hele taget - kort
+### Tidy data after augmentation
+
+```{r}
+#| echo: false   
+print(readr::read_tsv(here("data/03_dat_aug.tsv")))
+```
+:::
+
+## Results
+
+::: panel-tabset
+# \## Results 1
 
 ## Description of data
 
@@ -156,3 +207,4 @@ eller mangler/begrænsninger i datasættet
 Hvad kan det bruges til
 
 Hvad kunne have været nice at lave ellers.
+:::

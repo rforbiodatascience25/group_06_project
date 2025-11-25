@@ -1,7 +1,6 @@
 ---
 title: "Clean dataset"
 format: html
-output-dir: results
 ---
 
 # Load libraries

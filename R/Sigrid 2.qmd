@@ -1,7 +1,6 @@
 ---
 title: "Sigrid 2"
 format: html
-output-dir: results
 ---
 
 # Analysis X
@@ -12,19 +11,15 @@ Across these vaginal datasets, the most consistently reported endometriosis-asso
 
 -   Anaerococcus
 
--   Ureaplasma
-
 -   Gardnerella
 
--   Veillonella
+-   Streptococcus
 
--   Corynebacterium
+-   Escherichia/Shigella
 
--   Peptoniphilus
+-   Ureaplasma
 
--   Candida albicans
-
--   Alloscardovia
+-   Alloprevotella
 
 ## Load libraries
 
@@ -43,6 +38,22 @@ genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
 ## 1. Annotating MAGs with endometriosis-associated genera.
 
 We add a new column to the MAG dataset that flags whether each MAG belongs to a genus repeatedly associated with endometriosis in the vaginal microbiome. Labeling True or False
+
+-   Anaerococcus
+
+-   Ureaplasma
+
+-   Gardnerella
+
+-   Veillonella
+
+-   Corynebacterium
+
+-   Peptoniphilus
+
+-   Candida albicans
+
+-   Alloscardovia
 
 ```{r}
 
