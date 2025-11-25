@@ -38,10 +38,10 @@ Then the NA values are replaced with unclassified to be able to show them in the
 ```{r}
 tax <- genome_metadata_clean |>
   select(all_of(ranks)) |>
-  distinct() |> 
-  mutate(across(everything(),
-                ~ replace_na(., "unclassified"))) |>
+  drop_na() |>          # ← removes all rows with any NA in Domain–Species
+  distinct() |>
   mutate(across(everything(), as.factor))
+
 ```
 
 ```{r}
@@ -103,4 +103,170 @@ ggtree(tree_genus) +
 ggtree(tree_genus, layout = "circular") + 
   geom_tiplab(size = 2, offset = 0.05) + 
   theme_tree()
+```
+
+```{r}
+ranks <- c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+
+tax <- genome_metadata_clean |>
+  select(all_of(ranks)) |>      # ← removes all rows with any NA in Domain–Species
+  distinct() |>
+  mutate(across(everything(), ~ replace_na(., "unclassified"))) |>
+  mutate(across(everything(), as.factor))
+
+
+tree <- as.phylo(~ Domain/Phylum/Class/Order/Family/Genus/Species, data = tax)
+
+```
+
+```{r}
+ranks <- c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+
+tax <- genome_metadata_clean |>
+  select(all_of(ranks)) |>
+  distinct() |>
+  mutate(row_id = row_number()) |>
+  # go long so we can work along the taxonomic path
+  pivot_longer(
+    cols      = all_of(ranks),
+    names_to  = "rank",
+    values_to = "taxon"
+  ) |>
+  # keep the correct rank order
+  arrange(row_id, match(rank, ranks)) |>
+  group_by(row_id) |>
+  # for each lineage: once a taxon is known, carry it downward
+  # (so no NA below the deepest known level)
+  fill(taxon, .direction = "down") |>
+  ungroup() |>
+  # back to wide format
+  pivot_wider(names_from = "rank", values_from = "taxon") |>
+  select(all_of(ranks)) |>
+  distinct() |>
+  # just in case anything is still NA (e.g. completely missing lineages)
+  mutate(across(everything(),
+                ~ replace_na(., "unclassified"))) |>
+  mutate(across(everything(), as.factor))
+
+tree <- as.phylo(~ Domain/Phylum/Class/Order/Family/Genus/Species,
+                 data = tax)
+```
+
+```{r}
+
+tax_tip <- genome_metadata_clean |>
+  select(Species, Phylum) |>
+  distinct() |>
+  mutate(Phylum = replace_na(Phylum, "unclassified")) |>
+  rename(label = Species)
+
+
+p_base <- ggtree(tree, layout = "circular") %<+% tax_tip
+tree_data <- p_base$data
+
+# radius of the tree (furthest x)
+max_x <- max(tree_data$x)
+
+```
+
+```{r}
+
+# positions + angles for tips
+tip_pos_angle <- tree_data |>
+  filter(isTip) |>
+  select(label, x, y, angle)
+
+# one position per phylum (mean of its tips)
+phylum_lab <- tax_tip |>
+  left_join(tip_pos_angle, by = "label") |>
+  group_by(Phylum) |>
+  summarise(
+    y     = mean(y, na.rm = TRUE),
+    angle = mean(angle, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(
+    x      = max_x + 0.7,                               # outside the tree
+    hjust  = ifelse(angle > 90 & angle < 270, 1, 0),    # flip labels on left side
+    angle2 = ifelse(angle > 90 & angle < 270,
+                    angle + 180, angle)
+  )
+
+
+```
+
+```{r}
+# list of tips per phylum (names = phylum)
+phylum_list <- split(tax_tip$label, tax_tip$Phylum)
+
+# add grouping info to the tree
+tree_grp <- groupOTU(tree, phylum_list)
+
+```
+
+```{r}
+p_final <- p_base +
+  geom_text(
+    data = phylum_lab,
+    aes(x = x, y = y, label = Phylum, angle = angle2, hjust = hjust),
+    size = 3
+  ) +
+  theme_tree()
+
+p_final
+
+```
+
+```{r}
+cols <- c(
+  "Actinomycetota"   = "#FFFF00",
+  "Bacillota"        = "#e31a1c",
+  "Bacteroidota"     = "#FFE1FF",
+  "Campylobacterota" = "#33a02c",
+  "Fusobacteriota"   = "#ff7f00",
+  "Patescibacteria"  = "#D02090",
+  "Pseudomonadota"   = "#1f78b4",
+  "Synergistota"     = "#b15928",
+  "unclassified"     = "grey70",
+  "0"                = "grey80"   # branches whose descendants span >1 phylum
+)
+
+p <- ggtree(tree_grp, layout = "circular",
+            aes(color = group), size = 0.4) +
+  geom_tiplab(
+    size   = 1.2,
+    offset = 0.05,
+    align  = TRUE           # keeps labels nicely radial
+  ) +
+  scale_color_manual(
+    name   = "Phylum",
+    values = cols,
+    labels = c(
+      "Actinomycetota"   = "Actinomycetota",
+      "Bacillota"        = "Bacillota",
+      "Bacteroidota"     = "Bacteroidota",
+      "Campylobacterota" = "Campylobacterota",
+      "Fusobacteriota"   = "Fusobacteriota",
+      "Patescibacteria"  = "Patescibacteria",
+      "Pseudomonadota"   = "Pseudomonadota",
+      "Synergistota"     = "Synergistota",
+      "unclassified"     = "unclassified",
+      "0"                = "Unclassified"
+    )
+  ) +
+  theme_tree()
+
+p
+
+```
+
+```{r}
+phylum_data <- genome_metadata_clean |>
+  select(Phylum) 
+```
+
+```{r}
+tree_grp$data |>
+  count(group)
+
 ```
