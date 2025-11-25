@@ -43,26 +43,31 @@ We add a new column to the MAG dataset that flags whether each MAG belongs to a 
 
 -   Anaerococcus
 
--   Gardnerella
-
--   Streptococcus
-
--   Escherichia/Shigella
-
 -   Ureaplasma
 
--   Alloprevotella
+-   Gardnerella
+
+-   Veillonella
+
+-   Corynebacterium
+
+-   Peptoniphilus
+
+-   Candida albicans
+
+-   Alloscardovia
 
 ```{r}
 
 endo_genera <- c(
   "Anaerococcus",
-  "Gardnerella",
-  "Streptococcus",
-  "Escherichia",
-  "Shigella",
   "Ureaplasma",
-  "Alloprevotella" 
+  "Gardnerella",
+  "Veillonella",
+  "Corynebacterium",
+  "Peptoniphilus",
+  "Candida albicans", 
+  "Alloscardovia"
 )
 
 
@@ -77,9 +82,7 @@ genome_metadata_aug |>
 
 ```
 
-```{r}
-view(genome_metadata_aug)
-```
+There are 542 MAGs marked a non-endometriosis associated and 76 MAGs marked as endometriosis associated.
 
 ## 2. GC content of endometriosis-associated genera
 
@@ -97,7 +100,7 @@ genome_metadata_aug |>
 
 ```
 
-The GC-content distributions of endometriosis-associated and non-associated MAGs are largely overlapping, with only a small difference in median values. This indicates that GC content does not systematically distinguish genera linked to endometriosis from the rest of the vaginal microbiome. Overall, GC composition appears similar across both groups.
+Overall, the two groups show overlapping GC-content distributions, indicating no major genomic differences in GC composition between endometriosis-associated and non-associated taxa. MAGs annotated as endometriosis-associated span a fairly wide GC range, and their median GC content is slightly lower than that of non-associated genera, but the difference is modest and not indicative of a distinct GC signature. This suggests that GC content is not a distinguishing genomic feature of vaginal taxa associated with endometriosis, and that their relevance is likely driven by ecological or abundance differences rather than genome composition.
 
 ## 3. Genome length comparison
 
