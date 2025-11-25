@@ -239,7 +239,7 @@ Assembly statistics provide insight into the structural properties of metagenome
 
 Here, we explore three key aspects: genome size, contig count, and the relationship between genome length and fragmentation.
 
-## 7.1 Genome length distribution 
+## 7.1 Genome length distribution
 
 Genome length is a basic but informative assembly metric. It varies across bacterial taxa due to differences in genome reduction, metabolic capabilities, ecological specialization, and evolutionary history. Examining the distribution of genome lengths allows us to understand the range of genome sizes represented in the dataset and identify unusual or outlier assemblies.
 

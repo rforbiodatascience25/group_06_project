@@ -64,9 +64,9 @@ hvis man finder på andre ting som er nice at undersøge så skriv det på to do
 
 -   01_load.qmd (Done)
 
--   02_clean.qmd
+-   02_clean.qmd (Done)
 
--   03_augment.qmd
+-   03_augment.qmd (Done)
 
 -   04_describe.qmd (Done)
 
@@ -74,6 +74,6 @@ hvis man finder på andre ting som er nice at undersøge så skriv det på to do
 
 -   06_analysis_2.qmd
 
--   Analysis - GC content
+-   Analysis - GC content (Done)
 
--   Analysis - MAGs with endometriosis-associated genera
+-   Analysis - MAGs with endometriosis-associated genera (Done)
