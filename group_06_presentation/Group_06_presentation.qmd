@@ -129,8 +129,10 @@ Some additional commentary of more peripheral interest.
 Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 
 -   Uncover patterns in genome quality, taxonomic composition, and ecological characteristics.
--   Uncover potential patterns for diagnosis of endometriosis via associated pathogens
-    -   Alloscardovia, Ureaplasma,
+
+-   Uncover potential patterns for diagnosis of endometriosis via associated pathogens:
+
+    -   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia*
 
 ## **Untidy –\> tidy data**
 
