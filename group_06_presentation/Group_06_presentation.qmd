@@ -11,22 +11,31 @@ author:
 format: 
   revealjs:
     theme: moon
+    self-contained: true
+    code-line-numbers: true
+    smaller: true
+    scroll: true
+    transition: slide
+Editor: Visual
 ---
 
-## Examples: 
+```{r}
+library("tidyverse")
+library("readr")
+library("broom")
+library("here")
+library("ggrepel")
+```
 
-Bare for at vide de ting vi kan bruge i præsentations-dokumentet.
-Her skriver jeg i **bold**. 
-Her skriver jeg i *kursiv*. 
-Her skriver jeg i ***bold og kursiv***. 
-Her skriver jeg i <span style="color: red;">rød</span>
+## Examples:
 
+Bare for at vide de ting vi kan bruge i præsentations-dokumentet. Her skriver jeg i **bold**. Her skriver jeg i *kursiv*. Her skriver jeg i ***bold og kursiv***. Her skriver jeg i [rød]{style="color: red;"}
 
-### Mindre titel
+## Study Description
 
 ::: incremental
--   List
--   List
+-   Dataset: The genome meta-data-set from the human vaginal microbiome.
+-   Aim: Uncover patterns in genome quality, taxonomic composition, and ecological characteristics, while demonstrating the principles of reproducible and collaborative data science in R.
 :::
 
 ### Pause
@@ -37,12 +46,11 @@ content before the pause
 
 content after the pause
 
-## Examples: 
+## Examples:
 
 ### Several columns
 
-:::: {.columns}
-
+::::: columns
 ::: {.column width="40%"}
 Left column
 :::
@@ -50,12 +58,11 @@ Left column
 ::: {.column width="60%"}
 Right column
 :::
-
-::::
+:::::
 
 ## Examples: smaller text on slide {.smaller}
-slide so you can make things smaller if content can not fit.
--   Bullet Point 1
+
+slide so you can make things smaller if content can not fit. - Bullet Point 1
 
 -   Bullet Point 2
 
@@ -67,10 +74,9 @@ slide so you can make things smaller if content can not fit.
 
 -   Bullet Point 6
 
-
 ## Examples: scrollable slide {.scrollable}
-slide so you can scroll to see the rest of the content if to much.
--   Bullet Point 1
+
+slide so you can scroll to see the rest of the content if to much. - Bullet Point 1
 
 -   Bullet Point 2
 
@@ -99,35 +105,62 @@ slide so you can scroll to see the rest of the content if to much.
 ## Asides and footnotes
 
 ### Asides
+
 Slide content
-
-::: aside
-Some additional commentary of more peripheral interest.
-::: 
-
-### Footnotes
-- Green ^[A footnote]
-- Brown
-- Purple
 
 ::: aside
 Some additional commentary of more peripheral interest.
 :::
 
+### Footnotes
 
-## About the data set
+-   Green [^1]
+-   Brown
+-   Purple
+
+[^1]: A footnote
+
+::: aside
+Some additional commentary of more peripheral interest.
+:::
+
+## Study Description
+
 Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 
+-   Uncover patterns in genome quality, taxonomic composition, and ecological characteristics.
+-   Uncover potential patterns for diagnosis of endometriosis via associated pathogens
+    -   Alloscardovia, Ureaplasma,
 
+## **Untidy –\> tidy data**
 
+:::: {style="margin-top: -15px; margin-bottom: -15px;"}
+::: {style="line-height: 1.1;"}
+1.  *Each variable is saved in its own column.*\
+2.  *Each observation is saved in its own row.*\
+3.  *Each "type" of observation is stored in a single table.*\
+:::
+::::
 
--   Something about our data
--   nogle distributions og måske plots til overview af vores data.
+::: panel-tabset
+### Untidy datafile
 
-## What we did - briefly???
+```{r}
+#| echo: false   
+print(readr::read_tsv(here("data/_raw/genomes-all_metadata.tsv")))
+```
 
-en lille smule om hvad vi har ændret på dataen i det hele taget - kort
+### Tidy data after augmentation
 
+```{r}
+#| echo: false   
+print(readr::read_tsv(here("data/03_dat_aug.tsv")))
+```
+:::
+
+## Results
+
+::: panel-tabset
 ## Results 1
 
 måske nogle plots
@@ -161,3 +194,4 @@ eller mangler/begrænsninger i datasættet
 Hvad kan det bruges til
 
 Hvad kunne have været nice at lave ellers.
+:::
