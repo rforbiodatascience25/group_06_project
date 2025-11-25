@@ -140,7 +140,8 @@ Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 ::: {style="line-height: 1.1;"}
 1.  *Each variable is saved in its own column.*\
 2.  *Each observation is saved in its own row.*\
-3.  *Each "type" of observation is stored in a single table.*\
+3.  *Each "type" of observation is stored in a single table.*
+4.  Replace with NA\
 :::
 ::::
 
