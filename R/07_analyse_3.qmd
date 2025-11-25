@@ -5,6 +5,8 @@ format: html
 
 # Analysis 3 - Comparative Genomic Analysis of Endometriosis-Associated vs Non-Associated MAGs
 
+In this analysis, we compare basic genomic features of MAGs from genera previously linked to endometriosis against all other vaginal MAGs. We focus on GC content, genome length, and assembly quality (completeness and contamination) to assess whether endometriosis-associated genera form a genomically distinct subgroup.
+
 ## Load libraries
 
 ```{r}
@@ -21,77 +23,93 @@ genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
 
 ## 2. GC content of endometriosis-associated genera
 
-We compare GC content between associated and non-associated endometriosis groups
+We first compare the GC-content distributions between MAGs belonging to endometriosis-associated genera and those not linked to endometriosis. GC content can reflect long-term evolutionary pressures, so any systematic shift between the two groups could indicate deeper genomic differences.
 
 ```{r}
 genome_metadata_aug |>
-  ggplot2::ggplot(aes(x = endometriosis_associated, y = GC_content)) +
-  ggplot2::geom_boxplot() +
-  ggplot2::labs(
+  ggplot(aes(x    = endometriosis_associated,
+             y    = GC_content,
+             fill = endometriosis_associated)) +
+  geom_violin(trim = FALSE, alpha = 0.5) +
+  geom_boxplot(width = 0.18,
+               outlier.size = 0.7,
+               alpha = 0.9,
+               colour = "black") +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
     x = "Endometriosis-associated genus",
     y = "GC content (%)",
-    title = "GC content of MAGs by endometriosis association"
-  )
+    title = "GC content distributions by endometriosis association"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
 
 ```
 
-Overall, the two groups show overlapping GC-content distributions, indicating no major genomic differences in GC composition between endometriosis-associated and non-associated taxa. MAGs annotated as endometriosis-associated span a fairly wide GC range, and their median GC content is slightly lower than that of non-associated genera, but the difference is modest and not indicative of a distinct GC signature. This suggests that GC content is not a distinguishing genomic feature of vaginal taxa associated with endometriosis, and that their relevance is likely driven by ecological or abundance differences rather than genome composition.
+The distributions show substantial overlap between the groups. Endometriosis-associated MAGs have a slightly lower median GC content, but the difference is modest and the overall ranges are similar. This indicates that GC composition does not clearly distinguish taxa associated with endometriosis.
 
 ## 3. Genome length comparison
 
-We examine whether MAGs associated with endometriosis differ in genome size.
+Next, we test whether genome size relates differently to GC content in endometriosis-associated genera. If differences existed in evolutionary strategies—such as genome reduction or expansion—they might appear as distinct clustering patterns.
 
 ```{r}
 genome_metadata_aug |>
-  ggplot2::ggplot(aes(x = endometriosis_associated, y = Length)) +
-  ggplot2::geom_boxplot() +
-  ggplot2::scale_y_log10() +
-  ggplot2::labs(
-    x = "Endometriosis-associated genus",
+  ggplot(aes(x      = GC_content,
+             y      = Length,
+             colour = endometriosis_associated)) +
+  geom_point(alpha = 0.6, size = 2) +
+  scale_y_log10() +
+  scale_colour_brewer(palette = "Set1") +
+  labs(
+    x = "GC content (%)",
     y = "Genome length (bp, log scale)",
-    title = "Genome length of MAGs by endometriosis association"
-  )
+    title = "GC content vs genome length by endometriosis association",
+    colour = "Associated"
+  ) +
+  theme_minimal(base_size = 13)
+
 
 ```
 
-MAGs from endometriosis-associated genera tend to have slightly larger genome sizes compared with other vaginal taxa, although the ranges of both groups overlap broadly. This suggests that genome size is not strongly structured by endometriosis association, but the associated genera may include species with somewhat more expansive genomes.
+The scatterplot shows that MAGs from both groups occupy similar GC–length space. No association-specific cluster is visible, and both groups span comparable genome sizes across the GC spectrum. This suggests that genome size and GC composition are not meaningfully structured by endometriosis association.
 
 ## 4. Completeness and contamination
 
-We assess whether endometriosis-associated genera differ in assembly quality.
-
-### 4.1 Completeness
+Finally, we investigate whether endometriosis-associated genera differ in technical assembly quality. Completeness and contamination reflect how well each genome was reconstructed and whether its quality differs systematically across groups.
 
 ```{r}
 
 genome_metadata_aug |>
-  ggplot2::ggplot(aes(x = endometriosis_associated, y = Completeness)) +
-  ggplot2::geom_boxplot() +
-  ggplot2::labs(
+  select(endometriosis_associated,
+         Completeness,
+         Contamination) |>
+  pivot_longer(
+    cols      = c(Completeness, Contamination),
+    names_to  = "metric",
+    values_to = "value"
+  ) |>
+  ggplot(aes(x    = endometriosis_associated,
+             y    = value,
+             fill = endometriosis_associated)) +
+  geom_violin(trim = FALSE, alpha = 0.5) +
+  geom_boxplot(width = 0.17, outlier.size = 0.7, alpha = 0.9) +
+  facet_wrap(~ metric, scales = "free_y") +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
     x = "Endometriosis-associated genus",
-    y = "Completeness (%)",
-    title = "MAG completeness vs endometriosis association"
-  )
+    y = "Value (%)",
+    title = "MAG completeness and contamination by association status"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
 
 
 ```
 
-Completeness values are high for both groups, with only minor variation. Endometriosis-associated MAGs show completeness levels similar to those of other genera, suggesting that their assemblies are of comparable quality.
-
-### 4.2 Contamination
-
-```{r}
-
-genome_metadata_aug |>
-  ggplot2::ggplot(aes(x = endometriosis_associated, y = Contamination)) +
-  ggplot2::geom_boxplot() +
-  ggplot2::labs(
-    x = "Endometriosis-associated genus",
-    y = "Contamination (%)",
-    title = "MAG contamination vs endometriosis association"
-  )
-```
-
-Contamination levels are consistently low across both groups, with no clear differences between endometriosis-associated and non-associated MAGs. This indicates that assembly quality is comparable, and any genomic differences observed are unlikely to be driven by differences in contamination.
+Both completeness and contamination distributions are nearly identical between associated and non-associated genera. Completeness remains high (\>90%) in both groups, and contamination is consistently low. This confirms that assembly quality is comparable across MAGs and does not bias downstream comparisons between the groups.
 
 Using genera previously linked to endometriosis in vaginal microbiome studies, we annotated a subset of MAGs and compared their genomic features to the rest of the dataset. Across GC content, genome size, completeness, and contamination, the two groups showed only minor differences with broad overlap. This indicates that endometriosis-associated genera do not form a genomically distinct group within the vaginal microbiome. Instead, their relevance to endometriosis likely reflects differences in abundance or community composition rather than major differences in genome architecture.
+
+## **5. Conclusion**
+
+The GC-content analysis shows that MAGs in the dataset follow well-known phylogenetic patterns, confirming biologically consistent taxonomic assignments. GC content is only weakly related to genome size and has no detectable effect on assembly completeness or contamination, indicating that MAG quality is stable across all GC levels. A small number of GC outliers were identified, but their frequency matches what is expected from phylum size, and most deviations are minor. Overall, GC content supports the reliability of the dataset and reveals no systematic issues in genome reconstruction.
