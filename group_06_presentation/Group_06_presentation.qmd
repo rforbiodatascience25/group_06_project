@@ -132,7 +132,11 @@ Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 
 -   Uncover potential patterns for diagnosis of endometriosis via associated pathogens:
 
-    -   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia*
+```         
+-   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia[^2]* 
+```
+
+<!-- -->
 
 ## **Untidy –\> tidy data**
 
@@ -152,15 +156,6 @@ Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 #| echo: false   
 print(readr::read_tsv(here("data/_raw/genomes-all_metadata.tsv")))
 ```
-
-## About the data set / project
-
-Meta-data from MGnify’s **vaginal microbiome** genome catalogue
-
--   Something about our data
--   nogle distributions og måske plots til overview af vores data.
-
-## Cleaning of data
 
 ### Tidy data after augmentation
 

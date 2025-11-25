@@ -1257,11 +1257,10 @@ Kristine Johansen
 <p>Meta-data from MGnify’s <strong>vaginal microbiome</strong> genome catalogue</p>
 <ul>
 <li><p>Uncover patterns in genome quality, taxonomic composition, and ecological characteristics.</p></li>
-<li><p>Uncover potential patterns for diagnosis of endometriosis via associated pathogens:</p>
-<ul>
-<li><em>Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia</em></li>
-</ul></li>
+<li><p>Uncover potential patterns for diagnosis of endometriosis via associated pathogens:</p></li>
 </ul>
+<pre><code>-   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia[^2]* </code></pre>
+<!-- -->
 </section>
 <section id="untidy-tidy-data" class="slide level2">
 <h2><strong>Untidy –&gt; tidy data</strong></h2>
@@ -1304,22 +1303,11 @@ Kristine Johansen
 #   Country &lt;chr&gt;, Continent &lt;chr&gt;, FTP_download &lt;chr&gt;</code></pre>
 </div>
 </div>
-<section id="about-the-data-set-project" class="slide level2">
-<h2>About the data set / project</h2>
-<p>Meta-data from MGnify’s <strong>vaginal microbiome</strong> genome catalogue</p>
-<ul>
-<li>Something about our data</li>
-<li>nogle distributions og måske plots til overview af vores data.</li>
-</ul>
-</section>
-<section id="cleaning-of-data" class="slide level2">
-<h2>Cleaning of data</h2>
-</section>
 </div>
 <div id="tabset-1-2">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 618 × 24
+<pre><code># A tibble: 618 × 25
    Genome        Genome_type  Length N_contigs    N50 GC_content Completeness
    &lt;chr&gt;         &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
  1 MGYG000303700 MAG          678213         2 466332       47.8         63.7
@@ -1333,11 +1321,11 @@ Kristine Johansen
  9 MGYG000303708 MAG         1480380        12 169949       42.2         87.6
 10 MGYG000303709 MAG          694644        57  15063       47.9         62.0
 # ℹ 608 more rows
-# ℹ 17 more variables: Contamination &lt;dbl&gt;, rRNA_5S &lt;dbl&gt;, rRNA_16S &lt;dbl&gt;,
+# ℹ 18 more variables: Contamination &lt;dbl&gt;, rRNA_5S &lt;dbl&gt;, rRNA_16S &lt;dbl&gt;,
 #   rRNA_23S &lt;dbl&gt;, tRNAs &lt;dbl&gt;, Country &lt;chr&gt;, Continent &lt;chr&gt;, Domain &lt;chr&gt;,
 #   Phylum &lt;chr&gt;, Class &lt;chr&gt;, Order &lt;chr&gt;, Family &lt;chr&gt;, Genus &lt;chr&gt;,
 #   Species &lt;chr&gt;, Completeness_quality &lt;chr&gt;, Contamination_quality &lt;chr&gt;,
-#   Overall_quality &lt;chr&gt;</code></pre>
+#   Overall_quality &lt;chr&gt;, endometriosis_associated &lt;lgl&gt;</code></pre>
 </div>
 </div>
 </div>
