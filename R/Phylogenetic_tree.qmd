@@ -1,0 +1,86 @@
+---
+title: "First data analysis"
+format: html
+---
+
+# Phylogenetic tree
+
+The dataset contains information the different phylogenetic classes, which can be used to plot the phylogenetic tree.
+
+## Load libraries
+
+```{r}
+#| message: false
+#| warning: false
+library("tidyverse")
+library("ggtree")
+```
+
+## Load data
+
+Loading the data into a variable from the `03_dat_aug.tsv` file
+
+```{r}
+genome_metadata_aug<- readr::read_tsv("../data/03_dat_aug.tsv")
+```
+
+## Prepare data for plot
+
+First the different ranks in the phylogenetic are defined:
+
+```{r}
+ranks <- c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+```
+
+Then the NA values are replaced with unclassified to be able to show them in the plot. Additionally the data is changed into factors as it is required for using the .phylo command.
+
+```{r}
+genome_phylo_data <- genome_metadata_aug |>
+    drop_na()
+
+tax <- genome_phylo_data|>
+  select(all_of(ranks)) |>         
+  distinct() |>
+  mutate(across(everything(), as.factor))
+```
+
+Using the as.phylo functions to translate the data into a tree. The hierachy of the data is defined inside the function:
+
+```{r}
+tree <- as.phylo(~ Domain/Phylum/Class/Order/Family/Genus/Species, data = tax)
+```
+
+## Plot of phylogenetic tree
+
+```{r, fig.width=9.5, fig.height=9.5}
+tax_tip <- tax |>
+  select(Species, Phylum) |>
+  distinct() |>
+  rename(label = Species)
+
+# list of tip labels per phylum
+phylum_list <- split(tax_tip$label, tax_tip$Phylum)
+
+# add group information to the tree
+tree_grp <- groupOTU(tree, phylum_list)
+
+ggtree(tree_grp, layout = "circular",
+       aes(color = factor(group)), size = 0.4) %<+% tax_tip +
+  geom_tiplab(size = 1.5, offset = 0.05, align = TRUE) +
+  scale_color_discrete(
+    name   = "Phylum",
+    labels = names(phylum_list)
+  ) +
+  labs(
+    title   = "Phylogenetic Tree Colored by Phylum",
+    caption = "Note: NA values were removed before constructing the tree"
+  ) +
+  theme_tree() +
+  theme(
+    plot.title   = element_text(hjust = 0.5),
+    plot.caption = element_text(hjust = 0.5, size = 8, color = "grey40"
+  ))
+
+
+
+```
