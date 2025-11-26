@@ -300,6 +300,8 @@ The difference in distribution of species between countries is not significant, 
 
 # Endometriosis chi-square test
 
+To assess whether
+
 Check that the data contains the variable of interest:
 
 ```{r}
