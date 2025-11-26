@@ -46,7 +46,6 @@ if (!file.exists(file.path(raw_dir, data_file))) {
 The data is a tab separated file separated, so it is loaded into R using read_tsv from the read_r library:
 
 ```{r}
-
 genome_metadata <- readr::read_tsv(file = file.path(raw_dir, data_file))
 ```
 
