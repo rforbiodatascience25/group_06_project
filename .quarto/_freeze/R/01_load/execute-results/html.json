@@ -1,0 +1,15 @@
+{
+  "hash": "6313e2e2782ed25cd055caebd29eb50e",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Load data\"\nformat: html\n---\n\n\n\n## 1. Load libraries\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(\"tidyverse\")\n```\n:::\n\n\n\n## 2. Download data\n\nFirst of all, we create directories data and data/\\_raw if they don't already exist. Then we download the data from the EBI website below into the raw data directory:\n\n<https://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/genomes-all_metadata.tsv>\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\ndata_dir  <- \"../data/\"\nraw_dir   <- \"../data/_raw/\"\ndata_file <- \"genomes-all_metadata.tsv\"\n\ndata_loc  <- \"https://ftp.ebi.ac.uk/pub/databases/metagenomics/\" |>\n  str_c(\"mgnify_genomes/human-vaginal/v1.0/\")\n\nif (!dir.exists(data_dir)) {\n  dir.create(path = data_dir)\n}\n\nif (!dir.exists(raw_dir)) {\n  dir.create(path = raw_dir)\n}\n\nif (!file.exists(file.path(raw_dir, data_file))) {\n  download.file(\n    url      = str_c(data_loc, data_file),\n    destfile = file.path(raw_dir, data_file)\n  )\n}\n```\n:::\n\n\n\n## 3. Load data\n\nThe data is a tab separated file separated, so it is loaded into R using read_tsv from the read_r library:\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\ngenome_metadata <- readr::read_tsv(file = file.path(raw_dir, data_file))\n```\n\n::: {.cell-output .cell-output-stderr}\n\n```\nRows: 618 Columns: 20\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \"\\t\"\nchr (10): Genome, Genome_type, Genome_accession, Species_rep, Lineage, Sampl...\ndbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n```\n\n\n:::\n:::\n\n\n\n## 4. Saving the data\n\nSaving the loaded data again into \"01_dat_load.tsv\"-file located in the data directory, to keep a consistent overview/naming of data through the project.\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nreadr::write_tsv(\n  x    = genome_metadata,\n  file = \"../data/01_dat_load.tsv\"\n)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
