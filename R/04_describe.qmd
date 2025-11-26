@@ -107,6 +107,20 @@ genome_metadata_aug |>
   )
 ```
 
+```{r}
+genome_metadata_aug |>
+  ggplot(aes(x = Completeness)) +
+  geom_density(
+    fill = "#4C72B0", 
+    color = "white",
+    alpha = 0.6) +
+  labs(
+    x = "Completeness (%)",
+    y = "Number of genomes",
+    title = "Density of genome completeness"
+  )
+```
+
 The distribution shows that genome completeness is generally high, with many MAGs exceeding 80–90%. This suggests that the majority of genomes in the dataset are sufficiently complete for downstream biological analyses.
 
 ## 6.2 Distribution of contamination (Til præsentation)
@@ -125,6 +139,20 @@ genome_metadata_aug |>
     x     = "Contamination (%)",
     y     = "Number of genomes",
     title = "Distribution of genome contamination"
+  )
+```
+
+```{r}
+genome_metadata_aug |>
+  ggplot(aes(x = Contamination)) +
+  geom_density(
+    fill = "#4C72B0",
+    color = "white",
+    alpha = 0.6) +
+  labs(
+    x = "Contamination (%)",
+    y = "Number of genomes",
+    title = "Density of genome completeness"
   )
 ```
 
