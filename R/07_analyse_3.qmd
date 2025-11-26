@@ -31,17 +31,19 @@ The barplot shows how many MAGs occur in each phylum and whether the two groups 
 
 ```{r}
 genome_metadata_aug |>
-  ggplot(aes(x = Phylum, fill = endometriosis_associated)) +
+  ggplot(aes(x    = Phylum,
+             fill = endometriosis_associated)) +
   geom_bar(position = "dodge") +
   scale_fill_brewer(palette = "Set1") +
   labs(
     title = "Distribution of MAGs by phylum and association status",
-    x = "Phylum",
-    y = "Number of MAGs",
-    fill = "Associated"
+    x     = "Phylum",
+    y     = "Number of MAGs",
+    fill  = "Associated"
   ) +
   theme_minimal(base_size = 13) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45,
+                                   hjust  = 1))
 
 ```
 
@@ -71,21 +73,23 @@ To check whether GC differences between associated and non-associated MAGs are i
 
 ```{r}
 genome_metadata_aug |>
-  ggplot(aes(x = endometriosis_associated,
-             y = GC_content,
+  ggplot(aes(x    = endometriosis_associated,
+             y    = GC_content,
              fill = endometriosis_associated)) +
   geom_boxplot(outlier.size = 0.7) +
-  facet_wrap(~ Phylum, scales = "free_y") +
+  facet_wrap(~ Phylum,
+             scales = "free_y") +
   scale_fill_brewer(palette = "Set2") +
   labs(
     title = "GC content by phylum and association status",
-    x = "Associated",
-    y = "GC content (%)"
+    x     = "Associated",
+    y     = "GC content (%)"
   ) +
   theme_minimal(base_size = 13) +
   theme(
     legend.position = "none",
-    axis.text.x = element_text(angle = 30, hjust = 1)
+    axis.text.x     = element_text(angle = 30,
+                                   hjust  = 1)
   )
 
 ```
@@ -103,19 +107,21 @@ genome_metadata_aug |>
   ggplot(aes(x    = endometriosis_associated,
              y    = GC_content,
              fill = endometriosis_associated)) +
-  geom_violin(trim = FALSE, alpha = 0.5) +
-  geom_boxplot(width = 0.18,
+  geom_violin(trim  = FALSE,
+              alpha = 0.5) +
+  geom_boxplot(width        = 0.18,
                outlier.size = 0.7,
-               alpha = 0.9,
-               colour = "black") +
+               alpha        = 0.9,
+               colour       = "black") +
   scale_fill_brewer(palette = "Set2") +
   labs(
-    x = "Endometriosis-associated genus",
-    y = "GC content (%)",
+    x     = "Endometriosis-associated genus",
+    y     = "GC content (%)",
     title = "GC content distributions by endometriosis association"
   ) +
   theme_minimal(base_size = 13) +
   theme(legend.position = "none")
+
 
 ```
 
@@ -130,16 +136,18 @@ genome_metadata_aug |>
   ggplot(aes(x      = GC_content,
              y      = Length,
              colour = endometriosis_associated)) +
-  geom_point(alpha = 0.6, size = 2) +
+  geom_point(alpha = 0.6,
+             size  = 2) +
   scale_y_log10() +
   scale_colour_brewer(palette = "Set1") +
   labs(
-    x = "GC content (%)",
-    y = "Genome length (bp, log scale)",
-    title = "GC content vs genome length by endometriosis association",
+    x      = "GC content (%)",
+    y      = "Genome length (bp, log scale)",
+    title  = "GC content vs genome length by endometriosis association",
     colour = "Associated"
   ) +
   theme_minimal(base_size = 13)
+
 
 
 ```
@@ -164,13 +172,17 @@ genome_metadata_aug |>
   ggplot(aes(x    = endometriosis_associated,
              y    = value,
              fill = endometriosis_associated)) +
-  geom_violin(trim = FALSE, alpha = 0.5) +
-  geom_boxplot(width = 0.17, outlier.size = 0.7, alpha = 0.9) +
-  facet_wrap(~ metric, scales = "free_y") +
+  geom_violin(trim  = FALSE,
+              alpha = 0.5) +
+  geom_boxplot(width        = 0.17,
+               outlier.size = 0.7,
+               alpha        = 0.9) +
+  facet_wrap(~ metric,
+             scales = "free_y") +
   scale_fill_brewer(palette = "Set2") +
   labs(
-    x = "Endometriosis-associated genus",
-    y = "Value (%)",
+    x     = "Endometriosis-associated genus",
+    y     = "Value (%)",
     title = "MAG completeness and contamination by association status"
   ) +
   theme_minimal(base_size = 13) +
