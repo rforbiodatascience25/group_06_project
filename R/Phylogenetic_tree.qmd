@@ -64,39 +64,6 @@ tree <- as.phylo(~ Domain/Phylum/Class/Order/Family/Genus/Species, data = tax)
 
 ## Plot of phylogenetic tree
 
-```{r, fig.width=9.5, fig.height=9.5}
-# Then the specific tips of the tree of interest is defined to be able to color the tree by phylum:
-
-tax_tip <- tax |>
-  select(Species, Phylum) |>
-  distinct() |>
-  rename(label = Species)
-
-# list of tip labels per phylum
-phylum_list <- split(tax_tip$label, tax_tip$Phylum)
-
-# add group information to the tree
-tree_grp <- groupOTU(tree, phylum_list)
-
-ggtree(tree_grp, layout = "circular",
-       aes(color = factor(group)), size = 0.4) %<+% tax_tip +
-  geom_tiplab(size = 1.5, offset = 0.05, align = TRUE) +
-  scale_color_discrete(
-    name   = "Phylum",
-    labels = names(phylum_list)
-  ) +
-  labs(
-    title   = "Phylogenetic Tree Colored by Phylum",
-    caption = "Note: NA values were removed before constructing the tree"
-  ) +
-  theme_tree() +
-  theme(
-    plot.title   = element_text(hjust = 0.5),
-    plot.caption = element_text(hjust = 0.5, size = 8, color = "grey40"
-  ))
-
-```
-
 Then the tip labels (the species) added to a list for each phylum:
 
 ```{r}
@@ -111,7 +78,7 @@ tree_grp <- groupOTU(tree, phylum_list)
 
 The phylogenetic tree is then plotted and the edges of the plot is colored by the different phyla, to see the representation of the gene phyla present.
 
-```{r, fig.width=9.5, fig.height=9.5}
+```{r, fig.width=9.5, fig.height=8.5}
 phylogenetic_tree_plot <- ggtree(
   tree_grp, 
   layout = "circular",
