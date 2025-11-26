@@ -235,19 +235,65 @@ PCA_abundance_per_country(tree_group = "Phylum")
 
 ## 
 
-# Endometriosis test
+# Tests: Species' distribution between counties
+
+Simply counting the species (or another tree_group) per country.
 
 ```{r}
-head(genomes_country)
 
-data <- genomes_country |> 
-  group_by(Country, Species) |>
+counting_species <- function(data, tree_group){
+  data |> 
+  group_by(Country, .data[[tree_group]]) |>
   summarise(count = n(), .groups = "drop") |> 
-  pivot_wider(names_from = Species,
+  pivot_wider(names_from = .data[[tree_group]],
               values_from = count,
               values_fill = 0)
-
-
-head(data)
+}
 
 ```
+
+## Chi-squared test, with permutation.
+
+Test if the distribution of species differs between countries. We use simulate.p.value = TRUE to compute the p-value via Monte Carlo simulation, which is more reliable when some expected counts are small or zero.
+
+### For Species
+
+```{r}
+data <- counting_species(data = genomes_country, tree_group = "Species")
+
+tbl <- as.matrix(data[ , -1])
+rownames(tbl) <- data$Country
+
+chisq.test(tbl, simulate.p.value = TRUE, B = 1e6)
+
+```
+
+The difference in distribution of species between countries is not significant at all, as the p-value is 1.
+
+### For Family
+
+```{r}
+data <- counting_species(data = genomes_country, tree_group = "Family")
+
+tbl <- as.matrix(data[ , -1])
+rownames(tbl) <- data$Country
+
+chisq.test(tbl, simulate.p.value = TRUE, B = 1e6)
+
+```
+
+The difference in distribution of species between countries is not significant at all, as the p-value is 0.8.
+
+### For Phylum
+
+```{r}
+data <- counting_species(data = genomes_country, tree_group = "Phylum")
+
+tbl <- as.matrix(data[ , -1])
+rownames(tbl) <- data$Country
+
+chisq.test(tbl, simulate.p.value = TRUE, B = 1e6)
+
+```
+
+The difference in distribution of species between countries is not significant, as the p-value is 0.6
