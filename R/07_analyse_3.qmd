@@ -7,6 +7,8 @@ format: html
 
 In this analysis, we compare basic genomic features of MAGs from genera previously linked to endometriosis against all other vaginal MAGs. We focus on GC content, genome length, and assembly quality (completeness and contamination) to assess whether endometriosis-associated genera form a genomically distinct subgroup.
 
+Are endometriosis-associated MAGs genomically distinct?
+
 ## 1. Load libraries
 
 ```{r}
@@ -27,23 +29,36 @@ Before comparing genomic features between endometriosis-associated and non-assoc
 
 ### 3.1 Distribution of MAGs by phylum and association status
 
-The barplot shows how many MAGs occur in each phylum and whether the two groups (associated vs non-associated) are taxonomically balanced.
+The plot shows how many MAGs occur in each phylum and whether the two groups (associated vs non-associated) are taxonomically balanced.
 
 ```{r}
-genome_metadata_aug |>
-  ggplot(aes(x    = Phylum,
-             fill = endometriosis_associated)) +
-  geom_bar(position = "dodge") +
-  scale_fill_brewer(palette = "Set1") +
-  labs(
-    title = "Distribution of MAGs by phylum and association status",
-    x     = "Phylum",
-    y     = "Number of MAGs",
-    fill  = "Associated"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(axis.text.x = element_text(angle = 45,
-                                   hjust  = 1))
+
+phylum_prop_plot <-
+  genome_metadata_aug |>
+    count(Phylum, endometriosis_associated) |>
+    group_by(Phylum) |>
+    mutate(prop = n / sum(n)) |>
+    ggplot(aes(x = Phylum,
+               y = prop,
+               fill = endometriosis_associated)) +
+    geom_col(width = 0.7) +
+    scale_fill_brewer(palette = "Set1") +
+    labs(
+      title = "Proportion of endometriosis-associated MAGs within each phylum",
+      x = "Phylum",
+      y = "Proportion",
+      fill = "Associated"
+    ) +
+    theme_minimal(base_size = 13) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Saving plot
+ggsave(filename = "../results/analysis3_phylum_proportion.png",
+       plot = phylum_prop_plot,
+       width = 120,
+       height = 90,
+       units = "mm")
+
 
 ```
 
@@ -72,25 +87,33 @@ The chi-square test shows a significant deviation from independence (p ≈ 8.5 �
 To check whether GC differences between associated and non-associated MAGs are influenced by phylum-level structure, we compare GC content within each phylum.
 
 ```{r}
-genome_metadata_aug |>
-  ggplot(aes(x    = endometriosis_associated,
-             y    = GC_content,
-             fill = endometriosis_associated)) +
-  geom_boxplot(outlier.size = 0.7) +
-  facet_wrap(~ Phylum,
-             scales = "free_y") +
-  scale_fill_brewer(palette = "Set2") +
-  labs(
-    title = "GC content by phylum and association status",
-    x     = "Associated",
-    y     = "GC content (%)"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(
-    legend.position = "none",
-    axis.text.x     = element_text(angle = 30,
-                                   hjust  = 1)
-  )
+# Create plot
+phylum_prop_plot <-
+  genome_metadata_aug |>
+    count(Phylum, endometriosis_associated) |>
+    group_by(Phylum) |>
+    mutate(prop = n / sum(n)) |>
+    ggplot(aes(x = Phylum,
+               y = prop,
+               fill = endometriosis_associated)) +
+    geom_col(width = 0.7) +
+    scale_fill_brewer(palette = "Set1") +
+    labs(
+      title = "Proportion of endometriosis-associated MAGs within each phylum",
+      x = "Phylum",
+      y = "Proportion",
+      fill = "Associated"
+    ) +
+    theme_minimal(base_size = 13) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Saving the plot 
+ggsave(filename = "../results/analysis3_phylum_proportion.png",
+       plot = phylum_prop_plot,
+       width = 120,
+       height = 90,
+       units = "mm")
+
 
 ```
 
@@ -103,29 +126,37 @@ Together, these results indicate that endometriosis-associated MAGs are a taxono
 We first compare the GC-content distributions between MAGs belonging to endometriosis-associated genera and those not linked to endometriosis. GC content can reflect long-term evolutionary pressures, so any systematic shift between the two groups could indicate deeper genomic differences.
 
 ```{r}
-genome_metadata_aug |>
-  ggplot(aes(x    = endometriosis_associated,
-             y    = GC_content,
-             fill = endometriosis_associated)) +
-  geom_violin(trim  = FALSE,
-              alpha = 0.5) +
-  geom_boxplot(width        = 0.18,
-               outlier.size = 0.7,
-               alpha        = 0.9,
-               colour       = "black") +
-  scale_fill_brewer(palette = "Set2") +
-  labs(
-    x     = "Endometriosis-associated genus",
-    y     = "GC content (%)",
-    title = "GC content distributions by endometriosis association"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(legend.position = "none")
+# Create plot
+gc_violin_plot <-
+  genome_metadata_aug |>
+    ggplot(aes(x = endometriosis_associated,
+               y = GC_content,
+               fill = endometriosis_associated)) +
+    geom_violin(trim = FALSE, alpha = 0.5) +
+    geom_boxplot(width = 0.18,
+                 outlier.size = 0.7,
+                 alpha = 0.9,
+                 colour = "black") +
+    scale_fill_brewer(palette = "Set2") +
+    labs(
+      x = "Endometriosis-associated genus",
+      y = "GC content (%)",
+      title = "GC content distributions by endometriosis association"
+    ) +
+    theme_minimal(base_size = 13) +
+    theme(legend.position = "none")
+
+# Saving the plot
+ggsave(filename = "../results/analysis3_gc_violin.png",
+       plot = gc_violin_plot,
+       width = 120,
+       height = 90,
+       units = "mm")
 
 
 ```
 
-The distributions show substantial overlap between the groups. Endometriosis-associated MAGs have a slightly lower median GC content, but the difference is modest and the overall ranges are similar. This indicates that GC composition does not clearly distinguish taxa associated with endometriosis.
+The distributions show substantial overlap between the groups. Endometriosis-associated MAGs have a slightly lower median GC content, but the difference is modest and the overall ranges are similar. This indicates that GC composition does not clearly distinguish taxa associated with endometriosis. GC-content distributions are nearly identical, indicating no genomic differences between endometriosis-associated and non-associated MAGs.
 
 ## 5. Genome length comparison
 
@@ -197,6 +228,4 @@ Using genera previously linked to endometriosis in vaginal microbiome studies, w
 
 ## **7. Conclusion**
 
-The comparative genomic analysis shows that endometriosis-associated MAGs do not form a distinct genomic subgroup within the vaginal microbiome. A phylum-level examination revealed that associated MAGs are concentrated within the major vaginal phyla (*Actinomycetota*, *Bacillota*, and *Bacteroidota*), whereas non-associated MAGs span the full phylogenetic diversity of the dataset. This taxonomic structure explains much of the similarity observed between groups: GC content, genome length, completeness, and contamination all showed broad overlap when comparing associated and non-associated MAGs, and within-phylum comparisons confirmed that these features do not differ meaningfully after accounting for phylogeny.
-
-Together, these findings indicate that the relevance of certain genera to endometriosis is not driven by major genomic differences or altered genome architecture. Instead, their association likely reflects ecological patterns—such as differences in abundance, colonisation, or community composition—rather than genomic specialisation. The dataset appears robust, with consistent MAG quality and biologically coherent taxonomic structure, supporting the reliability of the downstream analyses.
+This analysis describes a comparative genomic evaluation showing that taxa associated with endometriosis are not genetically unique but simply part of expected vaginal microbial diversity, and their association with the disease likely arises from ecological, not genomic, differences.

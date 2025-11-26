@@ -62,7 +62,7 @@ genome_metadata_aug |>
   count(Phylum, sort = TRUE)
 ```
 
-## 4.2 Barplot of phyla (Til præsentation)
+## 4.2 Barplot of phyla
 
 Plotting the different Phylums in the dataset
 
@@ -90,7 +90,7 @@ The most represented phyla reflect the typical composition of the human vaginal 
 
 In metagenomics, the reliability of a reconstructed genome depends on two key metrics: completeness (how much of the genome is recovered) and contamination (how much foreign DNA is incorrectly included). To facilitate interpretation, we also use categorical quality variables derived from these continuous measures: Completeness_quality, Contamination_quality, and Overall_quality. Together, these metrics provide an overview of the assembly reliability and the overall quality of the MAG catalogue.
 
-## 6.1 Distribution of completeness (Til præsentation)
+## 6.1 Distribution of completeness
 
 We first examine the distribution of completeness values across all MAGs. Completeness estimates the proportion of the genome recovered during assembly, with higher values indicating more complete and reliable genomes.
 
@@ -125,7 +125,7 @@ genome_metadata_aug |>
 
 The distribution shows that genome completeness is generally high, with many MAGs exceeding 80–90%. This suggests that the majority of genomes in the dataset are sufficiently complete for downstream biological analyses.
 
-## 6.2 Distribution of contamination (Til præsentation)
+## 6.2 Distribution of contamination
 
 Next, we assess contamination levels, which reflect how much non-target DNA is mistakenly included in each MAG. Low contamination is essential for ensuring that each genome represents a single biological organism.
 
@@ -378,7 +378,7 @@ genome_metadata_aug |>
 
 Only a subset of genomes includes geographic information, indicating incomplete metadata coverage. This is common in public metagenomic datasets, where sample-associated metadata is often missing or inconsistently reported. The absence of geographic context for many genomes limits the extent to which biogeographical conclusions can be drawn.
 
-## 9.2 Genomes per country (Til præsentation)
+## 9.2 Genomes per country
 
 For genomes where geographic information is available, we summarize the number of genomes contributed from each country
 

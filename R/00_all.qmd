@@ -18,10 +18,10 @@ The aim of this project is to clean, explore, and analyse the genome meta-data-s
 In this project we will:
 
 1.  Tidy and standardize the raw meta-data-set by addressing missing values, harmonizing column formats, and parsing the hierarchical taxonomic lineage into separate levels (phylum to species).
-2.  Investigate genome quality metrics such as completeness, contamination, GC content, and genome length to identify potential biases or systematic differences among bacterial groups.
-3.  Explore taxonomic composition, visualizing which phyla and genera dominate the vaginal microbiome MAG catalogue.
-4.  Assess ecological trends, such as whether smaller or low-GC genomes correspond to specific bacterial taxa or ecological roles within the vaginal environment.
-5.  Examine geographical metadata to identify sampling biases or gaps across studies or regions.
+2.  Describe the cleaned and augmented dataset, including basic summaries of genome quality, taxonomy, and geography.
+3.  Perform exploratory analyses of genome quality and taxonomic composition
+4.  Analyse whether endometriosis-associated MAGs are genomically distinct from non-associated MAGs
+5.  Investigate geographical patterns in taxonomic composition and endometriosis association across countries using heatmaps, PCA and statistical tests
 
 Through these analyses, we aim to gain a deeper understanding of the genomic diversity of the vaginal microbiome, while showcasing the entire data science workflow using the tidyverse systems in R.
 
@@ -66,7 +66,7 @@ quarto_render("03_augment.qmd")
 
 # 7. Describe
 
-Described the cleaned data.
+Describes the cleaned data.
 
 ```{r}
 #| echo: false
@@ -76,8 +76,28 @@ quarto_render("04_describe.qmd")
 
 # 8. Analysis 1
 
-`05_analysis_1.qmd`: Here goes your first analysis
+```{r}
+#| echo: false
+#| eval: true
+quarto_render("05_analysis_1.qmd")
+```
 
 # 9. Analysis 2
 
-`06_analysis_2.qmd`: Here goes your second analysis and so on
+```{r}
+#| echo: false
+#| eval: true
+quarto_render("06_analysis_2.qmd")
+```
+
+# 10. Analysis 3
+
+Comparative Analysis of Endometriosis-Associated vs Non-Associated MAGs
+
+```{r}
+#| echo: false
+#| eval: true
+quarto_render("07_analysis_3.qmd")
+```
+
+# 11. Analysis 4
