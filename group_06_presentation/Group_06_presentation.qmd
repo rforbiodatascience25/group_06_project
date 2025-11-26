@@ -19,6 +19,14 @@ format:
 Editor: Visual
 ---
 
+```{r setup, include=FALSE}
+# Prevent X11 errors on headless servers
+options(bitmapType = "cairo")
+
+# Use PNG for all figures (safe with Cairo)
+knitr::opts_chunk$set(dev = "png")
+```
+
 ```{r}
 library("tidyverse")
 library("readr")
@@ -34,17 +42,9 @@ Bare for at vide de ting vi kan bruge i præsentations-dokumentet. Her skriver j
 ## Study Description
 
 ::: incremental
--   Dataset: The genome meta-data-set from the human vaginal microbiome.
--   Aim: Uncover patterns in genome quality, taxonomic composition, and ecological characteristics, while demonstrating the principles of reproducible and collaborative data science in R.
+-   Dataset:
+-   Aim
 :::
-
-### Pause
-
-content before the pause
-
-. . .
-
-content after the pause
 
 ## Examples:
 
@@ -126,26 +126,30 @@ Some additional commentary of more peripheral interest.
 
 ## Study Description
 
-Meta-data from MGnify’s **vaginal microbiome** genome catalogue
+-   Meta-data from **MGnify’s** **vaginal microbiome** genome catalogue
 
 -   Uncover patterns in genome quality, taxonomic composition, and ecological characteristics.
 
--   Uncover potential patterns for diagnosis of endometriosis via associated pathogens:
+-   Investigate potential patterns for diagnosis of endometriosis via associated pathogens:
 
-```         
--   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia[^2]* 
-```
+    -   Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia [^2]
 
-<!-- -->
+-   Raw data:
 
-## **Untidy –\> tidy data**
+-   
+
+[^2]: MacSharry, J., Kovács, Z., Xie, Y. *et al.* Endometriosis specific vaginal microbiota links to urine and serum *N*-glycome. *Sci Rep* **14**, 25372 (2024). https://doi.org/10.1038/s41598-024-76125-2
+
+## Untidy -\> tidy data {.scrollable}
 
 :::: {style="margin-top: -15px; margin-bottom: -15px;"}
 ::: {style="line-height: 1.1;"}
-1.  *Each variable is saved in its own column.*\
-2.  *Each observation is saved in its own row.*\
-3.  *Each "type" of observation is stored in a single table.*
-4.  Replace with NA\
+1.  Splitting the data in the "lineage" variable into multiple variables of the phylogenetic classes into seven taxonomic ranks.
+2.  Covert all "not provided" to NA.
+3.  Extract each taxonomic rank and remove prefixes.
+4.  Convert empty strings to NA in the new taxonomy columns.
+5.  Remove the GTDB suffixes (e.g. "\_A") to streamline taxonomies.
+6.  Remove columns that will not be used in our analysis.
 :::
 ::::
 
@@ -153,56 +157,82 @@ Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 ### Untidy datafile
 
 ```{r}
-#| echo: false   
-print(readr::read_tsv(here("data/_raw/genomes-all_metadata.tsv")))
+#| echo: true
+print(readr::read_tsv(
+  here::here("/net/pupil1/home/people/s215111/Exercises_from_class/Projects/group_06_project/data/_raw/genomes-all_metadata.tsv")))
 ```
 
-### Tidy data after augmentation
+### Lineages
 
 ```{r}
-#| echo: false   
-print(readr::read_tsv(here("data/03_dat_aug.tsv")))
+#| echo: true
+untidy_data <- readr::read_tsv(
+  here::here("/net/pupil1/home/people/s215111/Exercises_from_class/Projects/group_06_project/data/_raw/genomes-all_metadata.tsv")) 
+  print(
+    untidy_data  |>
+    dplyr::select(Lineage) |>
+    dplyr::slice_head(n = 10))
+```
+
+### Tidy data
+
+```{r}
+#| echo: true
+print(readr::read_tsv(here("/net/pupil1/home/people/s215111/Exercises_from_class/Projects/group_06_project/data/02_dat_clean.tsv"))) 
 ```
 :::
 
-## Results
+## Augmentation of the data {.scrollable}
 
-::: panel-tabset
-# \## Results 1
+-   Yes/no inserted
 
-## Description of data
+```{r}
+2+2
 
-## Analysis 1
+```
 
-måske nogle plots
+## Data analysis
 
-## Analysis 2
+## Data description {.scrollable}
 
-måske nogle plots
+-   Beskrivelse af data
 
-## Analysis 3
+-   plots
 
-måske nogle plots
+-   punkt 3
 
-## Analysis 4
+![](images/completeness_contamination_plot.png){.small-figure fig-align="center"}
 
-måske nogle plots
+## Data analysis: Completeness vs. contamination
 
-## Analysis 5
+![Tester lige hvordan caption ser ud](images/completeness_contamination_plot.png){.small-figure fig-align="center"}
 
-måske nogle plots
+## Data analysis: Phylogenetic tree
 
-## Discussion
+![](images/phylogenetic_tree_plot-01.png){.small-figure fig-align="center"}
 
-Hvis vi har nogle punkter her
+## Data analysis: Endometriosis association
 
-Fx noget vi skulle have gjort anderledes
+![](images/completeness_contamination_plot.png){.small-figure}
 
-eller mangler/begrænsninger i datasættet
+## Data analysis: Heatmap
 
-## Future Perspectives
+![](images/completeness_contamination_plot.png){.small-figure}
 
-Hvad kan det bruges til
+## Data analysis: PCA
 
-Hvad kunne have været nice at lave ellers.
+![](images/completeness_contamination_plot.png){.small-figure}
+
+## Data analysis: p value
+
+![](images/phylogenetic_tree_plot.png){.small-figure}
+
+## Discussion and conclusion
+
+::: incremental
+-   Are there any significant relationship between the vaginal microbiota and endometriosis?
+-   
+-   Aim
 :::
+
+## 
