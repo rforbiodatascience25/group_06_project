@@ -99,15 +99,11 @@ genome_metadata_clean <- genome_metadata |>
     -Study_accession,
     -FTP_download
   )
-
-
 ```
-
-We then remove the GTDB suffixes (e.g. "\_A") to streamline taxonomies. We also remove the
 
 ## Viewing the data
 
-Vieweing the top 10 rows of the split data to see the new structure.
+Viewing the top 10 rows of the split data to see the new structure.
 
 ```{r}
 genome_metadata_clean |> 
