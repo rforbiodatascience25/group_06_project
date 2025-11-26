@@ -297,3 +297,85 @@ chisq.test(tbl, simulate.p.value = TRUE, B = 1e6)
 ```
 
 The difference in distribution of species between countries is not significant, as the p-value is 0.6
+
+# Endometriosis chi-square test¨
+
+Check that the data contains the variable of interest:
+
+```{r}
+names(genomes_country)
+```
+
+Creating a table that contains the information about the country and the endometriosis association:
+
+```{r}
+tab <- table(
+  Country = genomes_country$Country,
+  Endometriosis = genomes_country$endometriosis_associated
+)
+tab
+prop.table(tab, margin = 1)
+```
+
+Performing a chi-square test to see
+
+```{r}
+chi_res <- chisq.test(tab)
+
+chi_res
+chi_res$expected  # expected counts under H0
+
+```
+
+```{r}
+fisher_res <- fisher.test(tab)
+
+fisher_res
+
+```
+
+```{r}
+pairwise.prop.test(
+  x = table(genomes_country$Country, genomes_country$endometriosis_associated),
+  p.adjust.method = "holm"
+)
+
+
+```
+
+```{r}
+countries <- c("USA", "China")
+
+tab <- table(
+  genomes_country$Country[genomes_country$Country %in% countries],
+  genomes_country$endometriosis_associated[genomes_country$Country %in% countries]
+)
+
+tab
+fisher.test(tab)
+
+```
+
+```{r}
+countries <- c("USA", "Denmark")
+
+tab <- table(
+  genomes_country$Country[genomes_country$Country %in% countries],
+  genomes_country$endometriosis_associated[genomes_country$Country %in% countries]
+)
+
+fisher.test(tab)
+```
+
+```{r}
+countries <- c("Denmark", "China")
+
+tab <- table(
+  genomes_country$Country[genomes_country$Country %in% countries],
+  genomes_country$endometriosis_associated[genomes_country$Country %in% countries]
+)
+
+fisher.test(tab)
+```
+
+> > > > > > > 2acccb6c3780f7ea4cb4261207f8df3e24f536e3
