@@ -298,7 +298,7 @@ chisq.test(tbl, simulate.p.value = TRUE, B = 1e6)
 
 The difference in distribution of species between countries is not significant, as the p-value is 0.6
 
-# Endometriosis chi-square test¨
+# Endometriosis chi-square test
 
 Check that the data contains the variable of interest:
 
@@ -377,5 +377,3 @@ tab <- table(
 
 fisher.test(tab)
 ```
-
-> > > > > > > 2acccb6c3780f7ea4cb4261207f8df3e24f536e3
