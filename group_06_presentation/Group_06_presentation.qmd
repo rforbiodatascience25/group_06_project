@@ -16,7 +16,7 @@ format:
     smaller: true
     scroll: true
     transition: slide
-Editor: Visual
+editor: visual
 ---
 
 ```{r}
@@ -138,9 +138,9 @@ Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 
 :::: {style="margin-top: -15px; margin-bottom: -15px;"}
 ::: {style="line-height: 1.1;"}
-1.  *Each variable is saved in its own column.*\
-2.  *Each observation is saved in its own row.*\
-3.  *Each "type" of observation is stored in a single table.*\
+1.  *Each variable is saved in its own column.*
+2.  *Each observation is saved in its own row.*
+3.  *Each "type" of observation is stored in a single table.*
 :::
 ::::
 
@@ -173,7 +173,7 @@ print(readr::read_tsv(here("data/03_dat_aug.tsv")))
 
 ## Analyse 2
 
-## Analyse 3 - Are endometriosis-associated MAGs genomically distinct?
+## Analysis 3 – Are endometriosis-associated MAGs genomically distinct?
 
 ::::: columns
 ::: column
@@ -181,22 +181,22 @@ Do endometriosis-associated MAGs differ genomically from non-associated MAGs?
 
 **Data & features compared**
 
--   GC content\
--   Genome length\
--   Completeness & contamination\
+-   GC content
+-   Genome length
+-   Completeness & contamination
 -   Phylum distribution
 
 **Key findings**
 
--   Associated MAGs occur mainly in a few major phyla\
--   GC content overlaps almost completely between groups\
--   Genome size shows no separation\
--   Assembly quality is equally high for both groups
+-   Endometriosis-associated MAGs occur mainly in a few major phyla
+-   GC content distributions overlap almost completely between groups
+-   Genome sizes show no clear separation
+-   Assembly quality is similarly high in both groups
 
 **Conclusion**
 
--   No clear genomic differences between groups\
--   Endometriosis association is likely ecological, not genomic
+-   No clear genomic differences between endometriosis-associated and non-associated MAGs
+-   
 :::
 
 ::: column
