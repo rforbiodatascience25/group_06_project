@@ -236,3 +236,18 @@ PCA_abundance_per_country(tree_group = "Phylum")
 ## 
 
 # Endometriosis test
+
+```{r}
+head(genomes_country)
+
+data <- genomes_country |> 
+  group_by(Country, Species) |>
+  summarise(count = n(), .groups = "drop") |> 
+  pivot_wider(names_from = Species,
+              values_from = count,
+              values_fill = 0)
+
+
+head(data)
+
+```
