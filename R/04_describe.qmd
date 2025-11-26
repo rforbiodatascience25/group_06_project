@@ -44,7 +44,19 @@ genome_metadata_aug |>
     values_to = "n_missing"
   ) |>
   arrange(desc(n_missing)) |>
-  slice_head(n = 6)
+  slice_head(n = 15) |>
+  ggplot(aes(x = reorder(variable, n_missing),
+             y = n_missing)) +
+  geom_col(fill = "#4C72B0") +
+  coord_flip() +
+  labs(
+    x     = "Variable",
+    y     = "Number of missing values",
+    title = "Missing data across variables"
+  ) +
+  theme_minimal(base_size = 13)
+
+
 ```
 
 Missing data is concentrated in four variables: Species, Country, Continent, and Genus. Species-level taxonomy is often unavailable for MAGs, explaining the high degree of missingness. Geographical metadata is also sparse in many public datasets, reflecting inconsistent reporting in the source studies. All other variables, including assembly metrics and higher taxonomic ranks, are fully complete.
@@ -68,18 +80,27 @@ Plotting the different Phylums in the dataset
 
 ```{r}
 genome_metadata_aug |>
-  mutate(Phylum = str_trim(as.character(Phylum))) |>
   filter(!is.na(Phylum)) |>
   count(Phylum, sort = TRUE) |>
-  ggplot(aes(x = fct_reorder(Phylum, n),
-             y = n)) +
-  geom_col(fill = "#4C72B0") +
-  coord_flip() +
+  mutate(Phylum = fct_reorder(Phylum, n)) |>
+  ggplot(aes(x = Phylum,
+             y = n,
+             fill = n)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label = n),
+            hjust = -0.1,
+            size  = 3) +
+  coord_flip(clip = "off") +
+  scale_fill_viridis_c(option = "C") +
   labs(
     x     = "Phylum",
     y     = "Number of genomes",
     title = "Number of genomes per phylum"
-  )
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(plot.margin = margin(5.5, 25, 5.5, 5.5))
+
+
 ```
 
 The most represented phyla reflect the typical composition of the human vaginal microbiome (Bacillota, Actinobacteriota). Less common phyla such as Patescibacteria appear at lower frequencies and may represent niche taxa or poorly sampled lineages.\
@@ -88,23 +109,68 @@ The most represented phyla reflect the typical composition of the human vaginal 
 
 In metagenomics, the reliability of a reconstructed genome depends on two key metrics: completeness (how much of the genome is recovered) and contamination (how much foreign DNA is incorrectly included). To facilitate interpretation, we also use categorical quality variables derived from these continuous measures: Completeness_quality, Contamination_quality, and Overall_quality. Together, these metrics provide an overview of the assembly reliability and the overall quality of the MAG catalogue.
 
-## 6.1 Distribution of completeness (Til præsentation)
+## 6.1 Completeness vs contamination
 
-We first examine the distribution of completeness values across all MAGs. Completeness estimates the proportion of the genome recovered during assembly, with higher values indicating more complete and reliable genomes.
+```{r}
+genome_metadata_aug |>
+  ggplot(aes(x = Completeness,
+             y = Contamination,
+             colour = Overall_quality)) +
+  geom_point(alpha = 0.7,
+             size  = 2) +
+  geom_vline(xintercept = 90,
+             linetype   = "dashed") +
+  geom_hline(yintercept = 5,
+             linetype   = "dashed") +
+  scale_colour_manual(
+    values = c(
+      "High"   = "#4C72B0",
+      "Medium" = "#dd8452",
+      "Low"    = "#55a868"
+    )
+  ) +
+  labs(
+    x       = "Completeness (%)",
+    y       = "Contamination (%)",
+    colour  = "Overall quality",
+    title   = "Joint distribution of completeness and contamination",
+    subtitle = "Dashed lines indicate 90% completeness and 5% contamination thresholds"
+  ) +
+  theme_minimal(base_size = 13)
+
+
+```
+
+The joint completeness–contamination plot shows a clear separation between high- and medium-quality MAGs. High-quality genomes (blue) cluster tightly above 90% completeness and near 0% contamination, falling well within commonly accepted quality thresholds. Medium-quality genomes (orange) show lower completeness (50–90%) and greater variability in contamination, though still generally below 2%.
+
+The dashed lines highlight the standard cutoffs of 90% completeness and 5% contamination. No genomes exceed the contamination threshold, indicating consistently clean assemblies. Overall, the plot confirms that the dataset is dominated by high-quality MAGs, with medium-quality genomes representing predictable decreases in completeness rather than problematic contamination.
+
+## 6.2 Distribution of completeness (Til præsentation)
+
+We examine the distribution of completeness values across all MAGs. Completeness estimates the proportion of the genome recovered during assembly, with higher values indicating more complete and reliable genomes.
 
 ```{r}
 genome_metadata_aug |>
   ggplot(aes(x = Completeness)) +
   geom_histogram(
-    bins  = 30,
-    fill  = "#4C72B0",
-    color = "white"
+    bins   = 35,
+    aes(y  = after_stat(density)),
+    fill   = "#4C72B0",
+    colour = "white",
+    alpha  = 0.8
   ) +
+  geom_density(linewidth = 1) +
+  geom_vline(xintercept = 90,
+             linetype   = "dashed") +
   labs(
-    x     = "Completeness (%)",
-    y     = "Number of genomes",
-    title = "Distribution of genome completeness"
-  )
+    x       = "Completeness (%)",
+    y       = "Density",
+    title   = "Genome completeness",
+    subtitle = "Dashed line = 90% threshold"
+  ) +
+  theme_minimal(base_size = 13)
+
+
 ```
 
 ```{r}
@@ -123,25 +189,36 @@ genome_metadata_aug |>
 
 The distribution shows that genome completeness is generally high, with many MAGs exceeding 80–90%. This suggests that the majority of genomes in the dataset are sufficiently complete for downstream biological analyses.
 
-## 6.2 Distribution of contamination (Til præsentation)
+## 6.3 Distribution of contamination (Til præsentation)
 
-Next, we assess contamination levels, which reflect how much non-target DNA is mistakenly included in each MAG. Low contamination is essential for ensuring that each genome represents a single biological organism.
+Next, we assess contamination levels. Low contamination is essential for ensuring that each genome represents a single biological organism.
 
 ```{r}
 genome_metadata_aug |>
   ggplot(aes(x = Contamination)) +
   geom_histogram(
-    bins  = 30,
-    fill  = "#4C72B0",
-    color = "white"
+    bins   = 30,
+    aes(y  = after_stat(density)),
+    fill   = "#dd8452",
+    colour = "white",
+    alpha  = 0.8
   ) +
+  geom_density(linewidth = 1) +
+  coord_cartesian(xlim = c(0, 10)) +
+  geom_vline(xintercept = 5,
+             linetype   = "dashed") +
   labs(
-    x     = "Contamination (%)",
-    y     = "Number of genomes",
-    title = "Distribution of genome contamination"
-  )
+    x       = "Contamination (%)",
+    y       = "Density",
+    title   = "Genome contamination",
+    subtitle = "Dashed line = 5% acceptable threshold"
+  ) +
+  theme_minimal(base_size = 13)
+
+
 ```
 
+<<<<<<< HEAD
 ```{r}
 genome_metadata_aug |>
   ggplot(aes(x = Contamination)) +
@@ -158,8 +235,11 @@ genome_metadata_aug |>
 
 Contamination values are generally very low, with most MAGs showing contamination close to 0%.\
 This indicates strong assembly quality and suggests that the majority of genomes fall within accepted thresholds for medium to high MAG quality.
+=======
+Contamination values are generally very low, with most MAGs showing contamination of 0% or close to 0%. This indicates strong assembly quality and suggests that the majority of genomes fall within accepted thresholds for medium to high MAG quality.
+>>>>>>> bb4e44e6d2ac4b8205886c90084e8519766d9ae2
 
-## 6.3 Completeness-based quality categories
+## 6.4 Completeness-based quality categories
 
 To simplify interpretation, completeness values are grouped into categorical quality assignments (e.g., high, medium, low).\
 
@@ -175,28 +255,42 @@ We visualize the distribution of completeness categories to assess the overall c
 ```{r}
 genome_metadata_aug |>
   count(Completeness_quality) |>
-  ggplot(aes(x = Completeness_quality,
-             y = n,
+  mutate(
+    prop  = n / sum(n),
+    label = scales::percent(prop, accuracy = 1)
+  ) |>
+  ggplot(aes(x    = "",
+             y    = prop,
              fill = Completeness_quality)) +
-  geom_col() +
+  geom_col(width  = 0.6,
+           colour = "white") +
+  geom_text(aes(label = label),
+            position = position_stack(vjust = 0.5),
+            size     = 4) +
+  coord_polar(theta = "y") +
   scale_fill_manual(
     values = c(
-      "High"   = "#4C72B0",  # blue
-      "Medium" = "#d62728",  # red
-      "Low"    = "#2ca02c"   # green
+      "High"   = "#4C72B0",
+      "Medium" = "#dd8452",
+      "Low"    = "#55a868"
     )
   ) +
   labs(
-    x     = "Completeness quality category",
-    y     = "Number of genomes",
-    title = "MAGs by completeness quality"
+    fill  = "Completeness quality",
+    title = "Completeness quality categories"
   ) +
+<<<<<<< HEAD
   theme_minimal(base_size = 13)
+=======
+  theme_void(base_size = 13)
+
+
+>>>>>>> bb4e44e6d2ac4b8205886c90084e8519766d9ae2
 ```
 
 Most genomes fall into the medium and high completeness categories, confirming the generally strong completeness characteristics observed in the continuous distribution.
 
-## 6.4 Contamination-based quality categories
+## 6.5 Contamination-based quality categories
 
 Similar to completeness, contamination values are grouped into quality categories. This provides a simplified overview of how many MAGs fall above or below contamination thresholds commonly used in MAG quality standards.
 
@@ -212,26 +306,40 @@ We visualize the distribution of contamination categories to assess the overall 
 ```{r}
 genome_metadata_aug |>
   count(Contamination_quality) |>
-  ggplot(aes(x = Contamination_quality,
-             y = n,
+  mutate(
+    prop  = n / sum(n),
+    label = scales::percent(prop, accuracy = 1)
+  ) |>
+  ggplot(aes(x    = "",
+             y    = prop,
              fill = Contamination_quality)) +
-  geom_col() +
+  geom_col(width  = 0.6,
+           colour = "white") +
+  geom_text(aes(label = label),
+            position = position_stack(vjust = 0.5),
+            size     = 4) +
+  coord_polar(theta = "y") +
   scale_fill_manual(
     values = c(
-      "High"   = "#4C72B0",   
-      "Medium" = "#d62728",   
-      "Low"    = "#2ca02c"    
+      "High"   = "#4C72B0",
+      "Medium" = "#dd8452",
+      "Low"    = "#55a868"
     )
   ) +
   labs(
-    x     = "Contamination quality category",
-    y     = "Number of genomes",
-    title = "MAGs by contamination quality"
+    fill  = "Contamination quality",
+    title = "Contamination quality categories"
   ) +
+<<<<<<< HEAD
   theme_minimal(base_size = 13)
+=======
+  theme_void(base_size = 13)
+
+
+>>>>>>> bb4e44e6d2ac4b8205886c90084e8519766d9ae2
 ```
 
-## 6.5 Overall MAG quality category
+## 6.6 Overall MAG quality category
 
 The overall quality category combines both completeness and contamination thresholds into a single metric. This provides the most useful summary when determining which genomes are suitable for specific downstream analyses.
 
@@ -245,6 +353,7 @@ We visualize the number of genomes in each overall quality category.
 ```{r}
 genome_metadata_aug |>
   count(Overall_quality) |>
+<<<<<<< HEAD
   ggplot(aes(x = Overall_quality,
              y = n,
              fill = Overall_quality)) +
@@ -255,11 +364,36 @@ genome_metadata_aug |>
       "Medium" = "#d62728",   
       "Low"    = "#2ca02c"    
     )) +
+=======
+  mutate(Overall_quality = fct_reorder(Overall_quality, n)) |>
+  ggplot(aes(x    = Overall_quality,
+             y    = n,
+             fill = Overall_quality)) +
+  geom_col(colour = "white") +
+  geom_text(aes(label = n),
+            vjust = -0.4,
+            size  = 3.2) +
+  scale_fill_manual(
+    values = c(
+      "High"   = "#4C72B0",
+      "Medium" = "#dd8452",
+      "Low"    = "#55a868"
+    )
+  ) +
+>>>>>>> bb4e44e6d2ac4b8205886c90084e8519766d9ae2
   labs(
     x     = "Overall MAG quality",
     y     = "Number of genomes",
     title = "Overall MAG quality categories"
+<<<<<<< HEAD
   )
+=======
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+
+
+>>>>>>> bb4e44e6d2ac4b8205886c90084e8519766d9ae2
 ```
 
 Most genomes fall into the medium and high overall quality categories, while only a small number are classified as low quality. This confirms that the dataset contains predominantly reliable MAGs that are suitable for biological interpretation. These quality categories can later be used to filter or stratify analyses depending on the research question.
@@ -278,18 +412,27 @@ Genome length is a basic but informative assembly metric. It varies across bacte
 genome_metadata_aug |>
   ggplot(aes(x = Length)) +
   geom_histogram(
-    bins  = 30,
-    fill  = "#4C72B0",
-    color = "white"
+    bins   = 35,
+    aes(y  = after_stat(density)),
+    fill   = "#4C72B0",
+    colour = "white",
+    alpha  = 0.8
+  ) +
+  geom_density(linewidth = 1) +
+  scale_x_log10(
+    labels = scales::label_number(scale_cut = scales::cut_si("b"))
   ) +
   labs(
-    x     = "Genome length (bp)",
-    y     = "Number of genomes",
+    x     = "Genome length (bp, log10)",
+    y     = "Density",
     title = "Distribution of genome lengths"
-  )
+  ) +
+  theme_minimal(base_size = 13)
+
+
 ```
 
-Genome sizes range from roughly 0.6 Mbp to more than 3 Mbp, which is typical for bacterial taxa found in the vaginal microbiome. Smaller genomes often reflect host-adapted or metabolically reduced bacteria, whereas larger genomes may indicate more metabolically versatile organisms. The observed range therefore aligns with expectations for vaginal microbial diversity and suggests no major abnormalities in genome size distributions.
+The genome lengths range from approx. 0.5 Mb to over 5 Mb, with most MAGs clustering between 1–3 Mb and peaking around 2 Mb. This is typical for common vaginal taxa such as *Lactobacillus*, *Gardnerella*, and *Prevotella*. Smaller genomes below 1 Mb likely reflect reduced, host-adapted lineages, while genomes above 3 Mb represent more versatile taxa. The multimodal density pattern indicates contributions from several phylogenetic groups. Overall, the distribution is biologically plausible and consistent with the taxonomic diversity of the vaginal microbiome.
 
 ## 7.2 Number of contigs
 
@@ -299,18 +442,23 @@ The number of contigs in a MAG reflects how fragmented the assembly is. A low nu
 genome_metadata_aug |>
   ggplot(aes(x = N_contigs)) +
   geom_histogram(
-    bins  = 30,
-    fill  = "#4C72B0",
-    color = "white"
+    bins   = 35,
+    fill   = "#55a868",
+    colour = "white",
+    alpha  = 0.85
   ) +
+  scale_x_log10() +
   labs(
-    x     = "Number of contigs",
+    x     = "Number of contigs (log10)",
     y     = "Number of genomes",
     title = "Distribution of contig counts"
-  )
+  ) +
+  theme_minimal(base_size = 13)
+
+
 ```
 
-The distribution shows substantial variation in contig counts across MAGs. While some genomes are assembled into relatively few contigs, others remain highly fragmented - a common characteristic of metagenomic assemblies. This variation highlights the importance of considering assembly fragmentation when interpreting genome structure and gene content.
+The distribution shows substantial variation in contig counts across MAGs. While some genomes are assembled into relatively few contigs, others remain highly fragmented, which is a common characteristic of metagenomic assemblies. This variation highlights the importance of considering assembly fragmentation when interpreting genome structure and gene content.
 
 ## 7.3 Length vs number of contigs
 
@@ -320,16 +468,27 @@ To further understand assembly quality, we explore the relationship between geno
 genome_metadata_aug |>
   ggplot(aes(x = Length,
              y = N_contigs)) +
-  geom_point(alpha = 0.5,
-             colour = "#4C72B0") +
+  geom_point(alpha = 0.4,
+             size  = 1.7) +
+  geom_smooth(method   = "loess",
+              se       = FALSE,
+              linewidth = 0.8) +
+  scale_x_log10(
+    labels = scales::label_number(scale_cut = scales::cut_si("b"))
+  ) +
+  scale_y_log10() +
   labs(
-    x     = "Genome length (bp)",
-    y     = "Number of contigs",
-    title = "Genome length vs fragmentation"
-  )
+    x     = "Genome length (bp, log10)",
+    y     = "Number of contigs (log10)",
+    title = "Genome length vs assembly fragmentation"
+  ) +
+  theme_minimal(base_size = 13)
+
+
+
 ```
 
-The scatterplot shows a loose association between genome length and the number of contigs, as expected. However, several outliers exhibit unusually high fragmentation relative to their genome size, which may indicate assembly challenges.
+Genome length and contig count show no strong linear relationship. The curve reveals a mild, nonlinear trend. Very small genomes (\<1 Mb) tend to be more fragmented, likely due to low coverage or challenging assembly of reduced genomes. Medium-sized genomes (1–2 Mb) generally have fewer contigs, reflecting more complete assemblies. At larger genome sizes (\>3 Mb), fragmentation increases again, which is typical for more complex or repetitive genomes. Overall, the pattern indicates that assembly fragmentation is influenced by genome size but also by other factors such as coverage, genomic complexity, and taxonomic variation.
 
 # 8. GC content
 
@@ -345,15 +504,25 @@ We begin by visualizing the distribution of GC content across all genomes. MAGs 
 genome_metadata_aug |>
   ggplot(aes(x = GC_content)) +
   geom_histogram(
-    bins  = 30,
-    fill  = "#4C72B0",
-    color = "white"
+    bins   = 35,
+    fill   = "#4C72B0",
+    colour = "white",
+    alpha  = 0.85
+  ) +
+  geom_vline(
+    xintercept = median(genome_metadata_aug$GC_content,
+                        na.rm = TRUE),
+    linetype   = "dashed"
   ) +
   labs(
-    x     = "GC content (%)",
-    y     = "Number of genomes",
-    title = "Distribution of GC content"
-  )
+    x       = "GC content (%)",
+    y       = "Number of genomes",
+    title   = "Distribution of GC content",
+    subtitle = "Dashed line = median GC"
+  ) +
+  theme_minimal(base_size = 13)
+
+
 ```
 
 GC content across the genomes spans a broad range-from approximately 25% up to more than 70%, indicating substantial genomic diversity within the vaginal microbiome. Most genomes cluster in the intermediate GC range (35–50%), which is typical for many common vaginal taxa, including Lactobacillus, Gardnerella, and Prevotella.
@@ -389,19 +558,47 @@ We visualize the distribution of genomes across continents to highlight sampling
 
 ```{r}
 genome_metadata_aug |>
+<<<<<<< HEAD
   count(Country) |>
   ggplot(aes(x = Country,
              y = n)) +
   geom_col(aes(fill = Country)) +
+=======
+  filter(!is.na(Continent)) |>
+  count(Continent, sort = TRUE) |>
+  mutate(Continent = fct_reorder(Continent, n)) |>
+  ggplot(aes(x    = Continent,
+             y    = n,
+             fill = n)) +
+  geom_col(show.legend = FALSE,
+           colour      = "white") +
+  geom_text(aes(label = n),
+            hjust = -0.1,
+            size  = 3.2) +
+  coord_flip(clip = "off") +
+  scale_fill_viridis_c(option = "D") +
+>>>>>>> bb4e44e6d2ac4b8205886c90084e8519766d9ae2
   labs(
     x     = "Country",
     y     = "Number of genomes",
+<<<<<<< HEAD
     title = "Number of genomes per country"
   )
 ```
 
 The geographic distribution of genomes is uneven, with certain countries (USA and china) contributing the majority of available data. This reflects sampling bias, where research efforts and sequencing initiatives are concentrated in specific regions.
+=======
+    title = "Genomes per continent"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(plot.margin = margin(5.5, 25, 5.5, 5.5))
+
+
+```
+
+The geographic distribution of genomes is uneven, with USA contributing the majority of available data. This reflects sampling bias, where research are concentrated in specific regions.
+>>>>>>> bb4e44e6d2ac4b8205886c90084e8519766d9ae2
 
 # 10. Descriptive summary
 
-Overall, the dataset contains 618 vaginal MAGs with high completeness, low contamination, and diverse taxonomic representation. Genome features such as size and GC content fall within biologically plausible ranges. Missing values are limited primarily to species-level taxonomy and geographical metadata. The dataset is therefore well-suited for downstream comparative analyses, including quality assessment across taxa, genome feature correlations, and ecological interpretation.
+Overall, the dataset contains 618 vaginal MAGs with high completeness, low contamination, and diverse taxonomic representation. Genome features such as size and GC content fall within biologically plausible ranges. Missing values are limited primarily to species-level taxonomy and geographical metadata. The dataset is therefore well-suited for comparative analyses.

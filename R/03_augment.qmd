@@ -94,19 +94,25 @@ endo_genera <- c(
   "Veillonella",
   "Corynebacterium",
   "Peptoniphilus",
-  "Candida albicans", 
+  "Candida albicans",
   "Alloscardovia"
 )
 
-
 genome_metadata_aug <- genome_metadata_aug |>
   dplyr::mutate(
-    endometriosis_associated = Genus %in% endo_genera
+    endometriosis_associated = dplyr::case_when(
+      Genus %in% endo_genera ~ "Yes",
+      TRUE                   ~ "No"
+    )
   )
-
 
 genome_metadata_aug |>
   dplyr::count(endometriosis_associated)
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> bb4e44e6d2ac4b8205886c90084e8519766d9ae2
 ```
 
 # 6. Saving the data
