@@ -57,6 +57,7 @@ completeness_contamination_plot <- ggplot(
     legend.title = element_text(face = "bold")
   )
 
+completeness_contamination_plot
 ggsave("../results/completeness_contamination_plot.png", completeness_contamination_plot, width = 16, height = 9, dpi = 300)
 ```
 
