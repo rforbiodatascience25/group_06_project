@@ -159,7 +159,7 @@ Some additional commentary of more peripheral interest.
 ```{r}
 #| echo: true
 print(readr::read_tsv(
-  here::here("/net/pupil1/home/people/s215111/Exercises_from_class/Projects/group_06_project/data/_raw/genomes-all_metadata.tsv")))
+  here::here("data/_raw/genomes-all_metadata.tsv")))
 ```
 
 ### Lineages
@@ -167,7 +167,7 @@ print(readr::read_tsv(
 ```{r}
 #| echo: true
 untidy_data <- readr::read_tsv(
-  here::here("/net/pupil1/home/people/s215111/Exercises_from_class/Projects/group_06_project/data/_raw/genomes-all_metadata.tsv")) 
+  here::here("data/_raw/genomes-all_metadata.tsv")) 
   print(
     untidy_data  |>
     dplyr::select(Lineage) |>
@@ -178,7 +178,7 @@ untidy_data <- readr::read_tsv(
 
 ```{r}
 #| echo: true
-print(readr::read_tsv(here("/net/pupil1/home/people/s215111/Exercises_from_class/Projects/group_06_project/data/02_dat_clean.tsv"))) 
+print(readr::read_tsv(here::here("data/02_dat_clean.tsv"))) 
 ```
 :::
 
@@ -215,13 +215,23 @@ print(readr::read_tsv(here("/net/pupil1/home/people/s215111/Exercises_from_class
 
 ![](images/completeness_contamination_plot.png){.small-figure}
 
-## Data analysis: Heatmap
+## Data analysis: Species distribution in Countries {.scrollable}
 
-![](images/completeness_contamination_plot.png){.small-figure}
+Problem: variation in sample size --> Normalized
+Calculated frequency of each species per country and visualized with heatmap.
+To crowded for species, so did it at other levels:
 
-## Data analysis: PCA
+![](../results/Heatmap_family.png){.small-figure}
+![](../results/Heatmap_order.png){.small-figure}
+![](../results/Heatmap_phylum.png){.small-figure}
 
-![](images/completeness_contamination_plot.png){.small-figure}
+## Data analysis: PCA {.scrollable}
+OBS!!! skal lige have lavet hvid baggrund \n Og bedre format på andet plot
+
+![](../results/PCA_variance_explained.png){.small-figure}
+
+![](../results/PCA_biplot.png){.small-figure}
+
 
 ## Data analysis: p value
 
