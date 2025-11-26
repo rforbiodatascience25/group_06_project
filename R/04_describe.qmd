@@ -164,7 +164,6 @@ genome_metadata_aug |>
     title = "MAGs by completeness quality"
   ) +
   theme_minimal(base_size = 13)
-
 ```
 
 Most genomes fall into the medium and high completeness categories, confirming the generally strong completeness characteristics observed in the continuous distribution.
@@ -202,7 +201,6 @@ genome_metadata_aug |>
     title = "MAGs by contamination quality"
   ) +
   theme_minimal(base_size = 13)
-
 ```
 
 ## 6.5 Overall MAG quality category
@@ -220,15 +218,20 @@ We visualize the number of genomes in each overall quality category.
 genome_metadata_aug |>
   count(Overall_quality) |>
   ggplot(aes(x = Overall_quality,
-             y = n)) +
-  geom_col(fill = "#4C72B0") +
+             y = n,
+             fill = Overall_quality)) +
+  geom_col() +
+  scale_fill_manual(
+    values = c(
+      "High"   = "#4C72B0",   
+      "Medium" = "#d62728",   
+      "Low"    = "#2ca02c"    
+    )) +
   labs(
     x     = "Overall MAG quality",
     y     = "Number of genomes",
     title = "Overall MAG quality categories"
   )
-
-
 ```
 
 Most genomes fall into the medium and high overall quality categories, while only a small number are classified as low quality. This confirms that the dataset contains predominantly reliable MAGs that are suitable for biological interpretation. These quality categories can later be used to filter or stratify analyses depending on the research question.
@@ -345,31 +348,31 @@ genome_metadata_aug |>
 
 Only a subset of genomes includes geographic information, indicating incomplete metadata coverage. This is common in public metagenomic datasets, where sample-associated metadata is often missing or inconsistently reported. The absence of geographic context for many genomes limits the extent to which biogeographical conclusions can be drawn.
 
-## 9.2 Genomes per continent (Til præsentation)
+## 9.2 Genomes per country (Til præsentation)
 
-For genomes where geographic information is available, we summarize the number of genomes contributed from each continent
+For genomes where geographic information is available, we summarize the number of genomes contributed from each country
 
 ```{r}
 genome_metadata_aug |>
-  count(Continent, sort = TRUE)
+  count(Country, sort = TRUE)
 ```
 
 We visualize the distribution of genomes across continents to highlight sampling imbalances.
 
 ```{r}
 genome_metadata_aug |>
-  count(Continent) |>
-  ggplot(aes(x = Continent,
+  count(Country) |>
+  ggplot(aes(x = Country,
              y = n)) +
-  geom_col(fill = "#4C72B0") +
+  geom_col(aes(fill = Country)) +
   labs(
-    x     = "Continent",
+    x     = "Country",
     y     = "Number of genomes",
-    title = "Number of genomes per continent"
+    title = "Number of genomes per country"
   )
 ```
 
-The geographic distribution of genomes is uneven, with certain continents (USA and Asia) contributing the majority of available data. This reflects sampling bias, where research efforts and sequencing initiatives are concentrated in specific regions.
+The geographic distribution of genomes is uneven, with certain countries (USA and china) contributing the majority of available data. This reflects sampling bias, where research efforts and sequencing initiatives are concentrated in specific regions.
 
 # 10. Descriptive summary
 
