@@ -67,19 +67,6 @@ genome_metadata_aug |>
 Plotting the different Phylums in the dataset
 
 ```{r}
-cols <- c(
-  "Actinomycetota"   = "#FFFF00",
-  "Bacillota"        = "#e31a1c",
-  "Bacteroidota"     = "#FFE1FF",
-  "Campylobacterota" = "#33a02c",
-  "Fusobacteriota"   = "#ff7f00",
-  "Patescibacteria"  = "#D02090",
-  "Pseudomonadota"   = "#1f78b4",
-  "Synergistota"     = "#b15928",
-  "unclassified"     = "grey70",
-  "0"                = "grey80"   # branches whose descendants span >1 phylum
-)
-
 genome_metadata_aug |>
   mutate(Phylum = str_trim(as.character(Phylum))) |>
   filter(!is.na(Phylum)) |>
@@ -88,7 +75,6 @@ genome_metadata_aug |>
              y = n,
              fill = Phylum)) +
   geom_col() +
-  scale_fill_manual(values = cols) +
   theme(legend.position = "none") +
   coord_flip() +
   labs(
