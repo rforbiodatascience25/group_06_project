@@ -14,6 +14,7 @@ The dataset contains information the different phylogenetic classes, which can b
 #| warning: false
 library("tidyverse")
 library("ggtree")
+library("ape")
 ```
 
 ## Load data
