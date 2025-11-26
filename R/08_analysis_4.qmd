@@ -27,12 +27,11 @@ genomes_country <- genome_metadata_aug %>%
 
 # Functions
 
-## Function for normalizing data based on the dataset size
+## Function for preparing data and normalizing it based on the dataset size
 
 ```{r}
 normalize <- function(data, tree_group){
   
-  # Count how many times each group appears in each country
   group_freq <- genomes_country %>%
     group_by(Country, .data[[tree_group]]) %>%
     summarise(count = n(), .groups = "drop") %>%
@@ -237,3 +236,18 @@ PCA_abundance_per_country(tree_group = "Phylum")
 ## 
 
 # Endometriosis test
+
+```{r}
+head(genomes_country)
+
+data <- genomes_country |> 
+  group_by(Country, Species) |>
+  summarise(count = n(), .groups = "drop") |> 
+  pivot_wider(names_from = Species,
+              values_from = count,
+              values_fill = 0)
+
+
+head(data)
+
+```
