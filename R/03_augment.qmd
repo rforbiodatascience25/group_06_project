@@ -17,7 +17,6 @@ Loading the data saved in the 02_dat_clean.tsv file
 
 ```{r}
 genome_metadata_clean <- readr::read_tsv("../data/02_dat_clean.tsv")
-
 ```
 
 # 3. Augment data
@@ -53,7 +52,6 @@ quality_table <- genome_metadata_clean |>
     Contamination_quality,
     Overall_quality
   )
-
 ```
 
 The new data table is then joined with the cleaned data frame using left join.
@@ -109,7 +107,6 @@ genome_metadata_aug <- genome_metadata_aug |>
 
 genome_metadata_aug |>
   dplyr::count(endometriosis_associated)
-
 ```
 
 # 6. Saving the data
