@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "R/00_all.qmd": {
     "00_all.html": "282a1a1c"
   },
@@ -13,5 +14,12 @@
   },
   "R/04_describe.qmd": {
     "04_describe.html": "92949f2a"
+=======
+  "group_06_presentation/Group_06_presentation.qmd": {
+    "Group_06_presentation.html": "e9884e47"
+  },
+  "R/Phylogenetic_tree.qmd": {
+    "Phylogenetic_tree.html": "c09b7bae"
+>>>>>>> bb4e44e6d2ac4b8205886c90084e8519766d9ae2
   }
 }
