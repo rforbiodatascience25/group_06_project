@@ -6,12 +6,16 @@ format: html
 # Loading libraries
 
 ```{r}
+#| message: false
+#| warning: false
+
 library(tidyverse)
 library(pheatmap)
 library(broom)
 library(dplyr)
 library(ggplot2)
 library(ggrepel)
+library(stats)
 ```
 
 # Preparing dataset
@@ -21,6 +25,9 @@ library(ggrepel)
 From the augmented data, we'll remove the genomes without country information.
 
 ```{r}
+#| echo: false
+#| eval: true
+
 genomes_country <- genome_metadata_aug %>%
   filter(!is.na(Country))
 ```
@@ -29,7 +36,18 @@ genomes_country <- genome_metadata_aug %>%
 
 ## Function for preparing data and normalizing it based on the dataset size
 
+Defining a function to:
+
+-   Count the instances of each group per country.
+
+-   Normalize this count based on the sample size of that country.
+
+-   And convert the data into wide format for easier analysis.
+
 ```{r}
+#| echo: false
+#| eval: true
+
 normalize <- function(data, tree_group){
   
   group_freq <- genomes_country %>%
@@ -47,41 +65,43 @@ normalize <- function(data, tree_group){
 
 # Heatmap
 
-Defining a function to produce the heatmap.
+Defining a function to produce the heatmap based on a group in the lineage. First, the data is normalized by sample size for each country; then it is converted into a matrix, and columns with zero variance are removed. The function then produces a heatmap using the pheatmap function.
 
 ```{r}
+#| echo: false
+#| eval: true
 
-# Defining function for heatmap based on species, genus, family etc...
 heatmap_abundance_per_country <- function(tree_group){
   
-  # Check that the column exists
   if (!tree_group %in% names(genomes_country)) {
     stop(paste("Column", tree_group, "not found in genomes_country"))
   }
   
-  group_freq <- normalize(data = genomes_country, tree_group = tree_group)
+  group_freq <- normalize(data = genomes_country,
+                          tree_group = tree_group)
   
-  # Convert to matrix, using Country as rownames
-  group_freq_mat <- group_freq %>%
-    column_to_rownames("Country") %>%
+  group_freq_mat <- group_freq |>
+    column_to_rownames("Country") |> 
     as.matrix()
   
-  # Remove zero-variance columns
   group_freq_mat <- group_freq_mat[, apply(group_freq_mat, 2, sd) > 0, drop = FALSE]
   
-  # alternative without scaling:
-  pheatmap(group_freq_mat,
-           cluster_cols = TRUE,
-           scale = "none",
-           main = paste0(tree_group, " frequency per country (normalized)")
+  pheatmap::pheatmap(
+    mat = group_freq_mat,
+    cluster_cols = TRUE,
+    scale = "none",
+    main = paste0(tree_group, " frequency per country (normalized)")
   )
 }
 
 ```
 
-Using the function to produce heatmap
+Using the function to produce heatmap for the lineage groups Family, Order, and Phylum to ensure clearer plots.
 
 ```{r}
+#| echo: false
+#| eval: true
+
 heatmap_family <- heatmap_abundance_per_country(tree_group = "Family")
 heatmap_order <- heatmap_abundance_per_country(tree_group = "Order")
 heatmap_phylum <- heatmap_abundance_per_country(tree_group = "Phylum")
@@ -89,7 +109,11 @@ heatmap_phylum <- heatmap_abundance_per_country(tree_group = "Phylum")
 
 ## Saving results
 
+The resulting heatmaps are saved as png's to the results directory with appropriate sizes.
+
 ```{r}
+#| echo: false
+#| eval: true
 
 ggsave(
   filename = "../results/Heatmap_family.png",
@@ -119,50 +143,49 @@ ggsave(
 
 # Principal Component Analysis
 
-```{r}
-PCA_abundance_per_country <- function(tree_group) {
-  
+To investigate if there is a difference in the distribution of microbiomes between countries, a Prinicipal Component Analysis was carried out using the following function. To do this, the data was normalized based on the sample size for each country, after which it was analysed with the prcomp() function. From this fit, the results were extracted (eigenvalues and rotation matrix) and used to create a biplot of the loadings (p1) and determine the variance explained (plotted in p2). Both plots were saved to the results directory.
 
-  group_freq <- normalize(data = genomes_country, tree_group = tree_group)
-  
-  # Extract country names
+```{r}
+#| echo: false
+#| eval: true
+
+PCA_abundance_per_country <- function(tree_group) {
+
+  group_freq <- normalize(data = genomes_country,
+                          tree_group = tree_group)
+
   country_names <- group_freq$Country
   
-  # Remove Country column and run PCA on numeric data only
-  pca_fit <- group_freq %>% 
-    select(-Country) %>%  # Remove the Country column
-    scale() %>%            # scale data
-    prcomp()               # do PCA
+  pca_fit <- group_freq |> 
+    select(-Country) |> 
+    scale() |> 
+    stats::prcomp()
   
-  # Get variance explained
-  variance_explained <- pca_fit %>%
+  variance_explained <- pca_fit |> 
     tidy(matrix = "eigenvalues")
 
-  # Get rotation matrix (loadings)
-  rotation_matrix <- pca_fit %>%
+  rotation_matrix <- pca_fit |> 
     tidy(matrix = "rotation")
-  
-  # Get PCA scores and add country names back
-  pca_scores <- pca_fit %>%
-    augment(group_freq %>% select(-Country)) %>%
+
+  pca_scores <- pca_fit |> 
+    augment(group_freq |> 
+              select(-Country)) |> 
     mutate(Country = country_names)
   
-  # Calculate % variance for axis labels
   pc1_var <- round(variance_explained$percent[1] * 100, 1)
   pc2_var <- round(variance_explained$percent[2] * 100, 1)
   
-  # Prepare loadings for biplot (scale them for visualization)
-  loadings_biplot <- rotation_matrix %>%
-    filter(PC %in% c(1, 2)) %>%
-    pivot_wider(names_from = PC, values_from = value, names_prefix = "PC") %>%
+  loadings_biplot <- rotation_matrix |> 
+    filter(PC %in% c(1, 2)) |> 
+    pivot_wider(names_from = PC,
+                values_from = value,
+                names_prefix = "PC") |> 
     mutate(
-      PC1 = PC1 * 3,  # Scale factor for visibility (adjust as needed)
-      PC2 = PC2 * 3
-    )
+      PC1 = PC1 * 3,
+      PC2 = PC2 * 3)
   
-  # Plot 1: PCA biplot with countries AND species loadings
+  
   p1 <- ggplot() +
-    # Add country points and labels
     geom_point(data = pca_scores, 
                aes(x = .fittedPC1, y = .fittedPC2, color = Country), 
                size = 4,
@@ -172,7 +195,6 @@ PCA_abundance_per_country <- function(tree_group) {
               vjust = -1,
               size = 4,
               show.legend = FALSE) +
-    # Add loading arrows
     geom_segment(data = loadings_biplot,
                  aes(x = 0, y = 0, xend = PC1, yend = PC2),
                  arrow = arrow(length = unit(0.3, "cm")),
@@ -183,54 +205,50 @@ PCA_abundance_per_country <- function(tree_group) {
                     color = "gray10",
                     size = 3.5,
                     fontface = "italic",
-                    box.padding = 0.5,      # Space around labels
-                    point.padding = 0.3,    # Space from arrow tips
-                    segment.color = "gray60",  # Connection lines
+                    box.padding = 0.5,
+                    point.padding = 0.3,
+                    segment.color = "gray60",
                     segment.size = 0.3,
-                    max.overlaps = Inf) +   # Allow all labels
+                    max.overlaps = Inf) +
     labs(title = paste0("PCA Biplot: Countries + ", tree_group),
          x = paste0("PC1 (", pc1_var, "%)"),
          y = paste0("PC2 (", pc2_var, "%)")) +
-    theme_minimal() +
     theme(legend.position = "right",
-          plot.title = element_text(face = "bold"),
-          plot.background = element_rect(color = "white"))
-  
-  
-  # Plot 2: Scree plot (variance explained)
+          plot.title = element_text(face = "bold"))
+
+
   p2 <- ggplot(variance_explained, aes(x = PC, y = percent)) +
     geom_col(fill = "steelblue", alpha = 0.8) +
     scale_y_continuous(labels = scales::percent_format()) +
     labs(title = "Variance Explained by Each PC",
          x = "Principal Component",
          y = "Variance Explained (%)") +
-    theme_minimal() +
-    theme(plot.title = element_text(face = "bold"),
-          plot.background = element_rect(color = "white"))
+    theme(plot.title = element_text(face = "bold")
+          )
   
 
-  # ggsave
   ggsave(filename = "../results/PCA_biplot.png",
        plot = p1,
-       width = 100,
-       height = 70,
+       width = 250,
+       height = 160,
        units = "mm")
     
   ggsave(filename = "../results/PCA_variance_explained.png",
          plot = p2,
-         width = 100,
-         height = 70,
+         width = 110,
+         height = 90,
          units = "mm")
   
 }
 
 ```
 
-Running the function
+Running the function for Phylum, which has fewer variables, hence resulting in a clearer plot.
 
 ```{r}
+#| echo: false
+#| eval: true
 
-# Run the function
 PCA_abundance_per_country(tree_group = "Phylum")
 
 ```
@@ -242,6 +260,8 @@ PCA_abundance_per_country(tree_group = "Phylum")
 Simply counting the species (or another tree_group) per country.
 
 ```{r}
+#| echo: false
+#| eval: true
 
 counting_species <- function(data, tree_group){
   data |> 
@@ -261,6 +281,9 @@ Test if the distribution of species differs between countries. We use simulate.p
 ### For Species
 
 ```{r}
+#| echo: false
+#| eval: true
+
 data <- counting_species(data = genomes_country, tree_group = "Species")
 
 tbl <- as.matrix(data[ , -1])
@@ -275,7 +298,11 @@ The difference in distribution of species between countries is not significant a
 ### For Family
 
 ```{r}
-data <- counting_species(data = genomes_country, tree_group = "Family")
+#| echo: false
+#| eval: true
+
+data <- counting_species(data = genomes_country,
+                         tree_group = "Family")
 
 tbl <- as.matrix(data[ , -1])
 rownames(tbl) <- data$Country
@@ -289,7 +316,11 @@ The difference in distribution of species between countries is not significant a
 ### For Phylum
 
 ```{r}
-data <- counting_species(data = genomes_country, tree_group = "Phylum")
+#| echo: false
+#| eval: true
+
+data <- counting_species(data = genomes_country,
+                         tree_group = "Phylum")
 
 tbl <- as.matrix(data[ , -1])
 rownames(tbl) <- data$Country
@@ -307,12 +338,18 @@ To assess whether
 Check that the data contains the variable of interest:
 
 ```{r}
+#| echo: false
+#| eval: true
+
 names(genomes_country)
 ```
 
 Creating a table that contains the information about the country and the endometriosis association:
 
 ```{r}
+#| echo: false
+#| eval: true
+
 tab <- table(
   Country = genomes_country$Country,
   Endometriosis = genomes_country$endometriosis_associated
@@ -324,6 +361,9 @@ prop.table(tab, margin = 1)
 Performing a chi-square test to see
 
 ```{r}
+#| echo: false
+#| eval: true
+
 chi_res <- chisq.test(tab)
 
 chi_res
@@ -332,6 +372,9 @@ chi_res$expected  # expected counts under H0
 ```
 
 ```{r}
+#| echo: false
+#| eval: true
+
 fisher_res <- fisher.test(tab)
 
 fisher_res
@@ -339,6 +382,9 @@ fisher_res
 ```
 
 ```{r}
+#| echo: false
+#| eval: true
+
 pairwise.prop.test(
   x = table(genomes_country$Country, genomes_country$endometriosis_associated),
   p.adjust.method = "holm"
@@ -348,6 +394,9 @@ pairwise.prop.test(
 ```
 
 ```{r}
+#| echo: false
+#| eval: true
+
 countries <- c("USA", "China")
 
 tab <- table(
@@ -361,6 +410,9 @@ fisher.test(tab)
 ```
 
 ```{r}
+#| echo: false
+#| eval: true
+
 countries <- c("USA", "Denmark")
 
 tab <- table(
@@ -372,6 +424,9 @@ fisher.test(tab)
 ```
 
 ```{r}
+#| echo: false
+#| eval: true
+
 countries <- c("Denmark", "China")
 
 tab <- table(

@@ -145,8 +145,23 @@ print(readr::read_tsv(here("data/03_dat_aug.tsv")))
 
 ## ANALYSIS 4 - Species Distribution between countries {.scrollable}
 
+::: incremental
+-   Investigating the distribution of lineage groups in Countries
+-   Counted group instances for each country and wide format
+-   Filtered for NA in Countries
+-   Big difference in sample size --> normalize
+
+:::
+
+. . .
+
 ::: panel-tabset
 ## Heatmap
+
+Some variation between countries. I.e. Order Bacteroidales, but not much.
+
+Could've tested for significance.
+
 
 ![](../results/Heatmap_family.png){width="87%"} 
 ![](../results/Heatmap_order.png){width="87%"} 
@@ -156,8 +171,16 @@ print(readr::read_tsv(here("data/03_dat_aug.tsv")))
 
 ## Principal Component Analysis (PCA)
 
-![](../results/PCA_variance_explained.png){width="87%"} 
-![](../results/PCA_biplot.png){width="87%"} 
+Only two principal components --> 100% variance.
+
+![](../results/PCA_variance_explained.png){width="60%"} 
+
+Clear division of countries. 
+
+Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation with heatmap.
+
+
+![](../results/PCA_biplot.png){width="100%"} 
 :::
 
 
