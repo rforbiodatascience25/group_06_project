@@ -1,0 +1,206 @@
+---
+title: "Exploring meta-data of human vaginal microbiome"
+subtitle: "Group 6"
+author:
+  - Alberte Englund
+  - Mathilde Due
+  - Line Winther Gormsen
+  - Sigrid Frandsen
+  - Kristine Johansen
+  
+format: 
+  revealjs:
+    theme: moon
+    self-contained: true
+    code-line-numbers: true
+    smaller: true
+    scroll: true
+    transition: slide
+editor: visual
+---
+
+```{r}
+library("tidyverse")
+library("readr")
+library("broom")
+library("here")
+library("ggrepel")
+```
+
+## STUDY DESCRIPTION
+
+Meta-data from MGnify’s vaginal microbiome genome catalogue
+
+-   Uncover patterns in genome quality, taxonomic composition, and ecological characteristics.
+
+-   Uncover potential patterns for diagnosis of endometriosis via associated pathogens:
+
+    -   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia*
+
+## DATA CLEANING AND WRANGLING
+
+:::: {style="margin-top: -15px; margin-bottom: -15px;"}
+**Untidy –\> tidy data**
+
+::: {style="line-height: 1.1;"}
+1.  *Each variable is saved in its own column.*
+2.  *Each observation is saved in its own row.*
+3.  *Each "type" of observation is stored in a single table.*
+:::
+::::
+
+::: panel-tabset
+### Untidy datafile
+
+```{r}
+#| echo: false   
+print(readr::read_tsv(here("data/_raw/genomes-all_metadata.tsv")))
+```
+
+### Tidy data after augmentation
+
+```{r}
+#| echo: false   
+print(readr::read_tsv(here("data/03_dat_aug.tsv")))
+```
+:::
+
+
+## DATA DESCRIPTION {.scrollable}
+
+::: incremental
+- 618 vaginal metagenome-assembled genomes (MAGs)
+- 25 variables covering taxonomy, assembly quality, and geography
+- High completeness and low contamination for most genomes
+- Dataset dominated by a few major bacterial phyla
+- Genome lengths fall within biologically expected ranges
+:::
+
+. . .
+
+::: panel-tabset
+
+## Phylum distribution
+
+Most MAGs belong to only a few dominant phyla.  
+This indicates strong taxonomic skew in the dataset.
+
+![](../results/desc_phylum_barplot.png){width="80%"}
+
+---
+
+## Completeness distribution
+
+Most genomes have high completeness (>90%),  
+indicating generally strong assembly quality.
+
+![](../results/desc_completeness_hist.png){width="80%"}
+
+
+---
+
+## Genome length distribution
+
+Genome lengths fall within the expected biological range  
+for vaginal bacterial taxa (typically 1.5–3 Mb).
+
+![](../results/desc_length_hist.png){width="80%"}
+
+:::
+
+
+## ANALYSIS 1
+
+## ANALYSIS 2
+
+## ANALYSIS 3 - Associated and non-associated-endometriosis MAGs {.scrollable}
+
+::: incremental
+- Compared endometriosis-associated vs non-associated MAGs
+- Focused on GC content, genome length, completeness & contamination
+- Investigated whether associated MAGs cluster taxonomically
+- Goal: determine if associated MAGs form a genomically distinct group
+:::
+
+. . .
+
+::: panel-tabset
+
+## Phylum distribution
+
+Endometriosis-associated MAGs occur in only a few phyla.  
+Most phyla contain *no* associated MAGs, suggesting limited taxonomic clustering.
+
+![](../results/analysis3_phylum_proportion.png){width="80%"}
+
+---
+
+## GC content
+
+GC content ranges overlap almost completely.  
+No evidence that GC% distinguishes associated vs non-associated MAGs.
+
+![](../results/analysis3_gc_violin.png){width="80%"}
+
+:::
+
+
+
+
+
+## ANALYSIS 4 - Species Distribution between countries {.scrollable}
+
+::: incremental
+-   Investigating the distribution of lineage groups in Countries
+-   Counted group instances for each country and wide format
+-   Filtered for NA in Countries
+-   Big difference in sample size --> normalize
+
+:::
+
+. . .
+
+::: panel-tabset
+## Heatmap
+
+Some variation between countries. I.e. Order Bacteroidales, but not much.
+
+Could've tested for significance.
+
+
+![](../results/Heatmap_family.png){width="87%"} 
+![](../results/Heatmap_order.png){width="87%"} 
+![](../results/Heatmap_phylum.png){width="87%"} 
+
+
+
+## Principal Component Analysis (PCA)
+
+Only two principal components --> 100% variance.
+
+![](../results/PCA_variance_explained.png){width="60%"} 
+
+Clear division of countries. 
+
+Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation with heatmap.
+
+
+![](../results/PCA_biplot.png){width="100%"} 
+:::
+
+
+
+## DISCUSSION
+
+- High-quality MAGs with good completeness  
+- No strong genomic differences between groups  
+- Limited metadata and uneven sampling
+
+
+## FUTURE PERSPECTIVES
+
+- Improve clinical + geographic metadata  
+
+
+
+## CONCLUSION
