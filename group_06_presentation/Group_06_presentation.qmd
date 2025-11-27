@@ -27,106 +27,9 @@ library("here")
 library("ggrepel")
 ```
 
-## Examples:
+## STUDY DESCRIPTION
 
-Bare for at vide de ting vi kan bruge i præsentations-dokumentet. Her skriver jeg i **bold**. Her skriver jeg i *kursiv*. Her skriver jeg i ***bold og kursiv***. Her skriver jeg i [rød]{style="color: red;"}
-
-## Study Description
-
-::: incremental
--   Dataset: The genome meta-data-set from the human vaginal microbiome.
--   Aim: Uncover patterns in genome quality, taxonomic composition, and ecological characteristics, while demonstrating the principles of reproducible and collaborative data science in R.
-:::
-
-### Pause
-
-content before the pause
-
-. . .
-
-content after the pause
-
-## Examples:
-
-### Several columns
-
-::::: columns
-::: {.column width="40%"}
-Left column
-:::
-
-::: {.column width="60%"}
-Right column
-:::
-:::::
-
-## Examples: smaller text on slide {.smaller}
-
-slide so you can make things smaller if content can not fit. - Bullet Point 1
-
--   Bullet Point 2
-
--   Bullet Point 3
-
--   Bullet Point 4
-
--   Bullet Point 5
-
--   Bullet Point 6
-
-## Examples: scrollable slide {.scrollable}
-
-slide so you can scroll to see the rest of the content if to much. - Bullet Point 1
-
--   Bullet Point 2
-
--   Bullet Point 3
-
--   Bullet Point 4
-
--   Bullet Point 5
-
--   Bullet Point 6
-
--   Bullet Point 7
-
--   Bullet Point 8
-
--   Bullet Point 9
-
--   Bullet Point 10
-
--   Bullet Point 11
-
--   Bullet Point 12
-
--   Bullet Point 13
-
-## Asides and footnotes
-
-### Asides
-
-Slide content
-
-::: aside
-Some additional commentary of more peripheral interest.
-:::
-
-### Footnotes
-
--   Green [^1]
--   Brown
--   Purple
-
-[^1]: A footnote
-
-::: aside
-Some additional commentary of more peripheral interest.
-:::
-
-## Study Description
-
-Meta-data from MGnify’s **vaginal microbiome** genome catalogue
+Meta-data from MGnify’s vaginal microbiome genome catalogue
 
 -   Uncover patterns in genome quality, taxonomic composition, and ecological characteristics.
 
@@ -134,9 +37,11 @@ Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 
     -   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia*
 
-## **Untidy –\> tidy data**
+## DATA CLEANING AND WRANGLING
 
 :::: {style="margin-top: -15px; margin-bottom: -15px;"}
+**Untidy –\> tidy data**
+
 ::: {style="line-height: 1.1;"}
 1.  *Each variable is saved in its own column.*
 2.  *Each observation is saved in its own row.*
@@ -152,15 +57,6 @@ Meta-data from MGnify’s **vaginal microbiome** genome catalogue
 print(readr::read_tsv(here("data/_raw/genomes-all_metadata.tsv")))
 ```
 
-## About the data set / project
-
-Meta-data from MGnify’s **vaginal microbiome** genome catalogue
-
--   Something about our data
--   nogle distributions og måske plots til overview af vores data.
-
-## Cleaning of data
-
 ### Tidy data after augmentation
 
 ```{r}
@@ -169,83 +65,112 @@ print(readr::read_tsv(here("data/03_dat_aug.tsv")))
 ```
 :::
 
-## Analyse 1
+## DATA DESCRIPTION
 
-## Analyse 2
+**Overview of the dataset**
 
-## Analysis 3 – Are endometriosis-associated MAGs genomically distinct?
-
-::::: columns
-::: column
-Do endometriosis-associated MAGs differ genomically from non-associated MAGs?
-
-**Data & features compared**
-
--   GC content
--   Genome length
--   Completeness & contamination
--   Phylum distribution
-
-**Key findings**
-
--   Endometriosis-associated MAGs occur mainly in a few major phyla
--   GC content distributions overlap almost completely between groups
--   Genome sizes show no clear separation
--   Assembly quality is similarly high in both groups
-
-**Conclusion**
-
--   No clear genomic differences between endometriosis-associated and non-associated MAGs
--   
+::: {.smaller style="font-size:0.85em"}
+-   618 vaginal metagenome-assembled genomes (MAGs)\
+-   25 metadata variables (taxonomy, assembly stats, geography, quality)\
+-   High completeness and low contamination for most MAGs\
+-   Dominated by a few major bacterial phyla\
+-   Genome sizes fall within biologically expected ranges
 :::
 
-::: column
-![](../results/analysis3_phylum_proportion.png){width="100%"}
+:::::: columns
+::: {.column width="33%"}
+![](../results/desc_phylum_barplot.png){width="100%"} **Figure 1.** Genomes per phylum
+:::
 
-![](../results/analysis3_gc_violin.png){width="100%"}
+::: {.column width="33%"}
+![](../results/desc_completeness_hist.png){width="100%"} **Figure 2.** Completeness distribution
+:::
+
+::: {.column width="33%"}
+![](../results/desc_length_hist.png){width="100%"} **Figure 3.** Genome length distribution
+:::
+::::::
+
+## ANALYSIS 1
+
+## ANALYSIS 2
+
+## ANALYSIS 3 – Associated and non-associated-endometriosis MAGs
+
+::::::::: columns
+:::: {.column width="33%"}
+::: {.smaller style="font-size:0.75em"}
+**What we compared**
+
+-   GC content
+
+-   Genome length
+
+-   Completeness & contamination
+
+-   Phylum distribution
+:::
+::::
+
+:::: {.column width="33%"}
+::: {.smaller style="font-size:0.75em"}
+**Key results**
+
+-   Associated MAGs cluster in few phyla
+
+-   GC content and genome sizes overlap
+
+-   Assembly quality is similarly high
+:::
+::::
+
+:::: {.column width="33%"}
+::: {.smaller style="font-size:0.75em"}
+**Conclusion**
+
+-   Endometriosis-associated MAGs are not genomically distinct.
+:::
+::::
+:::::::::
+
+::::: columns
+::: {.column width="50%"}
+![](../results/analysis3_phylum_proportion.png){width="87%"} **Figure x.** Phylum proportion of MAGs
+:::
+
+::: {.column width="50%"}
+![](../results/analysis3_gc_violin.png){width="87%"} **Figure x.** GC content distribution
 :::
 :::::
 
-## Analyse 4
+## ANALYSIS 4
 
-## Results
+## DISCUSSION
 
 ::: panel-tabset
-# \## Results 1
+**Strengths**
 
-## Description of data
+-   d
 
-## Analysis 1
+**Limitations**
 
-måske nogle plots
+-   Limited clinical metadata
 
-## Analysis 2
+-   Sparse geographic information for some MAGs
+:::
 
-måske nogle plots
+## FUTURE PERSPECTIVES
 
-## Analysis 3
-
-måske nogle plots
-
-## Analysis 4
-
-måske nogle plots
-
-## Analysis 5
-
-måske nogle plots
-
-## Discussion
-
-Hvis vi har nogle punkter her
-
-Fx noget vi skulle have gjort anderledes
-
-eller mangler/begrænsninger i datasættet
-
-## Future Perspectives
-
+::::: panel-tabset
+::: panel-tabset
 Hvad kan det bruges til
 
 Hvad kunne have været nice at lave ellers.
 :::
+
+## CONLUSION
+
+::: panel-tabset
+Key conclusion
+:::
+:::::

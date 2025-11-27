@@ -32,7 +32,6 @@ Before comparing genomic features between endometriosis-associated and non-assoc
 The plot shows how many MAGs occur in each phylum and whether the two groups (associated vs non-associated) are taxonomically balanced.
 
 ```{r}
-
 phylum_prop_plot <-
   genome_metadata_aug |>
     count(Phylum, endometriosis_associated) |>
@@ -41,23 +40,37 @@ phylum_prop_plot <-
     ggplot(aes(x = Phylum,
                y = prop,
                fill = endometriosis_associated)) +
-    geom_col(width = 0.7) +
+    geom_col() +
     scale_fill_brewer(palette = "Set1") +
     labs(
-      title = "Proportion of endometriosis-associated MAGs within each phylum",
-      x = "Phylum",
-      y = "Proportion",
-      fill = "Associated"
+      title = "Proportion of endometriosis-\nassociated MAGs by phylum",
+      x     = "Phylum",
+      y     = "Proportion",
+      fill  = "Associated"
     ) +
-    theme_minimal(base_size = 13) +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+    theme_minimal(base_size = 9) +
+    theme(
+      plot.title      = element_text(size = 11, face = "bold", hjust = 0.5),
+      axis.title.x    = element_text(size = 10, margin = margin(t = 6)),
+      axis.title.y    = element_text(size = 10, margin = margin(r = 6)),
+      axis.text.x     = element_text(size = 8, angle = 45, hjust = 1),
+      axis.text.y     = element_text(size = 8),
+      legend.title    = element_text(size = 9),
+      legend.text     = element_text(size = 8),
 
-# Saving plot
-ggsave(filename = "../results/analysis3_phylum_proportion.png",
-       plot = phylum_prop_plot,
-       width = 120,
-       height = 90,
-       units = "mm")
+      plot.margin      = margin(t = 20, r = 12, b = 10, l = 10),
+      panel.background = element_rect(fill = "white", colour = NA),
+      plot.background  = element_rect(fill = "white", colour = NA)
+    )
+
+ggsave(
+  filename = "../results/analysis3_phylum_proportion.png",
+  plot     = phylum_prop_plot,
+  width    = 120,
+  height   = 90,
+  units    = "mm",
+  dpi      = 300
+)
 
 
 ```
@@ -87,46 +100,6 @@ The chi-square test shows a significant deviation from independence (p â‰ˆ 8.5 Ã
 To check whether GC differences between associated and non-associated MAGs are influenced by phylum-level structure, we compare GC content within each phylum.
 
 ```{r}
-# Create plot
-phylum_prop_plot <-
-  genome_metadata_aug |>
-    count(Phylum, endometriosis_associated) |>
-    group_by(Phylum) |>
-    mutate(prop = n / sum(n)) |>
-    ggplot(aes(x = Phylum,
-               y = prop,
-               fill = endometriosis_associated)) +
-    geom_col(width = 0.7) +
-    scale_fill_brewer(palette = "Set1") +
-    labs(
-      title = "Proportion of endometriosis-associated MAGs within each phylum",
-      x = "Phylum",
-      y = "Proportion",
-      fill = "Associated"
-    ) +
-    theme_minimal(base_size = 13) +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-# Saving the plot 
-ggsave(filename = "../results/analysis3_phylum_proportion.png",
-       plot = phylum_prop_plot,
-       width = 120,
-       height = 90,
-       units = "mm")
-
-
-```
-
-The faceted boxplots show that within each phylum, GC-content values are very similar between associated and non-associated MAGs. The only phyla that contain both groups (Actinomycetota and Bacillota) show overlapping GC distributions with no clear separation. All other phyla contain only non-associated MAGs. This confirms that any GC differences observed at the whole-dataset level are driven by phylogenetic structure, not by endometriosis association.
-
-Together, these results indicate that endometriosis-associated MAGs are a taxonomically restricted subset of the broader vaginal microbiome, and their genomic features are typical for their phyla. There is no evidence that endometriosis-associated genera form a genomically distinct lineage when accounting for taxonomy.
-
-## 4. GC content of endometriosis-associated genera
-
-We first compare the GC-content distributions between MAGs belonging to endometriosis-associated genera and those not linked to endometriosis. GC content can reflect long-term evolutionary pressures, so any systematic shift between the two groups could indicate deeper genomic differences.
-
-```{r}
-# Create plot
 gc_violin_plot <-
   genome_metadata_aug |>
     ggplot(aes(x = endometriosis_associated,
@@ -139,19 +112,84 @@ gc_violin_plot <-
                  colour = "black") +
     scale_fill_brewer(palette = "Set2") +
     labs(
-      x = "Endometriosis-associated genus",
-      y = "GC content (%)",
-      title = "GC content distributions by endometriosis association"
+      title = "GC content distributions by endometriosis association",
+      x     = "Endometriosis-associated genus",
+      y     = "GC content (%)"
     ) +
-    theme_minimal(base_size = 13) +
-    theme(legend.position = "none")
+    theme_minimal(base_size = 10) +
+    theme(
+      plot.title      = element_text(size = 10, face = "bold", hjust = 0.5),
+      axis.title.x    = element_text(size = 12, margin = margin(t = 8)),
+      axis.title.y    = element_text(size = 12, margin = margin(r = 8)),
+      axis.text.x     = element_text(size = 10),
+      axis.text.y     = element_text(size = 10),
+      legend.position = "none",
 
-# Saving the plot
-ggsave(filename = "../results/analysis3_gc_violin.png",
-       plot = gc_violin_plot,
-       width = 120,
-       height = 90,
-       units = "mm")
+      panel.background = element_rect(fill = "white", colour = NA),
+      plot.background  = element_rect(fill = "white", colour = NA)
+    )
+
+ggsave(
+  filename = "../results/analysis3_gc_violin.png",
+  plot     = gc_violin_plot,
+  width    = 120,
+  height   = 90,
+  units    = "mm",
+  dpi      = 300
+)
+
+```
+
+The faceted boxplots show that within each phylum, GC-content values are very similar between associated and non-associated MAGs. The only phyla that contain both groups (Actinomycetota and Bacillota) show overlapping GC distributions with no clear separation. All other phyla contain only non-associated MAGs. This confirms that any GC differences observed at the whole-dataset level are driven by phylogenetic structure, not by endometriosis association.
+
+Together, these results indicate that endometriosis-associated MAGs are a taxonomically restricted subset of the broader vaginal microbiome, and their genomic features are typical for their phyla. There is no evidence that endometriosis-associated genera form a genomically distinct lineage when accounting for taxonomy.
+
+## 4. GC content of endometriosis-associated genera
+
+We first compare the GC-content distributions between MAGs belonging to endometriosis-associated genera and those not linked to endometriosis. GC content can reflect long-term evolutionary pressures, so any systematic shift between the two groups could indicate deeper genomic differences.
+
+```{r}
+gc_violin_plot <-
+  genome_metadata_aug |>
+    ggplot(aes(x = endometriosis_associated,
+               y = GC_content,
+               fill = endometriosis_associated)) +
+    geom_violin(trim = FALSE, alpha = 0.5) +
+    geom_boxplot(
+      width        = 0.18,
+      outlier.size = 0.7,
+      alpha        = 0.9,
+      colour       = "black"
+    ) +
+    scale_fill_brewer(palette = "Set2") +
+    labs(
+      title = "GC content distributions\nby endometriosis association",
+      x     = "Endometriosis-associated genus",
+      y     = "GC content (%)"
+    ) +
+    theme_minimal(base_size = 9) +
+    theme(
+      plot.title      = element_text(size = 11, face = "bold", hjust = 0.5),
+      axis.title.x    = element_text(size = 10, margin = margin(t = 6)),
+      axis.title.y    = element_text(size = 10, margin = margin(r = 6)),
+      axis.text.x     = element_text(size = 8),
+      axis.text.y     = element_text(size = 8),
+
+      legend.position = "none",
+
+      plot.margin      = margin(t = 20, r = 12, b = 10, l = 10),
+      panel.background = element_rect(fill = "white", colour = NA),
+      plot.background  = element_rect(fill = "white", colour = NA)
+    )
+
+ggsave(
+  filename = "../results/analysis3_gc_violin.png",
+  plot     = gc_violin_plot,
+  width    = 120,
+  height   = 90,
+  units    = "mm",
+  dpi      = 300
+)
 
 
 ```

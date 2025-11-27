@@ -67,21 +67,35 @@ genome_metadata_aug |>
 Plotting the different Phylums in the dataset
 
 ```{r}
-genome_metadata_aug |>
-  mutate(Phylum = str_trim(as.character(Phylum))) |>
-  filter(!is.na(Phylum)) |>
-  count(Phylum, sort = TRUE) |>
-  ggplot(aes(x = fct_reorder(Phylum, n),
-             y = n,
-             fill = Phylum)) +
-  geom_col() +
-  theme(legend.position = "none") +
-  coord_flip() +
-  labs(
-    x     = "Phylum",
-    y     = "Number of genomes",
-    title = "Number of genomes per phylum"
-  )
+# Phylum barplot
+plot_phylum <-
+  genome_metadata_aug |>
+    mutate(Phylum = str_trim(as.character(Phylum))) |>
+    filter(!is.na(Phylum)) |>
+    count(Phylum, sort = TRUE) |>
+    ggplot(aes(x = fct_reorder(Phylum, n), y = n)) +
+    geom_col(fill = "#4C72B0") +
+    coord_flip() +
+    labs(
+      x = "Phylum",
+      y = "Number of genomes",
+      title = "Number of genomes per phylum"
+    ) +
+    theme_minimal(base_size = 11) +
+    theme(
+      plot.background  = element_rect(fill = "white", colour = NA),
+      panel.background = element_rect(fill = "white", colour = NA)
+    )
+
+ggsave(
+  "../results/desc_phylum_barplot.png",
+  plot = plot_phylum,
+  width = 120,
+  height = 90,
+  units = "mm",
+  dpi = 300
+)
+
 ```
 
 The most represented phyla reflect the typical composition of the human vaginal microbiome (Bacillota, Actinobacteriota). Less common phyla such as Patescibacteria appear at lower frequencies and may represent niche taxa or poorly sampled lineages.\
@@ -95,18 +109,30 @@ In metagenomics, the reliability of a reconstructed genome depends on two key me
 We first examine the distribution of completeness values across all MAGs. Completeness estimates the proportion of the genome recovered during assembly, with higher values indicating more complete and reliable genomes.
 
 ```{r}
-genome_metadata_aug |>
-  ggplot(aes(x = Completeness)) +
-  geom_histogram(
-    bins  = 30,
-    fill  = "#4C72B0",
-    color = "white"
-  ) +
-  labs(
-    x     = "Completeness (%)",
-    y     = "Number of genomes",
-    title = "Distribution of genome completeness"
-  )
+plot_completeness <-
+  genome_metadata_aug |>
+    ggplot(aes(x = Completeness)) +
+    geom_histogram(bins = 30, fill = "#4C72B0", color = "white") +
+    labs(
+      x = "Completeness (%)",
+      y = "Number of genomes",
+      title = "Distribution of genome completeness"
+    ) +
+    theme_minimal(base_size = 11) +
+    theme(
+      plot.background  = element_rect(fill = "white", colour = NA),
+      panel.background = element_rect(fill = "white", colour = NA)
+    )
+
+ggsave(
+  "../results/desc_completeness_hist.png",
+  plot = plot_completeness,
+  width = 120,
+  height = 90,
+  units = "mm",
+  dpi = 300
+)
+
 ```
 
 ```{r}
@@ -277,18 +303,30 @@ Here, we explore three key aspects: genome size, contig count, and the relations
 Genome length is a basic but informative assembly metric. It varies across bacterial taxa due to differences in genome reduction, metabolic capabilities, ecological specialization, and evolutionary history. Examining the distribution of genome lengths allows us to understand the range of genome sizes represented in the dataset and identify unusual or outlier assemblies.
 
 ```{r}
-genome_metadata_aug |>
-  ggplot(aes(x = Length)) +
-  geom_histogram(
-    bins  = 30,
-    fill  = "#4C72B0",
-    color = "white"
-  ) +
-  labs(
-    x     = "Genome length (bp)",
-    y     = "Number of genomes",
-    title = "Distribution of genome lengths"
-  )
+plot_length <-
+  genome_metadata_aug |>
+    ggplot(aes(x = Length)) +
+    geom_histogram(bins = 30, fill = "#4C72B0", color = "white") +
+    labs(
+      x = "Genome length (bp)",
+      y = "Number of genomes",
+      title = "Distribution of genome lengths"
+    ) +
+    theme_minimal(base_size = 11) +
+    theme(
+      plot.background  = element_rect(fill = "white", colour = NA),
+      panel.background = element_rect(fill = "white", colour = NA)
+    )
+
+ggsave(
+  "../results/desc_length_hist.png",
+  plot = plot_length,
+  width = 120,
+  height = 90,
+  units = "mm",
+  dpi = 300
+)
+
 ```
 
 Genome sizes range from roughly 0.6 Mbp to more than 3 Mbp, which is typical for bacterial taxa found in the vaginal microbiome. Smaller genomes often reflect host-adapted or metabolically reduced bacteria, whereas larger genomes may indicate more metabolically versatile organisms. The observed range therefore aligns with expectations for vaginal microbial diversity and suggests no major abnormalities in genome size distributions.
