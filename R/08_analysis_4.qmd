@@ -193,7 +193,8 @@ PCA_abundance_per_country <- function(tree_group) {
          y = paste0("PC2 (", pc2_var, "%)")) +
     theme_minimal() +
     theme(legend.position = "right",
-          plot.title = element_text(face = "bold"))
+          plot.title = element_text(face = "bold"),
+          plot.background = element_rect(color = "white"))
   
   
   # Plot 2: Scree plot (variance explained)
@@ -204,7 +205,8 @@ PCA_abundance_per_country <- function(tree_group) {
          x = "Principal Component",
          y = "Variance Explained (%)") +
     theme_minimal() +
-    theme(plot.title = element_text(face = "bold"))
+    theme(plot.title = element_text(face = "bold"),
+          plot.background = element_rect(color = "white"))
   
 
   # ggsave

@@ -143,7 +143,24 @@ print(readr::read_tsv(here("data/03_dat_aug.tsv")))
 :::
 :::::
 
-## ANALYSIS 4
+## ANALYSIS 4 - Species Distribution between countries {.scrollable}
+
+::: panel-tabset
+## Heatmap
+
+![](../results/Heatmap_family.png){width="87%"} 
+![](../results/Heatmap_order.png){width="87%"} 
+![](../results/Heatmap_phylum.png){width="87%"} 
+
+
+
+## Principal Component Analysis (PCA)
+
+![](../results/PCA_variance_explained.png){width="87%"} 
+![](../results/PCA_biplot.png){width="87%"} 
+:::
+
+
 
 ## DISCUSSION
 
@@ -168,7 +185,7 @@ Hvad kan det bruges til
 Hvad kunne have været nice at lave ellers.
 :::
 
-## CONLUSION
+## CONCLUSION
 
 ::: panel-tabset
 Key conclusion
