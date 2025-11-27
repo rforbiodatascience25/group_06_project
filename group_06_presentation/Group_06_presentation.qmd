@@ -65,83 +65,88 @@ print(readr::read_tsv(here("data/03_dat_aug.tsv")))
 ```
 :::
 
-## DATA DESCRIPTION
 
-**Overview of the dataset**
+## DATA DESCRIPTION {.scrollable}
 
-::: {.smaller style="font-size:0.85em"}
--   618 vaginal metagenome-assembled genomes (MAGs)\
--   25 metadata variables (taxonomy, assembly stats, geography, quality)\
--   High completeness and low contamination for most MAGs\
--   Dominated by a few major bacterial phyla\
--   Genome sizes fall within biologically expected ranges
+::: incremental
+- 618 vaginal metagenome-assembled genomes (MAGs)
+- 25 variables covering taxonomy, assembly quality, and geography
+- High completeness and low contamination for most genomes
+- Dataset dominated by a few major bacterial phyla
+- Genome lengths fall within biologically expected ranges
 :::
 
-:::::: columns
-::: {.column width="33%"}
-![](../results/desc_phylum_barplot.png){width="100%"} **Figure 1.** Genomes per phylum
+. . .
+
+::: panel-tabset
+
+## Phylum distribution
+
+Most MAGs belong to only a few dominant phyla.  
+This indicates strong taxonomic skew in the dataset.
+
+![](../results/desc_phylum_barplot.png){width="80%"}
+
+---
+
+## Completeness distribution
+
+Most genomes have high completeness (>90%),  
+indicating generally strong assembly quality.
+
+![](../results/desc_completeness_hist.png){width="80%"}
+
+
+---
+
+## Genome length distribution
+
+Genome lengths fall within the expected biological range  
+for vaginal bacterial taxa (typically 1.5–3 Mb).
+
+![](../results/desc_length_hist.png){width="80%"}
+
 :::
 
-::: {.column width="33%"}
-![](../results/desc_completeness_hist.png){width="100%"} **Figure 2.** Completeness distribution
-:::
-
-::: {.column width="33%"}
-![](../results/desc_length_hist.png){width="100%"} **Figure 3.** Genome length distribution
-:::
-::::::
 
 ## ANALYSIS 1
 
 ## ANALYSIS 2
 
-## ANALYSIS 3 – Associated and non-associated-endometriosis MAGs
+## ANALYSIS 3 - Associated and non-associated-endometriosis MAGs {.scrollable}
 
-::::::::: columns
-:::: {.column width="33%"}
-::: {.smaller style="font-size:0.75em"}
-**What we compared**
-
--   GC content
-
--   Genome length
-
--   Completeness & contamination
-
--   Phylum distribution
-:::
-::::
-
-:::: {.column width="33%"}
-::: {.smaller style="font-size:0.75em"}
-**Key results**
-
--   Associated MAGs cluster in few phyla
-
--   GC content and genome sizes overlap
-
--   Assembly quality is similarly high
-:::
-::::
-
-:::: {.column width="33%"}
-::: {.smaller style="font-size:0.75em"}
-**Conclusion**
-
--   Endometriosis-associated MAGs are not genomically distinct.
-:::
-::::
-:::::::::
-
-::::: columns
-::: {.column width="50%"}
-![](../results/analysis3_phylum_proportion.png){width="87%"} **Figure x.** Phylum proportion of MAGs
+::: incremental
+- Compared endometriosis-associated vs non-associated MAGs
+- Focused on GC content, genome length, completeness & contamination
+- Investigated whether associated MAGs cluster taxonomically
+- Goal: determine if associated MAGs form a genomically distinct group
 :::
 
-::: {.column width="50%"}
-![](../results/analysis3_gc_violin.png){width="87%"} **Figure x.** GC content distribution
+. . .
+
+::: panel-tabset
+
+## Phylum distribution
+
+Endometriosis-associated MAGs occur in only a few phyla.  
+Most phyla contain *no* associated MAGs, suggesting limited taxonomic clustering.
+
+![](../results/analysis3_phylum_proportion.png){width="80%"}
+
+---
+
+## GC content
+
+GC content ranges overlap almost completely.  
+No evidence that GC% distinguishes associated vs non-associated MAGs.
+
+![](../results/analysis3_gc_violin.png){width="80%"}
+
 :::
-:::::
+
+
+
+
 
 ## ANALYSIS 4 - Species Distribution between countries {.scrollable}
 
@@ -187,30 +192,15 @@ Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation wi
 
 ## DISCUSSION
 
-::: panel-tabset
-**Strengths**
+- High-quality MAGs with good completeness  
+- No strong genomic differences between groups  
+- Limited metadata and uneven sampling
 
--   d
-
-**Limitations**
-
--   Limited clinical metadata
-
--   Sparse geographic information for some MAGs
-:::
 
 ## FUTURE PERSPECTIVES
 
-::::: panel-tabset
-::: panel-tabset
-Hvad kan det bruges til
+- Improve clinical + geographic metadata  
 
-Hvad kunne have været nice at lave ellers.
-:::
+
 
 ## CONCLUSION
-
-::: panel-tabset
-Key conclusion
-:::
-:::::
