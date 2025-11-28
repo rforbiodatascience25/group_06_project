@@ -156,7 +156,7 @@ for vaginal bacterial taxa (typically 1.5–3 Mb).
 
 . . .
 
-![](../results/phylogenetic_tree_plot.png){width="65%"}
+![](../results/05_key_plot_1.png){width="65%"}
 
 
 
@@ -175,7 +175,7 @@ Investigating quality of the samples.
 
 . . .
 
-![](../results/completeness_contamination_plot.png){width="100%"}
+![](../results/06_key_plot_1.png){width="100%"}
 
 ## ANALYSIS 3 - Associated and non-associated-endometriosis MAGs {.scrollable}
 

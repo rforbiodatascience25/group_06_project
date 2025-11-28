@@ -80,7 +80,7 @@ This plot shows that the majority of the genes have a low contamination between 
 
 ```{r}
 ggplot2::ggsave(
-  filename = "../results/completeness_contamination_plot.png",
+  filename = "../results/06_key_plot_1.png",
   plot = completeness_contamination_plot,
   width = 16,
   height = 9,
