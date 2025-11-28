@@ -3,11 +3,11 @@ title: "05_analysis_1"
 format: html
 ---
 
-# Phylogenetic tree
+# Analysis 1 - Phylogenetic tree
 
 The dataset contains information the different phylogenetic classes, which can be used to plot the phylogenetic tree.
 
-## Load libraries
+## 1. Load libraries
 
 ```{r}
 #| message: false
@@ -17,7 +17,7 @@ library("ggtree")
 library("ape")
 ```
 
-## Load data
+## 2. Load data
 
 Loading the data into a variable from the `03_dat_aug.tsv` file
 
@@ -27,7 +27,7 @@ Loading the data into a variable from the `03_dat_aug.tsv` file
 genome_metadata_aug<- readr::read_tsv(file = "../data/03_dat_aug.tsv")
 ```
 
-## Prepare data for plot
+## 3. Prepare data for plot
 
 First the different ranks in the phylogenetic are defined:
 
@@ -57,7 +57,7 @@ Using the as.phylo functions to translate the data into a tree. The hierachy of 
 tree <- ape::as.phylo(~ Domain/Phylum/Class/Order/Family/Genus/Species, data = tax)
 ```
 
-## Plot of phylogenetic tree
+## 4. Plot of phylogenetic tree
 
 Then the specific tips of the tree of interest is defined to be able to color the tree by phylum:
 
