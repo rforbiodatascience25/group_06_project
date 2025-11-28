@@ -91,16 +91,15 @@ results/
   ├── 04_key_plot_2.png
   ├── 04_key_plot_3.png
   ├── 05_key_plot_1.png
-  ├── 05_key_plot_2.png
   ├── 06_key_plot_1.png
-  ├── 06_key_plot_2.png
   ├── 07_key_plot_1.png
   ├── 07_key_plot_2.png
   ├── 08_key_plot_1.png
   ├── 08_key_plot_2.png
   ├── 08_key_plot_3.png
   ├── 08_key_plot_4.png
-  └── 08_key_plot_5.png
+  ├── 08_key_plot_5.png
+  └── 08_key_table_1.png
 
 doc/                        
     ├── presentation.qmd
