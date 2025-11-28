@@ -75,7 +75,7 @@ The resulting heatmaps are saved as png's to the results directory with appropri
 #| eval: false
 
 ggplot2::ggsave(
-  filename = "../results/Heatmap_family.png",
+  filename = "../results/08_key_plot_1.png",
   plot = heatmap_family,
   width = 190,
   height = 100,
@@ -83,7 +83,7 @@ ggplot2::ggsave(
   dpi = 300
 )
 ggplot2::ggsave(
-  filename = "../results/Heatmap_order.png",
+  filename = "../results/08_key_plot_2.png",
   plot = heatmap_order,
   width = 190,
   height = 100,
@@ -91,7 +91,7 @@ ggplot2::ggsave(
   dpi = 300
 )
 ggplot2::ggsave(
-  filename = "../results/Heatmap_phylum.png",
+  filename = "../results/08_key_plot_3.png",
   plot = heatmap_phylum,
   width = 190,
   height = 100,
@@ -111,8 +111,8 @@ Running the function for Phylum, which has fewer variables, hence resulting in a
 To run the PCA, the data was normalized by sample size of each country with the normalize() function based on the selected tree_group. In this case, "Phylum" was chosen to ensure a clearer plot. The data was then analysed with the prcomp() function and from the resulting fit, the eigenvalues and rotation matrix were extracted.
 
 ```{r}
-#| echo: false
-#| eval: true
+#| echo: true
+#| eval: false
 
 tree_group_PCA = "Phylum"
 
@@ -138,6 +138,9 @@ rotation_matrix <- pca_fit |>
 The biplot was created plotting each countries "scores" for the first two principal components. In the plot, the loadings, extracted from the rotation_matrix, were included to show the variance in species abundance between these countries.
 
 ```{r}
+#| echo: true
+#| eval: true
+
 pca_scores <- pca_fit |> 
   broom::augment(
     group_freq |>
@@ -222,6 +225,9 @@ p1
 To visualize how much variance was explained by the principal components, a barplot was created using the eigenvalues of the first three principal components.
 
 ```{r}
+#| echo: true
+#| eval: true
+
 p2 <- ggplot2::ggplot(
   data = variance_explained, 
   mapping = ggplot2::aes(x = PC, y = percent)
@@ -244,18 +250,21 @@ p2
 Using ggsave to save plots in the results directory.
 
 ```{r}
-ggplot2::ggsave(
-  filename = "../results/PCA_biplot.png",
-  plot = p1,
-  width = 250,
-  height = 160,
-  units = "mm")
+#| echo: false
+#| eval: false
   
 ggplot2::ggsave(
-  filename = "../results/PCA_variance_explained.png",
+  filename = "../results/08_key_plot_4.png",
   plot = p2,
   width = 110,
   height = 90,
+  units = "mm")
+
+ggplot2::ggsave(
+  filename = "../results/08_key_plot_5.png",
+  plot = p1,
+  width = 250,
+  height = 160,
   units = "mm")
 ```
 
@@ -268,7 +277,7 @@ Test if the distribution of species differs between countries. The groups abunda
 ### For Species
 
 ```{r}
-#| echo: false
+#| echo: true
 #| eval: true
 
 data <- counting_species(data = genomes_country,

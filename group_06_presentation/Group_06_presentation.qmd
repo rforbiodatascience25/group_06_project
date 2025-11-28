@@ -224,19 +224,21 @@ Some variation between countries. I.e. Order Bacteroidales, but not much.
 
 Could've tested for significance.
 
-![](../results/Heatmap_family.png){width="87%"} ![](../results/Heatmap_order.png){width="87%"} ![](../results/Heatmap_phylum.png){width="87%"}
+![](../results/08_key_plot_1.png){width="87%"} 
+![](../results/08_key_plot_2.png){width="87%"} 
+![](../results/08_key_plot_3.png){width="87%"}
 
 ## Principal Component Analysis (PCA)
 
 Only two principal components --\> 100% variance.
 
-![](../results/PCA_variance_explained.png){width="60%"}
+![](../results/08_key_plot_4.png){width="60%"}
 
 Clear division of countries.
 
 Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation with heatmap.
 
-![](../results/PCA_biplot.png){width="90%"}
+![](../results/08_key_plot_5.png){width="90%"}
 
 ## Tests
 Test to see if there is a significant difference in the proportion of endometriosis-associated genomes between countries
