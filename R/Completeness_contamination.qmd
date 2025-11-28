@@ -5,7 +5,7 @@ format: html
 
 # Completeness vs. contamination
 
-This analysis will evaluate the relationship between the completeness and contamination levels. Completeness is a measure for how much of the organism’s full genome has been recovered in this assembly. On the other hand, contamination is a measures of how much foreign DNA (from other organisms or strains) is mixed into the assembled genome. These measures can be used to evaluate the quality of the assembled DNA genome.
+This analysis will evaluate the relationship between the completeness and contamination levels. Completeness is a measure of how much of the organism’s full genome has been recovered in this assembly. On the other hand, contamination is a measure of how much foreign DNA (from other organisms or strains) is mixed into the assembled genome. These measures can be used to evaluate the quality of the assembled DNA genome.
 
 ## Load libraries
 
@@ -26,10 +26,10 @@ genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
 Scatterplot to show the distribution between the completeness and contamination which is colored by phylum:
 
 ```{r}
-completeness_contamination_plot <- ggplot(
+completeness_contamination_plot <- ggplot2::ggplot(
   genome_metadata_aug, 
-       aes(Completeness, 
-           Contamination, 
+       aes(Completeness,
+           Contamination,
            color = Phylum)) +
   geom_point() +
   geom_vline(xintercept = 90, 
@@ -39,7 +39,8 @@ completeness_contamination_plot <- ggplot(
              linetype = "dashed",
              alpha = 0.5) +
   annotate("label",
-           x = 94, y = 4.6,
+           x = 94,
+           y = 4.6,
            label = "High-quality",
            hjust = 0,
            size = 5,
