@@ -357,7 +357,7 @@ names(genomes_country)
 
 Both the `Country` and `endometriosis_associated` variables are present and we are able to make the analysis.
 
-As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use the made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that. A function is also made to compute the results and store them in a shared tibble with all the pairs tested against each other.
+As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use the made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that. A function is also made to compute the results and store them in a shared tibble with all the pairs tested against each other. These are stored in the `99_proj_func.R` script
 
 We then define the country pairs that we want to compare:
 
