@@ -195,8 +195,6 @@ Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation wi
 ## Tests
 
 Mathilde skriver her.
-
-
 :::
 
 ## DISCUSSION & FUTURE PERSPECTIVES
@@ -205,6 +203,5 @@ Mathilde skriver her.
 -   No strong genomic differences between groups\
 -   Limited metadata and uneven sampling
 -   Improve clinical + geographic metadata
-
 
 ## CONCLUSION
