@@ -63,6 +63,11 @@ Through these analyses, we aim to gain a deeper understanding of the genomic div
 ## Repository Structure
 
 ---
+format:
+  html:
+    code-block-bg: true 
+    code-block-border-left: false 
+
 data/                       
   ├── _raw/                   
       └── raw_data.xlsx
