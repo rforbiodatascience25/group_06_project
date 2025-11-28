@@ -331,9 +331,13 @@ chisq.test(tbl, simulate.p.value = TRUE, B = 1e6)
 
 The difference in distribution of species between countries is not significant, as the p-value is 0.6
 
-# Endometriosis chi-square test
+# Endometriosis test
 
-To assess whether
+To assess whether genes associated with endometriosis are significantly more represented in one country than another, a fisher exact test is performed to compare the frequency of these genes. The fisher exact test is used as the number of present endometriosis associated genes are quite low, so the analysis needs to be able to handle that. Aditionally it can handle the uneven data sizes, as the number of observations from USA is a lot higher than for Denmark and China. With the Fisher exact test, we want to answer:
+
+Does the proportion of endometriosis associated genomes differ between the countries?
+
+The countries will e be compared pairwise to test the null hypothesis, if the proportion of endometriosis associated genomes is the same in both countries and the alternative hypothsis being that the proportions differ between the countries.
 
 Check that the data contains the variable of interest:
 
@@ -344,95 +348,64 @@ Check that the data contains the variable of interest:
 names(genomes_country)
 ```
 
-Creating a table that contains the information about the country and the endometriosis association:
+Both the `Country` and `endometriosis_associated` variables are present and we are able to make the analysis.
+
+As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use the made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that.:\
 
 ```{r}
-#| echo: false
-#| eval: true
+fisher_compare_countries <- function(data, country_var, outcome_var, country1, country2) {
+  
+  country_col <- data[[country_var]]
+  outcome_col <- data[[outcome_var]]
+  subset_data <- data[country_col %in% c(country1, country2), ]
+  tab <- table(subset_data[[country_var]], subset_data[[outcome_var]])
+  fisher_res <- fisher.test(tab)
+  list(
+    countries = c(country1, country2),
+    table = tab,
+    p_value = fisher_res$p.value,
+    odds_ratio = fisher_res$estimate,
+    conf_int = fisher_res$conf.int,
+    method = fisher_res$method
+  )
+}
 
-tab <- table(
-  Country = genomes_country$Country,
-  Endometriosis = genomes_country$endometriosis_associated
+```
+
+## USA vs. China
+
+```{r}
+fisher_compare_countries(
+  data = genomes_country,
+  country_var = "Country",
+  outcome_var = "endometriosis_associated",
+  country1 = "USA",
+  country2 = "China"
 )
-tab
-prop.table(tab, margin = 1)
 ```
 
-Performing a chi-square test to see
+## USA vs. Denmark
 
 ```{r}
-#| echo: false
-#| eval: true
-
-chi_res <- chisq.test(tab)
-
-chi_res
-chi_res$expected  # expected counts under H0
-
-```
-
-```{r}
-#| echo: false
-#| eval: true
-
-fisher_res <- fisher.test(tab)
-
-fisher_res
-
-```
-
-```{r}
-#| echo: false
-#| eval: true
-
-pairwise.prop.test(
-  x = table(genomes_country$Country, genomes_country$endometriosis_associated),
-  p.adjust.method = "holm"
+fisher_compare_countries(
+  data = genomes_country,
+  country_var = "Country",
+  outcome_var = "endometriosis_associated",
+  country1 = "USA",
+  country2 = "Denmark"
 )
-
-
 ```
+
+## Denmark vs. China
 
 ```{r}
-#| echo: false
-#| eval: true
-
-countries <- c("USA", "China")
-
-tab <- table(
-  genomes_country$Country[genomes_country$Country %in% countries],
-  genomes_country$endometriosis_associated[genomes_country$Country %in% countries]
+fisher_compare_countries(
+  data = genomes_country,
+  country_var = "Country",
+  outcome_var = "endometriosis_associated",
+  country1 = "Denmark",
+  country2 = "China"
 )
-
-tab
-fisher.test(tab)
-
 ```
 
-```{r}
-#| echo: false
-#| eval: true
-
-countries <- c("USA", "Denmark")
-
-tab <- table(
-  genomes_country$Country[genomes_country$Country %in% countries],
-  genomes_country$endometriosis_associated[genomes_country$Country %in% countries]
-)
-
-fisher.test(tab)
-```
-
-```{r}
-#| echo: false
-#| eval: true
-
-countries <- c("Denmark", "China")
-
-tab <- table(
-  genomes_country$Country[genomes_country$Country %in% countries],
-  genomes_country$endometriosis_associated[genomes_country$Country %in% countries]
-)
-
-fisher.test(tab)
-```
+The fisher exact tests showed a significant difference in the proportion of endometriosis associated between USA and China with a p-value on 0.02. Usa is having a 2.7 fold higher odds of endometriosis associated genomes. For both Denmark and USA or between Denmark and China there where no significant difference in the proportion of the endometriosis associated genes as the p-values were 0.155 and 1. This is likely due to the small number of both danish and chinese genomes, which results in wide confidence intervals and low statistical power.
