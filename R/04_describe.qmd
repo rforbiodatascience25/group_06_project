@@ -26,7 +26,7 @@ genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
 
 ### 3.1 Structure of the dataset
 
-Using the str command to investigate, what the data looks like:
+Using the `str` command to investigate, what the data looks like:
 
 ```{r}
 dplyr::glimpse(genome_metadata_aug)
@@ -70,9 +70,6 @@ genome_metadata_aug |>
 Plotting the different Phylums in the dataset
 
 ```{r}
-#| echo: false
-#| eval: true
-# Phylum barplot
 plot_phylum <-
   genome_metadata_aug |>
     dplyr::mutate(Phylum = stringr::str_trim(as.character(Phylum))) |>
@@ -100,9 +97,9 @@ plot_phylum <-
 plot_phylum
 ```
 
-#### Saving plot
-
 ```{r}
+#| echo: false
+#| eval: false
 ggplot2::ggsave(
   "../results/04_key_plot_1.png",
   plot = plot_phylum,
@@ -123,8 +120,6 @@ In metagenomics, the reliability of a reconstructed genome depends on two key me
 
 We first examine the distribution of completeness values across all MAGs. Completeness estimates the proportion of the genome recovered during assembly, with higher values indicating more complete and reliable genomes.
 
-#### Saving plot
-
 ```{r}
 plot_completeness <- genome_metadata_aug |>
   ggplot2::ggplot(ggplot2::aes(x = Completeness)) +
@@ -141,9 +136,9 @@ plot_completeness <- genome_metadata_aug |>
 plot_completeness
 ```
 
-#### Saving plot
-
 ```{r}
+#| echo: false
+#| eval: false
 ggplot2::ggsave(
   "../results/04_key_plot_2.png",
   plot = plot_completeness,
@@ -311,9 +306,9 @@ plot_length <- genome_metadata_aug |>
 plot_length
 ```
 
-#### Saving plot
-
 ```{r}
+#| echo: false
+#| eval: false
 ggplot2::ggsave(
   "../results/04_key_plot_3.png",
   plot = plot_length,
