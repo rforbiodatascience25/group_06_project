@@ -126,7 +126,7 @@ phylogenetic_tree_plot
 #| echo: false
 #| eval: false
 ggplot2::ggsave(
-  "../results/phylogenetic_tree_plot.png",
+  "../results/05_key_plot_1.png",
   phylogenetic_tree_plot,
   width = 10,
   height = 10,

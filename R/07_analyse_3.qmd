@@ -64,7 +64,7 @@ phylum_prop_plot <-
     )
 
 ggsave(
-  filename = "../results/analysis3_phylum_proportion.png",
+  filename = "../results/07_key_plot_1.png",
   plot     = phylum_prop_plot,
   width    = 120,
   height   = 90,
@@ -183,7 +183,7 @@ gc_violin_plot <-
     )
 
 ggsave(
-  filename = "../results/analysis3_gc_violin.png",
+  filename = "../results/07_key_plot_2.png",
   plot     = gc_violin_plot,
   width    = 120,
   height   = 90,
