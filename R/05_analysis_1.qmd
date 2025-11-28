@@ -77,7 +77,7 @@ phylum_list <- split(tax_tip$label, tax_tip$Phylum)
 Then the information about each of the phylum groups are added to the tree using the groupOTU command:
 
 ```{r}
-tree_grp <- ggtree::groupOTU(data = tree, node = phylum_list)
+tree_grp <- ggtree::groupOTU(.data = tree, .node = phylum_list)
 ```
 
 To plot the phylogenetic tree, the base plot is made:
@@ -123,6 +123,8 @@ phylogenetic_tree_plot
 ```
 
 ```{r}
+#| echo: false
+#| eval: false
 ggplot2::ggsave(
   "../results/phylogenetic_tree_plot.png",
   phylogenetic_tree_plot,
