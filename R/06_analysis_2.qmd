@@ -20,7 +20,7 @@ library("tidyverse")
 ```{r}
 #| eval: false
 #| echo: true
-genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
+genome_metadata_aug <- readr::read_tsv(file = "../data/03_dat_aug.tsv")
 ```
 
 ## Plot completeness vs. contamination
@@ -29,11 +29,12 @@ Scatterplot to show the distribution between the completeness and contamination 
 
 ```{r}
 completeness_contamination_plot <- ggplot2::ggplot(
-  data = genome_metadata_aug, 
-       ggplot2::aes(
-         x = Completeness,
-         y = Contamination,
-         color = Phylum)) +
+  data = genome_metadata_aug,
+  mapping = ggplot2::aes(
+    x = Completeness,
+    y = Contamination,
+    color = Phylum)
+  ) +
   ggplot2::geom_point() +
   ggplot2::geom_vline(
     xintercept = 90, 
