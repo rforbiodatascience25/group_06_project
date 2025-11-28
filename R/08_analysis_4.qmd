@@ -348,7 +348,29 @@ names(genomes_country)
 
 Both the `Country` and `endometriosis_associated` variables are present and we are able to make the analysis.
 
-As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use the made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that.:
+As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use the made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that:
+
+```{r}
+fisher_compare_countries <- function(data, country_var, outcome_var, country1, country2) {
+  country_col <- data[[country_var]]
+  outcome_col <- data[[outcome_var]]
+  
+  subset_data <- data[country_col %in% c(country1, country2), ]
+  tab <- table(subset_data[[country_var]], subset_data[[outcome_var]])
+  fisher_res <- stats::fisher.test(tab)
+  
+  list(
+    countries  = c(country1, country2),
+    table      = tab,
+    p_value    = fisher_res$p.value,
+    odds_ratio = fisher_res$estimate,
+    conf_int   = fisher_res$conf.int,
+    method     = fisher_res$method
+  )
+}
+```
+
+A function is then made to compute the results and store them in a shared tibble with all the pairs tested against each other:
 
 ```{r}
 compute_fisher_results <- function(data, country_var, outcome_var, pairs) {
