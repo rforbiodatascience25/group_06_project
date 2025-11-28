@@ -62,18 +62,12 @@ Through these analyses, we aim to gain a deeper understanding of the genomic div
 
 ## Repository Structure
 
----
-format:
-  html:
-    code-block-bg: true 
-    code-block-border-left: false 
-
-data/                       
-  ├── _raw/                   
-      └── raw_data.xlsx
-  ├── 01_dat_load.tsv         
-  ├── 02_dat_clean.tsv       
-  └── 03_dat_aug.tsv          
+#### data/                       
+- raw/                   
+  - raw_data.xlsx
+- 01_dat_load.tsv         
+- 02_dat_clean.tsv       
+- 03_dat_aug.tsv          
 
 
 R/ 
@@ -109,7 +103,6 @@ results/
 doc/                        
     ├── presentation.qmd
     └── presentation.html
----
 
 ## Data retrieval
 
