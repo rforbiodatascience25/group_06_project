@@ -33,7 +33,7 @@ Meta-data from MGnify’s vaginal microbiome genome catalogue
 
 -   Uncover patterns in genome quality, taxonomic composition, and ecological characteristics.
 
--   Identify potential patterns for diagnosis of endometriosis via associated pathogens of the vaginal microbiota:
+-   Identify potential patterns for diagnosis of endometriosis via associated pathogens of the vaginal microbiota based on genus:
 
     -   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia* [^1]
 
@@ -44,13 +44,17 @@ Meta-data from MGnify’s vaginal microbiome genome catalogue
 :::: {style="margin-top: -15px; margin-bottom: -15px;"}
 **Untidy –\> tidy data**
 
-::: {style="margin-left: 1.5em; font-size: 0.9em; line-height: 1.1;"}
-1.  *Splitting the data in the "lineage" variable into multiple variables of the phylogenetic classes into seven taxonomic ranks.*
-2.  *Covert all "not provided" to NA.*
-3.  *Extract each taxonomic rank and remove prefixes.*
-4.  *Convert empty strings to NA in the new taxonomy columns.*
-5.  *Remove the GTDB suffixes (e.g. "\_A") to streamline taxonomies.*
-6.  *Remove columns that will not be used in our analysis.*
+::: {style="margin-left: 1.5em; font-size: 0.8em; line-height: 1.1;"}
+::: incremental
+1.  *Split the data in the "lineage" variable into multiple variables of seven taxonomic ranks.*
+2.  *Extract and mutate prefixes and GTDB suffixes (e.g. "\_A") to streamline taxonomies*
+2.  *Each variable occupies a column, and each observation occupies a row.*
+3.  *Mutate all "not provided" and empty strings to NA.*
+4.  *Remove columns that will not be used in our analysis.*
+5.  *Quality of the MAGs - completeness, contamination, and genome quality (high, medium, low) - joined to the left side of tidy data.*
+6.  *Add column to MAGs dataset that flags each endometriosis-associated genus (True/False)*
+
+:::
 :::
 ::::
 
@@ -63,7 +67,6 @@ print(readr::read_tsv(here("data/_raw/genomes-all_metadata.tsv")))
 ```
 
 ### Lineages
-
 ```{r}
 #| echo: true
 untidy_data <- readr::read_tsv(
@@ -79,12 +82,28 @@ untidy_data <- readr::read_tsv(
 #| echo: true   
 print(readr::read_tsv(here("data/02_dat_clean.tsv")))
 ```
+### Taxonomic ranks 
+```{r}
+#| echo: true
+tidy_data <- readr::read_tsv(
+  here::here("data/02_dat_clean.tsv"))
+  print(
+    tidy_data  |>
+    dplyr::select(Domain, Phylum, Class, Order, Family, Genus, Species))
+```
 
-### Post augmentation
+### Augmentation
 
 ```{r}
-#| echo: true   
-print(readr::read_tsv(here("data/03_dat_aug.tsv")))
+#| echo: true
+options(width = 200)
+Aug_data <- readr::read_tsv(
+  here::here("data/03_dat_aug.tsv"))
+  print(
+    Aug_data  |>
+    dplyr::select(Completeness_quality, Contamination_quality, Overall_quality, endometriosis_associated),
+    width = Inf)
+
 ```
 :::
 
@@ -106,7 +125,7 @@ print(readr::read_tsv(here("data/03_dat_aug.tsv")))
 Most MAGs belong to only a few dominant phyla.\
 This indicates strong taxonomic skew in the dataset.
 
-![](../results/desc_phylum_barplot.png){width="80%"}
+![](../results/desc_phylum_barplot.png){width="70%"}
 
 ------------------------------------------------------------------------
 
@@ -115,7 +134,7 @@ This indicates strong taxonomic skew in the dataset.
 Most genomes have high completeness (\>90%),\
 indicating generally strong assembly quality.
 
-![](../results/desc_completeness_hist.png){width="80%"}
+![](../results/desc_completeness_hist.png){width="70%"}
 
 ------------------------------------------------------------------------
 
@@ -124,7 +143,7 @@ indicating generally strong assembly quality.
 Genome lengths fall within the expected biological range\
 for vaginal bacterial taxa (typically 1.5–3 Mb).
 
-![](../results/desc_length_hist.png){width="80%"}
+![](../results/desc_length_hist.png){width="70%"}
 :::
 
 ## ANALYSIS 1 - Phylogenetic tree {.scrollable}
