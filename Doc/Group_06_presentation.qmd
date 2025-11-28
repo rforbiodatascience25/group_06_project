@@ -35,7 +35,7 @@ Meta-data from MGnify’s vaginal microbiome genome catalogue
 
 -   Identify potential patterns for diagnosis of endometriosis via associated pathogens of the vaginal microbiota based on genus:
 
-    -   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida albicans, Alloscardovia* [^1]
+    -   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida, Alloscardovia* [^1]
 
 [^1]: MacSharry, J., Kovács, Z., Xie, Y. *et al.* Endometriosis specific vaginal microbiota links to urine and serum *N*-glycome. *Sci Rep* **14**, 25372 (2024). https://doi.org/10.1038/s41598-024-76125-2
 
@@ -44,7 +44,7 @@ Meta-data from MGnify’s vaginal microbiome genome catalogue
 :::: {style="margin-top: -15px; margin-bottom: -15px;"}
 **Untidy –\> tidy data**
 
-::: {style="margin-left: 1.5em; font-size: 0.8em; line-height: 1.1;"}
+::: {style="margin-left: 1.5em; font-size: 0.9em; line-height: 1.1;"}
 ::: incremental
 1.  *Split the data in the "lineage" variable into multiple variables of seven taxonomic ranks.*
 2.  *Extract and mutate prefixes and GTDB suffixes (e.g. "\_A") to streamline taxonomies*
@@ -160,9 +160,9 @@ for vaginal bacterial taxa (typically 1.5–3 Mb).
 
 
 
-## ANALYSIS 2 {.scrollable}
+## ANALYSIS 2 - Data quality {.scrollable}
 
-Investigating quality of the samples.
+Investigating the quality of samples.
 
 . . .
 
