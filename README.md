@@ -32,16 +32,87 @@ student-id: s215098
 
 github-username: s215098
 
-## Direct link to presentation
+## Presentation link
 
-Be sure to include a direct link to your presentation, e.g. the direct link to the lecture in lab 3 is: [`https://raw.githack.com/r4bds/r4bds.github.io/main/lecture_lab03.html`](https://raw.githack.com/r4bds/r4bds.github.io/main/lecture_lab03.html)
+Here is a direct link to our presentation: **(HUSK AT SKIFT LINK UD)**
+
+[`https://raw.githack.com/r4bds/r4bds.github.io/main/lecture_lab03.html`](https://raw.githack.com/r4bds/r4bds.github.io/main/lecture_lab03.html)`.`
+
+## Background
+
+The human vaginal microbiome plays an essential role in reproductive health and protection against infections. It is usually dominated by *Lactobacillus* species, which help maintain an acidic environment and prevent the growth of harmful microorganisms. However, the vaginal microbiome can differ between people and across health states. Other bacteria, such as Gardnerella, Atopobium, and Prevotella, often appear during dysbiosis or bacterial vaginosis.
+
+Recent advances in metagenomic sequencing enable researchers to reconstruct individual microbial genomes from complex communities. These reconstructed genomes are called metagenome-assembled genomes (MAGs). MAGs provide new insights into the genetic makeup and functions of microorganisms that cannot be easily grown in the lab. Databases such as MGnify collect MAGs from many human and environmental microbiomes, including the vaginal microbiome, and provide useful but often unstandardized metadata.
+
+The dataset used in this project, called `genomes-all_metadata.tsv`, comes from MGnify’s vaginal microbiome genome catalogue. It contains thousands of bacterial MAGs with information on assembly quality (genome length, N50, GC content, completeness, contamination), taxonomic classification, and limited geographical data. Like many real biological datasets, it includes inconsistencies, missing values, and mixed formats.
+
+### Aim
+
+The aim of this project is to clean, explore, and analyse the genome meta-data-set from the human vaginal microbiome. With this project we aim to uncover patterns in genome quality, taxonomic composition, and ecological characteristics, while demonstrating the principles of reproducible and collaborative data science in R.
+
+In this project we will:
+
+1.  Tidy and standardize the raw meta-data-set by addressing missing values, harmonizing column formats, and parsing the hierarchical taxonomic lineage into separate levels (phylum to species).
+2.  Describe the cleaned and augmented dataset, including basic summaries of genome quality, taxonomy, and geography.
+3.  Perform exploratory analyses of genome quality and taxonomic composition
+4.  Analyse whether endometriosis-associated MAGs are genomically distinct from non-associated MAGs
+5.  Investigate geographical patterns in taxonomic composition and endometriosis association across countries using heatmaps, PCA and statistical tests
+
+Through these analyses, we aim to gain a deeper understanding of the genomic diversity of the vaginal microbiome, while showcasing the entire data science workflow using the tidyverse systems in R.
+
+## Repository Structure
+
+---
+data/                       
+  ├── _raw/                   
+      └── raw_data.xlsx
+  ├── 01_dat_load.tsv         
+  ├── 02_dat_clean.tsv       
+  └── 03_dat_aug.tsv          
+
+
+R/ 
+  ├── 00_all.qmd              
+  ├── 01_load.qmd            
+  ├── 02_clean.qmd            
+  ├── 03_augment.qmd          
+  ├── 04_describe.qmd         
+  ├── 05_analysis_1.qmd       
+  ├── 06_analysis_2.qmd 
+  ├── 07_analysis_3.qmd 
+  ├── 08_analysis_4.qmd 
+  └── 99_proj_func.R          
+  │
+
+results/  
+  │
+  ├── *.html
+  ├── 04_key_plot_1.png
+  ├── 04_key_plot_2.png
+  ├── 04_key_plot_3.png
+  ├── 05_key_plot_1.png
+  ├── 05_key_plot_2.png
+  ├── 06_key_plot_1.png
+  ├── 06_key_plot_2.png
+  ├── 07_key_plot_1.png
+  ├── 07_key_plot_2.png
+  ├── 08_key_plot_1.png
+  ├── 08_key_plot_2.png
+  ├── 08_key_plot_3.png
+  ├── 08_key_plot_4.png
+  └── 08_key_plot_5.png
+
+doc/                        
+    ├── presentation.qmd
+    └── presentation.html
+---
 
 ## Data retrieval
 
-Since we are not putting data on GitHub, use the README to supply information on data retrieval
+The data for this project is publicly available from the EBI MGnify database.
 
-**Important: This entails, that the entire project as put on GitHub, can be cloned and then executed end-to-end. Since, we are not putting data on GitHub, if possible included programmatic retrieval of data and/or data instructions on how to easily retrieve the data, e.g. via login, in your GitHub repository README file**
+Our 01_load.qmd script downloads the metadata file automatically and saves it to data/\_raw/.
 
-#### But How???
+Direct link to the dataset:
 
-Yes, we are not putting the data on GitHub, so either include programmatic retrieval of the data or state in your [GitHub README file](https://quarto.org/docs/output-formats/gfm.html), how you retrieved the data forming the base of the project.
+<https://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/genomes-all_metadata.tsv>
