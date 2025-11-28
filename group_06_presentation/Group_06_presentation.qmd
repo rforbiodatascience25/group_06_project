@@ -193,14 +193,12 @@ Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation wi
 ![](../results/PCA_biplot.png){width="100%"}
 :::
 
-## DISCUSSION
+## DISCUSSION & FUTURE PERSPECTIVES
 
 -   High-quality MAGs with good completeness\
 -   No strong genomic differences between groups\
 -   Limited metadata and uneven sampling
-
-## FUTURE PERSPECTIVES
-
 -   Improve clinical + geographic metadata
+
 
 ## CONCLUSION
