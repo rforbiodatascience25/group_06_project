@@ -94,7 +94,7 @@ endo_genera <- c(
   "Veillonella",
   "Corynebacterium",
   "Peptoniphilus",
-  "Candida albicans",
+  "Candida",
   "Alloscardovia"
 )
 
