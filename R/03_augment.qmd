@@ -108,11 +108,6 @@ genome_metadata_aug <- genome_metadata_aug |>
 
 genome_metadata_aug |>
   dplyr::count(endometriosis_associated)
-<<<<<<< HEAD
-=======
-
-
->>>>>>> bb4e44e6d2ac4b8205886c90084e8519766d9ae2
 ```
 
 # 6. Saving the data
