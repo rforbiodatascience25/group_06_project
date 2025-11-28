@@ -70,39 +70,37 @@ Through these analyses, we aim to gain a deeper understanding of the genomic div
 - 03_dat_aug.tsv          
 
 
-R/ 
-  ├── 00_all.qmd              
-  ├── 01_load.qmd            
-  ├── 02_clean.qmd            
-  ├── 03_augment.qmd          
-  ├── 04_describe.qmd         
-  ├── 05_analysis_1.qmd       
-  ├── 06_analysis_2.qmd 
-  ├── 07_analysis_3.qmd 
-  ├── 08_analysis_4.qmd 
-  └── 99_proj_func.R          
-  │
+#### R/ 
+- 00_all.qmd              
+- 01_load.qmd            
+- 02_clean.qmd            
+- 03_augment.qmd          
+- 04_describe.qmd         
+- 05_analysis_1.qmd       
+- 06_analysis_2.qmd 
+- 07_analysis_3.qmd 
+- 08_analysis_4.qmd 
+- 99_proj_func.R          
 
-results/  
-  │
-  ├── *.html
-  ├── 04_key_plot_1.png
-  ├── 04_key_plot_2.png
-  ├── 04_key_plot_3.png
-  ├── 05_key_plot_1.png
-  ├── 06_key_plot_1.png
-  ├── 07_key_plot_1.png
-  ├── 07_key_plot_2.png
-  ├── 08_key_plot_1.png
-  ├── 08_key_plot_2.png
-  ├── 08_key_plot_3.png
-  ├── 08_key_plot_4.png
-  ├── 08_key_plot_5.png
-  └── 08_key_table_1.png
+#### results/  
+- *.html
+- 04_key_plot_1.png
+- 04_key_plot_2.png
+- 04_key_plot_3.png
+- 05_key_plot_1.png
+- 06_key_plot_1.png
+- 07_key_plot_1.png
+- 07_key_plot_2.png
+- 08_key_plot_1.png
+- 08_key_plot_2.png
+- 08_key_plot_3.png
+- 08_key_plot_4.png
+- 08_key_plot_5.png
+- 08_key_table_1.png
 
-doc/                        
-    ├── presentation.qmd
-    └── presentation.html
+#### doc/                        
+- presentation.qmd
+- presentation.html
 
 ## Data retrieval
 
