@@ -130,73 +130,21 @@ gc_violin_plot <-
     )
 
 ggsave(
-  filename = "../results/analysis3_gc_violin.png",
+  filename = "../results/07_key_plot_02.png",
   plot     = gc_violin_plot,
   width    = 120,
   height   = 90,
   units    = "mm",
   dpi      = 300
 )
-
-```
-
-The faceted boxplots show that within each phylum, GC-content values are very similar between associated and non-associated MAGs. The only phyla that contain both groups (Actinomycetota and Bacillota) show overlapping GC distributions with no clear separation. All other phyla contain only non-associated MAGs. This confirms that any GC differences observed at the whole-dataset level are driven by phylogenetic structure, not by endometriosis association.
-
-Together, these results indicate that endometriosis-associated MAGs are a taxonomically restricted subset of the broader vaginal microbiome, and their genomic features are typical for their phyla. There is no evidence that endometriosis-associated genera form a genomically distinct lineage when accounting for taxonomy.
-
-## 4. GC content of endometriosis-associated genera
-
-We first compare the GC-content distributions between MAGs belonging to endometriosis-associated genera and those not linked to endometriosis. GC content can reflect long-term evolutionary pressures, so any systematic shift between the two groups could indicate deeper genomic differences.
-
-```{r}
-gc_violin_plot <-
-  genome_metadata_aug |>
-    ggplot(aes(x = endometriosis_associated,
-               y = GC_content,
-               fill = endometriosis_associated)) +
-    geom_violin(trim = FALSE, alpha = 0.5) +
-    geom_boxplot(
-      width        = 0.18,
-      outlier.size = 0.7,
-      alpha        = 0.9,
-      colour       = "black"
-    ) +
-    scale_fill_brewer(palette = "Set2") +
-    labs(
-      title = "GC content distributions\nby endometriosis association",
-      x     = "Endometriosis-associated genus",
-      y     = "GC content (%)"
-    ) +
-    theme_minimal(base_size = 9) +
-    theme(
-      plot.title      = element_text(size = 11, face = "bold", hjust = 0.5),
-      axis.title.x    = element_text(size = 10, margin = margin(t = 6)),
-      axis.title.y    = element_text(size = 10, margin = margin(r = 6)),
-      axis.text.x     = element_text(size = 8),
-      axis.text.y     = element_text(size = 8),
-
-      legend.position = "none",
-
-      plot.margin      = margin(t = 20, r = 12, b = 10, l = 10),
-      panel.background = element_rect(fill = "white", colour = NA),
-      plot.background  = element_rect(fill = "white", colour = NA)
-    )
-
-ggsave(
-  filename = "../results/07_key_plot_2.png",
-  plot     = gc_violin_plot,
-  width    = 120,
-  height   = 90,
-  units    = "mm",
-  dpi      = 300
-)
-
 
 ```
 
 The distributions show substantial overlap between the groups. Endometriosis-associated MAGs have a slightly lower median GC content, but the difference is modest and the overall ranges are similar. This indicates that GC composition does not clearly distinguish taxa associated with endometriosis. GC-content distributions are nearly identical, indicating no genomic differences between endometriosis-associated and non-associated MAGs.
 
-## 5. Genome length comparison
+Together, these results indicate that endometriosis-associated MAGs are a taxonomically restricted subset of the broader vaginal microbiome, and their genomic features are typical for their phyla. There is no evidence that endometriosis-associated genera form a genomically distinct lineage when accounting for taxonomy.
+
+## 4. Genome length comparison
 
 Next, we test whether genome size relates differently to GC content in endometriosis-associated genera. If differences existed in evolutionary strategies—such as genome reduction or expansion—they might appear as distinct clustering patterns.
 
@@ -223,7 +171,7 @@ genome_metadata_aug |>
 
 The scatterplot shows that MAGs from both groups occupy similar GC–length space. No association-specific cluster is visible, and both groups span comparable genome sizes across the GC spectrum. This suggests that genome size and GC composition are not meaningfully structured by endometriosis association.
 
-## 6. Completeness and contamination
+## 5. Completeness and contamination
 
 Finally, we investigate whether endometriosis-associated genera differ in technical assembly quality. Completeness and contamination reflect how well each genome was reconstructed and whether its quality differs systematically across groups.
 
@@ -264,6 +212,6 @@ Both completeness and contamination distributions are nearly identical between a
 
 Using genera previously linked to endometriosis in vaginal microbiome studies, we annotated a subset of MAGs and compared their genomic features to the rest of the dataset. Across GC content, genome size, completeness, and contamination, the two groups showed only minor differences with broad overlap. This indicates that endometriosis-associated genera do not form a genomically distinct group within the vaginal microbiome. Instead, their relevance to endometriosis likely reflects differences in abundance or community composition rather than major differences in genome architecture.
 
-## **7. Conclusion**
+## **6. Conclusion**
 
 This analysis describes a comparative genomic evaluation showing that taxa associated with endometriosis are not genetically unique but simply part of expected vaginal microbial diversity, and their association with the disease likely arises from ecological, not genomic, differences.

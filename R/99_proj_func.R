@@ -75,3 +75,72 @@ counting_species <- function(data, tree_group){
 }
 
 
+#' Perform Fisher's exact test between two countries
+#'
+#' @param data A data frame containing at least `country_var` and `outcome_var`.
+#' @param country_var Name of the country variable (string).
+#' @param outcome_var Name of the binary outcome variable (string).
+#' @param country1 Name of the first country (string).
+#' @param country2 Name of the second country (string).
+#'
+#' @return A list with countries compared, contingency table, p-value, odds ratio,
+#'   confidence interval, and method description.
+fisher_compare_countries <- function(data, country_var, outcome_var, country1, country2) {
+  
+  country_col <- data[[country_var]]
+  outcome_col <- data[[outcome_var]]
+  
+  subset_data <- data[country_col %in% c(country1, country2), ]
+  tab <- table(subset_data[[country_var]], subset_data[[outcome_var]])
+  
+  fisher_res <- stats::fisher.test(tab)
+  
+  list(
+    countries  = c(country1, country2),
+    table      = tab,
+    p_value    = fisher_res$p.value,
+    odds_ratio = fisher_res$estimate,
+    conf_int   = fisher_res$conf.int,
+    method     = fisher_res$method
+  )
+}
+
+
+#' Compute Fisher's exact test results for multiple country pairs
+#'
+#' @param data A data frame containing at least `country_var` and `outcome_var`.
+#' @param country_var Name of the country variable (string).
+#' @param outcome_var Name of the binary outcome variable (string).
+#' @param pairs A list of length-2 character vectors, each giving a country pair.
+#'
+#' @return A tibble with one row per pair, containing countries, p-value,
+#'   odds ratio, and confidence interval.
+compute_fisher_results <- function(data, country_var, outcome_var, pairs) {
+  
+  # Run Fisher test for each pair
+  results <- lapply(pairs, function(p) {
+    fisher_compare_countries(
+      data        = data,
+      country_var = country_var,
+      outcome_var = outcome_var,
+      country1    = p[1],
+      country2    = p[2]
+    )
+  })
+  
+  # Convert each result into a tibble row
+  rows <- lapply(results, function(res) {
+    tibble::tibble(
+      country1   = res$countries[1],
+      country2   = res$countries[2],
+      p_value    = round(res$p_value, 4),
+      odds_ratio = round(as.numeric(res$odds_ratio), 3),
+      CI_low     = round(res$conf_int[1], 3),
+      CI_high    = round(res$conf_int[2], 3)
+    )
+  })
+  
+  # Combine into a table
+  dplyr::bind_rows(rows)
+}
+

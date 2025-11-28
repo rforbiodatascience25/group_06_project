@@ -81,7 +81,7 @@ Across these vaginal datasets, the most consistently reported endometriosis-asso
 
 -   Peptoniphilus
 
--   Candida albicans
+-   Candida
 
 -   Alloscardovia
 
@@ -95,7 +95,7 @@ endo_genera <- c(
   "Veillonella",
   "Corynebacterium",
   "Peptoniphilus",
-  "Candida albicans",
+  "Candida",
   "Alloscardovia"
 )
 

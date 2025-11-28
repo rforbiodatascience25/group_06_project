@@ -3,11 +3,11 @@ title: "06_analysis_2"
 format: html
 ---
 
-# Completeness vs. contamination
+# Analysis 2 - Completeness vs. contamination
 
 This analysis will evaluate the relationship between the completeness and contamination levels. Completeness is a measure of how much of the organism’s full genome has been recovered in this assembly. On the other hand, contamination is a measure of how much foreign DNA (from other organisms or strains) is mixed into the assembled genome. These measures can be used to evaluate the quality of the assembled DNA genome.
 
-## Load libraries
+## 1. Load libraries
 
 ```{r}
 #| message: false
@@ -15,7 +15,7 @@ This analysis will evaluate the relationship between the completeness and contam
 library("tidyverse")
 ```
 
-## Load data
+## 2. Load data
 
 ```{r}
 #| eval: false
@@ -23,7 +23,7 @@ library("tidyverse")
 genome_metadata_aug <- readr::read_tsv(file = "../data/03_dat_aug.tsv")
 ```
 
-## Plot completeness vs. contamination
+## 3. Plot completeness vs. contamination
 
 Scatterplot to show the distribution between the completeness and contamination which is colored by phylum:
 
@@ -76,11 +76,11 @@ completeness_contamination_plot
 
 This plot shows that the majority of the genes have a low contamination between 0 and 1% which indicates that the dataset contains mainly clean bins. Additionally the completeness levels are high. It ranges between 50 and 100% and a big cluster of the genes are between 90 and 100% completeness. This indicates that the dataset assembles are high-quality and that the MAGs are nearly complete. A common standard threshold for the contamination/completeness levels are that high-quality data have a completeness above 90% and a contamination below 5%. In our dataset, a large cluster of genomes fall into this category.
 
-## Saving plot
+## 4. Saving plot
 
 ```{r}
 ggplot2::ggsave(
-  filename = "../results/completeness_contamination_plot.png",
+  filename = "../results/06_key_plot_1.png",
   plot = completeness_contamination_plot,
   width = 16,
   height = 9,
