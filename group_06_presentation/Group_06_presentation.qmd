@@ -231,6 +231,6 @@ Mathilde skriver her.
 -   Limited metadata and uneven sampling
 -   Improve clinical + geographic metadata
 
--   More focus on theoretically correct analysis.
+-   More focus on theoretically correct analysis (compositional data analysis)
 
 ## CONCLUSION
