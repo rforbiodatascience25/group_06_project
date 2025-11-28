@@ -149,8 +149,13 @@ Investigating quality of the samples.
 . . .
 
 ::: incremental
+<<<<<<< HEAD
 -   XXX
 -   XXX
+=======
+- Kan Mathilde (eller en anden der skal snakke contamination) skrive her???
+- Kan Mathilde (eller en anden der skal snakke contamination) skrive her???
+>>>>>>> cf484bf8ba189ec80994d674f6640a7dda6d02a5
 :::
 
 . . .
