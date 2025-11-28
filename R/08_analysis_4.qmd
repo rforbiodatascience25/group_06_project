@@ -16,6 +16,8 @@ library(dplyr)
 library(ggplot2)
 library(ggrepel)
 library(stats)
+
+source("99_proj_func.R")
 ```
 
 # Preparing dataset
@@ -59,7 +61,6 @@ Using the defined heatmap_abundancy_per_country() function to produce heatmaps f
 #| echo: true
 #| eval: true
 
-source("99_proj_func.R")
 heatmap_family <- heatmap_abundance_per_country(tree_group = "Family")
 heatmap_order <- heatmap_abundance_per_country(tree_group = "Order")
 heatmap_phylum <- heatmap_abundance_per_country(tree_group = "Phylum")
@@ -121,15 +122,15 @@ group_freq <- normalize(data = genomes_country,
 country_names <- group_freq$Country
 
 pca_fit <- group_freq |> 
-  select(-Country) |> 
+  dplyr::select(-Country) |> 
   scale() |> 
   stats::prcomp()
 
 variance_explained <- pca_fit |> 
-  tidy(matrix = "eigenvalues")
+  broom::tidy(matrix = "eigenvalues")
 
 rotation_matrix <- pca_fit |> 
-  tidy(matrix = "rotation")
+  broom::tidy(matrix = "rotation")
 ```
 
 ## Create Biplot
@@ -138,53 +139,80 @@ The biplot was created plotting each countries "scores" for the first two princi
 
 ```{r}
 pca_scores <- pca_fit |> 
-  augment(group_freq |> 
-            select(-Country)) |> 
+  broom::augment(
+    group_freq |>
+      dplyr::select(-Country)
+    ) |> 
   mutate(Country = country_names)
 
 pc1_var <- round(variance_explained$percent[1] * 100, 1)
 pc2_var <- round(variance_explained$percent[2] * 100, 1)
 
 loadings_biplot <- rotation_matrix |> 
-  filter(PC %in% c(1, 2)) |> 
-  pivot_wider(names_from = PC,
-              values_from = value,
-              names_prefix = "PC") |> 
-  mutate(
+  dplyr::filter(PC %in% c(1, 2)) |> 
+  tidyr::pivot_wider(
+    names_from = PC,
+    values_from = value,
+    names_prefix = "PC"
+    ) |> 
+  dplyr::mutate(
     PC1 = PC1 * 3,
     PC2 = PC2 * 3)
 
 
 p1 <- ggplot() +
-  geom_point(data = pca_scores, 
-             aes(x = .fittedPC1, y = .fittedPC2, color = Country), 
-             size = 4,
-             show.legend = TRUE) +
-  geom_text(data = pca_scores, 
-            aes(x = .fittedPC1, y = .fittedPC2, label = Country, color = Country),
-            vjust = -1,
-            size = 4,
-            show.legend = FALSE) +
-  geom_segment(data = loadings_biplot,
-               aes(x = 0, y = 0, xend = PC1, yend = PC2),
-               arrow = arrow(length = unit(0.3, "cm")),
-               color = "gray50",
-               linewidth = 0.7) +
-  geom_text_repel(data = loadings_biplot,
-                  aes(x = PC1, y = PC2, label = column),
-                  color = "gray10",
-                  size = 3.5,
-                  fontface = "italic",
-                  box.padding = 0.5,
-                  point.padding = 0.3,
-                  segment.color = "gray60",
-                  segment.size = 0.3,
-                  max.overlaps = Inf) +
-  labs(title = paste0("PCA Biplot: Countries + ", tree_group_PCA),
-       x = paste0("PC1 (", pc1_var, "%)"),
-       y = paste0("PC2 (", pc2_var, "%)")) +
-  theme(legend.position = "right",
-        plot.title = element_text(face = "bold"))
+  ggplot2::geom_point(
+    data = pca_scores,
+    mapping = ggplot2::aes(x = .fittedPC1,
+                           y = .fittedPC2,
+                           color = Country),
+    size = 4,
+    show.legend = TRUE
+    ) +
+  ggplot2::geom_text(
+    data = pca_scores,
+    mapping = ggplot2::aes(x = .fittedPC1,
+                 y = .fittedPC2,
+                 label = Country,
+                 color = Country),
+    vjust = -1,
+    size = 4,
+    show.legend = FALSE
+    ) +
+  ggplot2::geom_segment(
+    data = loadings_biplot,
+    mapping = ggplot2::aes(x = 0,
+                 y = 0,
+                 xend = PC1,
+                 yend = PC2),
+    arrow = arrow(length = unit(0.3, "cm")),
+    color = "gray50",
+    linewidth = 0.7
+    ) +
+  ggrepel::geom_text_repel(
+    data = loadings_biplot,
+    mapping = ggplot2::aes(
+      x = PC1,
+      y = PC2,
+      label = column),
+    color = "gray10",
+    ize = 3.5,
+    fontface = "italic",
+    box.padding = 0.5,
+    point.padding = 0.3,
+    segment.color = "gray60",
+    segment.size = 0.3,
+    max.overlaps = Inf
+    ) +
+  ggplot2::labs(
+    title = paste0("PCA Biplot: Countries + ", tree_group_PCA),
+    x = paste0("PC1 (", pc1_var, "%)"),
+    y = paste0("PC2 (", pc2_var, "%)")
+    ) +
+  ggplot2::theme(
+    legend.position = "right",
+    plot.title = element_text(face = "bold")
+    )
 
 p1
 ```
@@ -194,14 +222,19 @@ p1
 To visualize how much variance was explained by the principal components, a barplot was created using the eigenvalues of the first three principal components.
 
 ```{r}
-p2 <- ggplot(variance_explained, aes(x = PC, y = percent)) +
-  geom_col(fill = "steelblue", alpha = 0.8) +
-  scale_y_continuous(labels = scales::percent_format()) +
-  labs(title = "Variance Explained by Each PC",
-       x = "Principal Component",
-       y = "Variance Explained (%)") +
-  theme(plot.title = element_text(face = "bold")
-        )
+p2 <- ggplot2::ggplot(
+  data = variance_explained, 
+  mapping = ggplot2::aes(x = PC, y = percent)
+  ) +
+  ggplot2::geom_col(fill = "steelblue",
+                    alpha = 0.8) +
+  ggplot2::scale_y_continuous(labels = scales::percent_format()) +
+  ggplot2::labs(
+    title = "Variance Explained by Each PC",
+    x = "Principal Component",
+    y = "Variance Explained (%)"
+    ) +
+  ggplot2::theme(plot.title = element_text(face = "bold"))
 
 p2
 ```
@@ -228,26 +261,9 @@ ggplot2::ggsave(
 
 # Tests: Species' distribution between counties
 
-Simply counting the species (or another tree_group) per country.
-
-```{r}
-#| echo: false
-#| eval: true
-
-counting_species <- function(data, tree_group){
-  data |> 
-  group_by(Country, .data[[tree_group]]) |>
-  summarise(count = n(), .groups = "drop") |> 
-  pivot_wider(names_from = .data[[tree_group]],
-              values_from = count,
-              values_fill = 0)
-}
-
-```
-
 ## Chi-squared test, with permutation.
 
-Test if the distribution of species differs between countries. We use simulate.p.value = TRUE to compute the p-value via Monte Carlo simulation, which is more reliable when some expected counts are small or zero.
+Test if the distribution of species differs between countries. The groups abundancy is counted using the counting_species() function. We use simulate.p.value = TRUE to compute the p-value via Monte Carlo simulation, which is more reliable when some expected counts are small or zero.
 
 ### For Species
 
@@ -255,12 +271,16 @@ Test if the distribution of species differs between countries. We use simulate.p
 #| echo: false
 #| eval: true
 
-data <- counting_species(data = genomes_country, tree_group = "Species")
+data <- counting_species(data = genomes_country,
+                         tree_group = "Species")
 
 tbl <- as.matrix(data[ , -1])
 rownames(tbl) <- data$Country
 
-chisq.test(tbl, simulate.p.value = TRUE, B = 1e6)
+stats::chisq.test(
+  x = tbl,
+  simulate.p.value = TRUE,
+  B = 1e6)
 
 ```
 
@@ -278,8 +298,10 @@ data <- counting_species(data = genomes_country,
 tbl <- as.matrix(data[ , -1])
 rownames(tbl) <- data$Country
 
-chisq.test(tbl, simulate.p.value = TRUE, B = 1e6)
-
+stats::chisq.test(
+  x = tbl,
+  simulate.p.value = TRUE,
+  B = 1e6)
 ```
 
 The difference in distribution of species between countries is not significant at all, as the p-value is 0.8.
@@ -296,7 +318,10 @@ data <- counting_species(data = genomes_country,
 tbl <- as.matrix(data[ , -1])
 rownames(tbl) <- data$Country
 
-chisq.test(tbl, simulate.p.value = TRUE, B = 1e6)
+stats::chisq.test(
+  x = tbl,
+  simulate.p.value = TRUE,
+  B = 1e6)
 
 ```
 

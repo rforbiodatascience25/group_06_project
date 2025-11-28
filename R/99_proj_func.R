@@ -60,4 +60,18 @@ heatmap_abundance_per_country <- function(tree_group){
   )
 }
 
+#' Counting the species (or another tree_group) per country.
+#'
+#' @param data A data frame to normalize.
+#' @param tree_group String indicating the lineage level.
+#' @return A wide data frame of frequencies, one row per country.
+counting_species <- function(data, tree_group){
+  data |> 
+    group_by(Country, .data[[tree_group]]) |>
+    summarise(count = n(), .groups = "drop") |> 
+    pivot_wider(names_from = .data[[tree_group]],
+                values_from = count,
+                values_fill = 0)
+}
+
 
