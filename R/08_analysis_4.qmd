@@ -3,7 +3,9 @@ title: "08_analysis_4"
 format: html
 ---
 
-# Loading libraries
+# Analysis 4 - Distributions between countries
+
+## 1. Load libraries
 
 ```{r}
 #| message: false
@@ -20,9 +22,15 @@ library(stats)
 source("99_proj_func.R")
 ```
 
-# Preparing dataset
+## 2. Load data
 
-## Removing NA values for "Countries"
+```{r}
+genome_metadata_aug <- readr::read_tsv(file = "../data/03_dat_aug.tsv")
+```
+
+## 3. Preparing dataset
+
+### 3.1 Removing NA values for "Countries"
 
 From the augmented data, we'll remove the genomes without country information.
 
@@ -33,11 +41,11 @@ genomes_country <- genome_metadata_aug |>
   dplyr::filter(!is.na(Country))
 ```
 
-# About the functions
+## 4. About the functions
 
 Functions used in this script were sourced from the file "99_proj_func.R".
 
-## normalize()
+### 4.1 normalize()
 
 The function "normalize()" is used for producing a heatmap and doing PCAs. It normalizes the counts of a variable tree_group based on the sample size of the countries to allow for easy production of several heatmaps. The function works by:
 
@@ -47,13 +55,13 @@ The function "normalize()" is used for producing a heatmap and doing PCAs. It no
 
 -   And converting the data into wide format for easier analysis.
 
-## heatmap_abundance_per_country()
+### 4.2 heatmap_abundance_per_country()
 
 A function to produce the heatmap based on a group in the lineage. First, the data is normalized by sample size for each country; then it is converted into a matrix, and columns with zero variance are removed. The function then produces a heatmap using the pheatmap function. Again, the function was established to be able to quickly produce heatmaps for several tree_groups.
 
-# Heatmaps for exploration of abundance among countries
+## 5. Heatmaps for exploration of abundance among countries
 
-## Creating heatmaps
+### 5.1 Creating heatmaps
 
 Using the defined heatmap_abundancy_per_country() function to produce heatmaps for some of the "higher" lineage groups, Family, Order, and Phylum, to ensure clearer plots.
 
@@ -66,7 +74,7 @@ heatmap_order <- heatmap_abundance_per_country(tree_group = "Order")
 heatmap_phylum <- heatmap_abundance_per_country(tree_group = "Phylum")
 ```
 
-## Saving results
+### 5.2 Saving results
 
 The resulting heatmaps are saved as png's to the results directory with appropriate sizes.
 
@@ -100,13 +108,13 @@ ggplot2::ggsave(
 )
 ```
 
-# Principal Component Analysis
+## 6. Principal Component Analysis
 
 To investigate if there is a difference in the distribution of microbiomes between countries, a Prinicipal Component Analysis was carried out using the PCA_abundancy_per_country() function. To do this, the data was normalized based on the sample size for each country, after which it was analysed with the prcomp() function. From this fit, the results were extracted (eigenvalues and rotation matrix) and used to create a biplot of the loadings (p1) and determine the variance explained (plotted in p2). Both plots were saved to the results directory.
 
 Running the function for Phylum, which has fewer variables, hence resulting in a clearer plot.
 
-## Running PCA
+### 6.1 Running PCA
 
 To run the PCA, the data was normalized by sample size of each country with the normalize() function based on the selected tree_group. In this case, "Phylum" was chosen to ensure a clearer plot. The data was then analysed with the prcomp() function and from the resulting fit, the eigenvalues and rotation matrix were extracted.
 
@@ -133,7 +141,7 @@ rotation_matrix <- pca_fit |>
   broom::tidy(matrix = "rotation")
 ```
 
-## Create Biplot
+### 6.2 Create Biplot
 
 The biplot was created plotting each countries "scores" for the first two principal components. In the plot, the loadings, extracted from the rotation_matrix, were included to show the variance in species abundance between these countries.
 
@@ -220,7 +228,7 @@ p1 <- ggplot() +
 p1
 ```
 
-## Create plot of variance explained by the PCs
+### 6.3 Create plot of variance explained by the PCs
 
 To visualize how much variance was explained by the principal components, a barplot was created using the eigenvalues of the first three principal components.
 
@@ -245,7 +253,7 @@ p2 <- ggplot2::ggplot(
 p2
 ```
 
-## Save plots
+### 6.4 Save plots
 
 Using ggsave to save plots in the results directory.
 
@@ -268,13 +276,13 @@ ggplot2::ggsave(
   units = "mm")
 ```
 
-# Tests: Species' distribution between counties
+## 7. Tests: Species' distribution between counties
 
-## Chi-squared test, with permutation.
+### 7.1 Chi-squared test, with permutation.
 
 Test if the distribution of species differs between countries. The groups abundancy is counted using the counting_species() function. We use simulate.p.value = TRUE to compute the p-value via Monte Carlo simulation, which is more reliable when some expected counts are small or zero.
 
-### For Species
+#### 7.1.1 For Species
 
 ```{r}
 #| echo: true
@@ -295,7 +303,7 @@ stats::chisq.test(
 
 The difference in distribution of species between countries is not significant at all, as the p-value is 1.
 
-### For Family
+#### 7.1.2 For Family
 
 ```{r}
 #| echo: false
@@ -315,7 +323,7 @@ stats::chisq.test(
 
 The difference in distribution of species between countries is not significant at all, as the p-value is 0.8.
 
-### For Phylum
+#### 7.1.3 For Phylum
 
 ```{r}
 #| echo: false
@@ -336,7 +344,7 @@ stats::chisq.test(
 
 The difference in distribution of species between countries is not significant, as the p-value is 0.6
 
-# Endometriosis test
+## 8. Endometriosis test
 
 To assess whether genes associated with endometriosis are significantly more represented in one country than another, a Fisher’s exact test is performed to compare the frequency of these genes. The Fisher test is chosen because the number of endometriosis-associated genomes is low and the sample sizes between countries are highly uneven, especially for Denmark. Fisher’s exact test can handle both sparse data and unequal group sizes.
 
