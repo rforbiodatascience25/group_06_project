@@ -304,79 +304,88 @@ The difference in distribution of species between countries is not significant, 
 
 # Endometriosis test
 
-To assess whether genes associated with endometriosis are significantly more represented in one country than another, a fisher exact test is performed to compare the frequency of these genes. The fisher exact test is used as the number of present endometriosis associated genes are quite low, so the analysis needs to be able to handle that. Aditionally it can handle the uneven data sizes, as the number of observations from USA is a lot higher than for Denmark and China. With the Fisher exact test, we want to answer:
+To assess whether genes associated with endometriosis are significantly more represented in one country than another, a Fisher’s exact test is performed to compare the frequency of these genes. The Fisher test is chosen because the number of endometriosis-associated genomes is low and the sample sizes between countries are highly uneven, especially for Denmark. Fisher’s exact test can handle both sparse data and unequal group sizes.
 
-Does the proportion of endometriosis associated genomes differ between the countries?
+The purpose of the test is to answer:
 
-The countries will e be compared pairwise to test the null hypothesis, if the proportion of endometriosis associated genomes is the same in both countries and the alternative hypothsis being that the proportions differ between the countries.
+**Does the proportion of endometriosis-associated genomes differ between countries?**
 
-Check that the data contains the variable of interest:
+Countries are compared pairwise. For each comparison, the null hypothesis states that the proportion of endometriosis-associated genomes is the same in both countries, while the alternative hypothesis states that the proportions differ.
+
+Before running the test, we confirm that the required variables are present:
 
 ```{r}
 #| echo: false
-#| eval: true
+#| eval: false
 
 names(genomes_country)
 ```
 
 Both the `Country` and `endometriosis_associated` variables are present and we are able to make the analysis.
 
-As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use the made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that.:\
+As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use the made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that.:
 
 ```{r}
-fisher_compare_countries <- function(data, country_var, outcome_var, country1, country2) {
+compute_fisher_results <- function(data, country_var, outcome_var, pairs) {
   
-  country_col <- data[[country_var]]
-  outcome_col <- data[[outcome_var]]
-  subset_data <- data[country_col %in% c(country1, country2), ]
-  tab <- table(subset_data[[country_var]], subset_data[[outcome_var]])
-  fisher_res <- fisher.test(tab)
-  list(
-    countries = c(country1, country2),
-    table = tab,
-    p_value = fisher_res$p.value,
-    odds_ratio = fisher_res$estimate,
-    conf_int = fisher_res$conf.int,
-    method = fisher_res$method
-  )
+  # Run Fisher test for each pair
+  results <- lapply(pairs, function(p) {
+    fisher_compare_countries(
+      data        = data,
+      country_var = country_var,
+      outcome_var = outcome_var,
+      country1    = p[1],
+      country2    = p[2]
+    )
+  })
+  
+  # Convert each result into a tibble row
+  rows <- lapply(results, function(res) {
+    tibble::tibble(
+      country1   = res$countries[1],
+      country2   = res$countries[2],
+      p_value    = round(res$p_value, 4),
+      odds_ratio = round(as.numeric(res$odds_ratio), 3),
+      CI_low     = round(res$conf_int[1], 3),
+      CI_high    = round(res$conf_int[2], 3)
+    )
+  })
+  
+  # Combine into a table
+  dplyr::bind_rows(rows)
 }
 
 ```
 
-## USA vs. China
+We then define the country pairs that we want to compare:
 
 ```{r}
-fisher_compare_countries(
-  data = genomes_country,
-  country_var = "Country",
-  outcome_var = "endometriosis_associated",
-  country1 = "USA",
-  country2 = "China"
+pairs <- list(
+  c("USA", "China"),
+  c("USA", "Denmark"),
+  c("Denmark", "China")
 )
 ```
 
-## USA vs. Denmark
+The functions is then used to compute the fisher exact test between the differen country pairs:
 
 ```{r}
-fisher_compare_countries(
-  data = genomes_country,
+all_fisher_results <- compute_fisher_results(
+  data        = genomes_country,
   country_var = "Country",
   outcome_var = "endometriosis_associated",
-  country1 = "USA",
-  country2 = "Denmark"
+  pairs       = pairs
 )
-```
 
-## Denmark vs. China
+all_fisher_results
+```
 
 ```{r}
-fisher_compare_countries(
-  data = genomes_country,
-  country_var = "Country",
-  outcome_var = "endometriosis_associated",
-  country1 = "Denmark",
-  country2 = "China"
-)
+#| echo: false
+#| eval: false
+readr::write_tsv(all_fisher_results, "../results/fisher_results.tsv")
 ```
 
-The fisher exact tests showed a significant difference in the proportion of endometriosis associated between USA and China with a p-value on 0.02. Usa is having a 2.7 fold higher odds of endometriosis associated genomes. For both Denmark and USA or between Denmark and China there where no significant difference in the proportion of the endometriosis associated genes as the p-values were 0.155 and 1. This is likely due to the small number of both danish and chinese genomes, which results in wide confidence intervals and low statistical power.
+The fisher exact tests showed a significant difference in the proportion of endometriosis associated between USA and China with a p-value on 0.02. Usa is having a 2.7 fold higher odds of endometriosis associated genomes.
+
+No significant differences were observed between USA and Denmark (p = 0.155) or between Denmark and China (p = 1). These non-significant results are likely due to the very small number of Danish and Chinese genomes, resulting in wide confidence intervals and low statistical power.
