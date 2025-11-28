@@ -25,14 +25,13 @@ library(stats)
 From the augmented data, we'll remove the genomes without country information.
 
 ```{r}
-#| echo: false
-#| eval: true
-
+#| echo: true
+#| eval: false
 genomes_country <- genome_metadata_aug %>%
   filter(!is.na(Country))
 ```
 
-# Functions
+# Sourcing Functions
 
 ## Function for preparing data and normalizing it based on the dataset size
 
