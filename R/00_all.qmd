@@ -3,29 +3,7 @@ title: "Project"
 format: html
 ---
 
-# 1. Background
-
-The human vaginal microbiome plays an important role in reproductive health and protection against infections. It is usually dominated by *Lactobacillus* species, which keep the environment acidic and prevent the growth of harmful microorganisms. However, the vaginal microbiome can differ between people and across health states. Other bacteria such as *Gardnerella, Atopobium*, and *Prevotella* often appear during dysbiosis or bacterial vaginosis.
-
-Recent advances in metagenomic sequencing allow researchers to rebuild individual microbial genomes from complex microbial communities. These reconstructed genomes are called metagenome-assembled genomes (MAGs). MAGs give new insight into the genetic makeup and functions of microorganisms that cannot easily be grown in the lab. Databases such as MGnify collect MAGs from many human and environmental microbiomes, including the vaginal microbiome, and provide useful but often un-standardized metadata.
-
-The dataset used in this project, called `genomes-all_metadata.tsv`, comes from MGnify’s vaginal microbiome genome catalogue. It contains thousands of bacterial MAGs with information on assembly quality (genome length, N50, GC content, completeness, contamination), taxonomic classification, and limited geographical data. Like many real biological datasets, it includes inconsistencies, missing values, and mixed formats.
-
-# 2. Aim
-
-The aim of this project is to clean, explore, and analyse the genome meta-data-set from the human vaginal microbiome. With this project we aim to uncover patterns in genome quality, taxonomic composition, and ecological characteristics, while demonstrating the principles of reproducible and collaborative data science in R.
-
-In this project we will:
-
-1.  Tidy and standardize the raw meta-data-set by addressing missing values, harmonizing column formats, and parsing the hierarchical taxonomic lineage into separate levels (phylum to species).
-2.  Describe the cleaned and augmented dataset, including basic summaries of genome quality, taxonomy, and geography.
-3.  Perform exploratory analyses of genome quality and taxonomic composition
-4.  Analyse whether endometriosis-associated MAGs are genomically distinct from non-associated MAGs
-5.  Investigate geographical patterns in taxonomic composition and endometriosis association across countries using heatmaps, PCA and statistical tests
-
-Through these analyses, we aim to gain a deeper understanding of the genomic diversity of the vaginal microbiome, while showcasing the entire data science workflow using the tidyverse systems in R.
-
-# 3. Load Libraries
+# Load Libraries
 
 ```{r}
 #| message: false
@@ -34,7 +12,7 @@ library("tidyverse")
 library("quarto")
 ```
 
-# 4. Load Data
+# 1. Load Data
 
 Below we run the loading script that downloads the raw data and writes `01_dat_load.tsv.`
 
@@ -44,7 +22,7 @@ Below we run the loading script that downloads the raw data and writes `01_dat_l
 quarto_render("01_load.qmd")
 ```
 
-# 5. Clean data
+# 2. Clean data
 
 Cleans the loaded data and writes it to `02_dat_clean.tsv`.
 
@@ -54,7 +32,7 @@ Cleans the loaded data and writes it to `02_dat_clean.tsv`.
 quarto_render("02_clean.qmd")
 ```
 
-# 6. Augment
+# 3. Augment
 
 Added augmentation the cleaned data and writes it to `03_dat_aug.tsv`.
 
@@ -64,7 +42,7 @@ Added augmentation the cleaned data and writes it to `03_dat_aug.tsv`.
 quarto_render("03_augment.qmd")
 ```
 
-# 7. Describe
+# 4. Describe
 
 Describes the cleaned data.
 
@@ -74,7 +52,7 @@ Describes the cleaned data.
 quarto_render("04_describe.qmd")
 ```
 
-# 8. Analysis 1
+# 5. Analysis 1
 
 ```{r}
 #| echo: false
@@ -82,7 +60,7 @@ quarto_render("04_describe.qmd")
 quarto_render("05_analysis_1.qmd")
 ```
 
-# 9. Analysis 2
+# 6. Analysis 2
 
 ```{r}
 #| echo: false
@@ -90,9 +68,7 @@ quarto_render("05_analysis_1.qmd")
 quarto_render("06_analysis_2.qmd")
 ```
 
-# 10. Analysis 3
-
-Comparative Analysis of Endometriosis-Associated vs Non-Associated MAGs
+# 7. Analysis 3
 
 ```{r}
 #| echo: false
@@ -100,4 +76,10 @@ Comparative Analysis of Endometriosis-Associated vs Non-Associated MAGs
 quarto_render("07_analysis_3.qmd")
 ```
 
-# 11. Analysis 4
+# 8. Analysis 4
+
+```{r}
+#| echo: false
+#| eval: true
+quarto_render("08_analysis_4.qmd")
+```
