@@ -127,22 +127,35 @@ for vaginal bacterial taxa (typically 1.5–3 Mb).
 ![](../results/desc_length_hist.png){width="80%"}
 :::
 
-## ANALYSIS 1
+## ANALYSIS 1 - Phylogenetic tree {.scrollable}
+
+::: incremental
+-   Constructed a phylogenetic tree from the taxonomic ranks  
+    (*Domain → Species*) in the augmented dataset.
+-   NA values in taxonomy were removed before tree construction.
+-   The tree is colored by **phylum** to show taxonomic clustering.
+:::
+
+. . .
+
+![](../results/phylogenetic_tree_plot.png){width="65%"}
+
+
 
 ## ANALYSIS 2 {.scrollable}
+
 Investigating quality of the samples.
 
 . . .
 
 ::: incremental
-- XXX
-- XXX
+-   XXX
+-   XXX
 :::
 
 . . .
 
 ![](../results/completeness_contamination_plot.png){width="100%"}
-
 
 ## ANALYSIS 3 - Associated and non-associated-endometriosis MAGs {.scrollable}
 
