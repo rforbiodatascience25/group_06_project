@@ -244,7 +244,7 @@ Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation wi
 Test to see if there is a significant difference in the proportion of endometriosis-associated genomes between countries
 ```{r}
 #| echo: false 
-all_fisher_results <- readr::read_tsv(here::here("results/fisher_results.tsv"))
+all_fisher_results <- readr::read_tsv(here::here("results/08_key_table_1.tsv"))
 knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 ```
 -   Significant difference between USA and China
