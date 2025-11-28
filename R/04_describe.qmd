@@ -73,8 +73,10 @@ plot_phylum <-
     mutate(Phylum = str_trim(as.character(Phylum))) |>
     filter(!is.na(Phylum)) |>
     count(Phylum, sort = TRUE) |>
-    ggplot(aes(x = fct_reorder(Phylum, n), y = n)) +
-    geom_col(fill = "#4C72B0") +
+    ggplot(aes(x = fct_reorder(Phylum, n), 
+               y = n,
+               fill = Phylum)) +
+    geom_col() +
     coord_flip() +
     labs(
       x = "Phylum",
@@ -84,7 +86,8 @@ plot_phylum <-
     theme_minimal(base_size = 11) +
     theme(
       plot.background  = element_rect(fill = "white", colour = NA),
-      panel.background = element_rect(fill = "white", colour = NA)
+      panel.background = element_rect(fill = "white", colour = NA),
+      legend.position = "none"
     )
 
 ggsave(
