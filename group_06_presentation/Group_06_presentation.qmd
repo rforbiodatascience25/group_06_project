@@ -135,8 +135,8 @@ Investigating quality of the samples.
 . . .
 
 ::: incremental
-- XXX
-- XXX
+- Kan Mathilde (eller en anden der skal snakke contamination) skrive her???
+- Kan Mathilde (eller en anden der skal snakke contamination) skrive her???
 :::
 
 . . .
