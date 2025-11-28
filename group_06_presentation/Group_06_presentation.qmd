@@ -220,8 +220,16 @@ Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation wi
 ![](../results/PCA_biplot.png){width="90%"}
 
 ## Tests
-
-Mathilde skriver her.
+Test to see if there is a significant difference in the proportion of endometriosis-associated genomes between countries
+```{r}
+#| echo: false 
+all_fisher_results <- readr::read_tsv(here::here("results/fisher_results.tsv"))
+knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
+```
+-   Significant difference between USA and China
+-   USA displayed 2.7 times higher odds of endometriosis-associated genomes
+-   No significant difference between USA vs. Denmark or Denmark vs. China
+-   Likely due to the limited amount of danish and chinese genomes represented
 :::
 
 ## DISCUSSION & FUTURE PERSPECTIVES
