@@ -125,7 +125,7 @@ Aug_data <- readr::read_tsv(
 Most MAGs belong to only a few dominant phyla.\
 This indicates strong taxonomic skew in the dataset.
 
-![](../results/desc_phylum_barplot.png){width="70%"}
+![](../results/04_key_plot_1.png){width="70%"}
 
 ------------------------------------------------------------------------
 
@@ -134,7 +134,7 @@ This indicates strong taxonomic skew in the dataset.
 Most genomes have high completeness (\>90%),\
 indicating generally strong assembly quality.
 
-![](../results/desc_completeness_hist.png){width="70%"}
+![](../results/04_key_plot_2.png){width="70%"}
 
 ------------------------------------------------------------------------
 
@@ -143,7 +143,7 @@ indicating generally strong assembly quality.
 Genome lengths fall within the expected biological range\
 for vaginal bacterial taxa (typically 1.5–3 Mb).
 
-![](../results/desc_length_hist.png){width="70%"}
+![](../results/04_key_plot_3.png){width="70%"}
 :::
 
 ## ANALYSIS 1 - Phylogenetic tree {.scrollable}
@@ -194,7 +194,7 @@ Investigating quality of the samples.
 Endometriosis-associated MAGs occur in only a few phyla.\
 Most phyla contain *no* associated MAGs, suggesting limited taxonomic clustering.
 
-![](../results/analysis3_phylum_proportion.png){width="80%"}
+![](../results/07_key_plot_1.png){width="80%"}
 
 ------------------------------------------------------------------------
 
@@ -203,7 +203,7 @@ Most phyla contain *no* associated MAGs, suggesting limited taxonomic clustering
 GC content ranges overlap almost completely.\
 No evidence that GC% distinguishes associated vs non-associated MAGs.
 
-![](../results/analysis3_gc_violin.png){width="80%"}
+![](../results/07_key_plot_2.png){width="80%"}
 :::
 
 ## ANALYSIS 4 - Species Distribution between countries {.scrollable}
