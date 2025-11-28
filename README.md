@@ -56,7 +56,7 @@ In this project we will:
 2.  Describe the cleaned and augmented dataset, including basic summaries of genome quality, taxonomy, and geography.
 3.  Perform exploratory analyses of genome quality and taxonomic composition
 4.  Analyse whether endometriosis-associated MAGs are genomically distinct from non-associated MAGs
-5.  Investigate geographical patterns in taxonomic composition and endometriosis association across countries using heatmaps, PCA and statistical tests
+5.  Investigate geographical patterns in taxonomic composition and endometriosis association across countries using heatmaps, PCA and statistical tests. 
 
 Through these analyses, we aim to gain a deeper understanding of the genomic diversity of the vaginal microbiome, while showcasing the entire data science workflow using the tidyverse systems in R.
 
@@ -115,3 +115,10 @@ Our 01_load.qmd script downloads the metadata file automatically and saves it to
 Direct link to the dataset:
 
 <https://ftp.ebi.ac.uk/pub/databases/metagenomics/mgnify_genomes/human-vaginal/v1.0/genomes-all_metadata.tsv>
+
+## Additional data
+
+During augmentation of the data we are annotating MAGs with endometriosis-associated genera based on the article:
+
+Endobiota Study 2019, "The endobiota study: comparison of vaginal, cervical and gut microbiota between women with stage 3/4 endometriosis and healthy controls" 
+(<https://www.nature.com/articles/s41598-019-39700-6>). 
