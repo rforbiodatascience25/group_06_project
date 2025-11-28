@@ -3,3 +3,132 @@ title: "05_analysis_1"
 format: html
 ---
 
+# Phylogenetic tree
+
+The dataset contains information the different phylogenetic classes, which can be used to plot the phylogenetic tree.
+
+## Load libraries
+
+```{r}
+#| message: false
+#| warning: false
+library("tidyverse")
+library("ggtree")
+library("ape")
+```
+
+## Load data
+
+Loading the data into a variable from the `03_dat_aug.tsv` file
+
+```{r}
+#| echo: true
+#| eval: false
+genome_metadata_aug<- readr::read_tsv(file = "../data/03_dat_aug.tsv")
+```
+
+## Prepare data for plot
+
+First the different ranks in the phylogenetic are defined:
+
+```{r}
+ranks <- c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+```
+
+Then the observations containing NA values in all the variables related to the phylogenetic taxonomy ranks. The `drop_na` command is used, but it is specified which columns it should remove NA values from. If it was not specifed, then all NA observations would be removed and then observations having NA values in different variables would have been lost.
+
+```{r}
+genome_phylo_data <- genome_metadata_aug |>
+    tidyr::drop_na(all_of(ranks))
+```
+
+The data needs to be changed into factors as it is required for the .phylo command.
+
+```{r}
+tax <- genome_phylo_data|>
+  dplyr::select(all_of(ranks)) |>         
+  dplyr::distinct() |>
+  dplyr::mutate(dplyr::across(everything(), as.factor))
+```
+
+Using the as.phylo functions to translate the data into a tree. The hierachy of the data is defined in the function:
+
+```{r}
+tree <- ape::as.phylo(~ Domain/Phylum/Class/Order/Family/Genus/Species, data = tax)
+```
+
+## Plot of phylogenetic tree
+
+Then the specific tips of the tree of interest is defined to be able to color the tree by phylum:
+
+```{r}
+tax_tip <- tax |>
+  dplyr::select(Species, Phylum) |>
+  dplyr::distinct() |>
+  dplyr::rename(label = Species)
+```
+
+Then the tip labels (the species) added to a list for each phylum:
+
+```{r}
+phylum_list <- split(tax_tip$label, tax_tip$Phylum)
+```
+
+Then the information about each of the phylum groups are added to the tree using the groupOTU command:
+
+```{r}
+tree_grp <- ggtree::groupOTU(.data = tree, .node = phylum_list)
+```
+
+To plot the phylogenetic tree, the base plot is made:
+
+```{r}
+p <- ggtree::ggtree(
+tr = tree_grp,
+layout = "circular",
+aes(color = factor(group)),
+size = 0.4
+)
+```
+
+To add the tax tips to the plot, the species and phylum is joined onto the tree data:
+
+```{r}
+p$data <- p$data |>
+  dplyr::left_join(tax_tip, by = "label")
+```
+
+The phylogenetic tree is then plotted and the edges of the plot is colored by the different phyla, to see the representation of the gene phyla present.
+
+```{r, fig.width=9.5, fig.height=9.5}
+phylogenetic_tree_plot <- p +
+  ggtree::geom_tiplab(
+    aes(label = label),
+    size = 1.5,
+    offset = 0.05,
+    align = TRUE) +
+  ggplot2::scale_color_discrete(
+    name = "Phylum",
+    labels = names(phylum_list)) +
+  ggplot2::labs(
+    title = "Phylogenetic tree colored by phylum",
+    caption = "Note: NA values were removed before constructing the tree") +
+  ggtree::theme_tree() +
+  ggplot2::theme(
+    plot.title = ggplot2::element_text(hjust = 0.5, face = "bold"),
+    plot.caption = ggplot2::element_text(hjust = 0.5, size = 6, color = "grey40"),
+    legend.title = ggplot2::element_text(face = "bold"))
+
+phylogenetic_tree_plot
+```
+
+```{r}
+#| echo: false
+#| eval: false
+ggplot2::ggsave(
+  "../results/phylogenetic_tree_plot.png",
+  phylogenetic_tree_plot,
+  width = 10,
+  height = 10,
+  dpi = 300)
+```

@@ -146,9 +146,36 @@ for vaginal bacterial taxa (typically 1.5–3 Mb).
 ![](../results/desc_length_hist.png){width="70%"}
 :::
 
-## ANALYSIS 1
+## ANALYSIS 1 - Phylogenetic tree {.scrollable}
 
-## ANALYSIS 2
+::: incremental
+-   Constructed a phylogenetic tree from the taxonomic ranks (*Domain → Species*) in the augmented dataset.
+-   NA values in taxonomy were removed before tree construction.
+-   The tree is colored by **phylum** to show taxonomic clustering.
+:::
+
+. . .
+
+![](../results/phylogenetic_tree_plot.png){width="65%"}
+
+
+
+## ANALYSIS 2 {.scrollable}
+
+Investigating quality of the samples.
+
+. . .
+
+::: incremental
+-   Scatterplot of **completeness (%)** vs. **contamination (%)** for all MAGs
+-   The dashed lines mark the **high-quality** genomes (above 90% completeness and below 5% contamination)
+-   Points are colored by **phylum**
+-   Most MAGs cluster in the high-quality area indicating good assemble quality of the MAGs. 
+:::
+
+. . .
+
+![](../results/completeness_contamination_plot.png){width="100%"}
 
 ## ANALYSIS 3 - Associated and non-associated-endometriosis MAGs {.scrollable}
 
@@ -209,7 +236,11 @@ Clear division of countries.
 
 Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation with heatmap.
 
-![](../results/PCA_biplot.png){width="100%"}
+![](../results/PCA_biplot.png){width="90%"}
+
+## Tests
+
+Mathilde skriver her.
 :::
 
 ## DISCUSSION & FUTURE PERSPECTIVES
@@ -219,5 +250,6 @@ Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation wi
 -   Limited metadata and uneven sampling
 -   Improve clinical + geographic metadata
 
+-   More focus on theoretically correct analysis (compositional data analysis)
 
 ## CONCLUSION
