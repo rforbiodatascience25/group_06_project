@@ -191,6 +191,12 @@ Clear division of countries.
 Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation with heatmap.
 
 ![](../results/PCA_biplot.png){width="100%"}
+
+## Tests
+
+Mathilde skriver her.
+
+
 :::
 
 ## DISCUSSION & FUTURE PERSPECTIVES
