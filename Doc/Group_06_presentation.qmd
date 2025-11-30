@@ -41,22 +41,21 @@ Meta-data from MGnify’s vaginal microbiome genome catalogue
 
 ## DATA CLEANING AND WRANGLING {.scrollable}
 
-:::: {style="margin-top: -15px; margin-bottom: -15px;"}
+::::: {style="margin-top: -15px; margin-bottom: -15px;"}
 **Untidy –\> tidy data**
 
-::: {style="margin-left: 1.5em; font-size: 0.9em; line-height: 1.1;"}
+:::: {style="margin-left: 1.5em; font-size: 0.9em; line-height: 1.1;"}
 ::: incremental
 1.  *Split the data in the "lineage" variable into multiple variables of seven taxonomic ranks.*
 2.  *Extract and mutate prefixes and GTDB suffixes (e.g. "\_A") to streamline taxonomies*
-2.  *Each variable occupies a column, and each observation occupies a row.*
-3.  *Mutate all "not provided" and empty strings to NA.*
-4.  *Remove columns that will not be used in our analysis.*
-5.  *Quality of the MAGs - completeness, contamination, and genome quality (high, medium, low) - joined to the left side of tidy data.*
-6.  *Add column to MAGs dataset that flags each endometriosis-associated genus (True/False)*
-
-:::
+3.  *Each variable occupies a column, and each observation occupies a row.*
+4.  *Mutate all "not provided" and empty strings to NA.*
+5.  *Remove columns that will not be used in our analysis.*
+6.  *Quality of the MAGs - completeness, contamination, and genome quality (high, medium, low) - joined to the left side of tidy data.*
+7.  *Add column to MAGs dataset that flags each endometriosis-associated genus (True/False)*
 :::
 ::::
+:::::
 
 ::: panel-tabset
 ### Untidy datafile
@@ -67,6 +66,7 @@ print(readr::read_tsv(here("data/_raw/genomes-all_metadata.tsv")))
 ```
 
 ### Lineages
+
 ```{r}
 #| echo: true
 untidy_data <- readr::read_tsv(
@@ -82,7 +82,9 @@ untidy_data <- readr::read_tsv(
 #| echo: true   
 print(readr::read_tsv(here("data/02_dat_clean.tsv")))
 ```
-### Taxonomic ranks 
+
+### Taxonomic ranks
+
 ```{r}
 #| echo: true
 tidy_data <- readr::read_tsv(
@@ -158,8 +160,6 @@ for vaginal bacterial taxa (typically 1.5–3 Mb).
 
 ![](../results/05_key_plot_1.png){width="65%"}
 
-
-
 ## ANALYSIS 2 - Data quality {.scrollable}
 
 Investigating the quality of samples.
@@ -170,7 +170,7 @@ Investigating the quality of samples.
 -   Scatterplot of **completeness (%)** vs. **contamination (%)** for all MAGs
 -   The dashed lines mark the **high-quality** genomes (above 90% completeness and below 5% contamination)
 -   Points are colored by **phylum**
--   Most MAGs cluster in the high-quality area indicating good assemble quality of the MAGs. 
+-   Most MAGs cluster in the high-quality area indicating good assemble quality of the MAGs.
 :::
 
 . . .
@@ -224,9 +224,7 @@ Some variation between countries. I.e. Order Bacteroidales, but not much.
 
 Could've tested for significance.
 
-![](../results/08_key_plot_1.png){width="87%"} 
-![](../results/08_key_plot_2.png){width="87%"} 
-![](../results/08_key_plot_3.png){width="87%"}
+![](../results/08_key_plot_1.png){width="87%"} ![](../results/08_key_plot_2.png){width="87%"} ![](../results/08_key_plot_3.png){width="87%"}
 
 ## Principal Component Analysis (PCA)
 
@@ -241,12 +239,15 @@ Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation wi
 ![](../results/08_key_plot_5.png){width="90%"}
 
 ## Tests
+
 Test to see if there is a significant difference in the proportion of endometriosis-associated genomes between countries
+
 ```{r}
 #| echo: false 
 all_fisher_results <- readr::read_tsv(here::here("results/08_key_table_1.tsv"))
 knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 ```
+
 -   Significant difference between USA and China
 -   USA displayed 2.7 times higher odds of endometriosis-associated genomes
 -   No significant difference between USA vs. Denmark or Denmark vs. China
@@ -256,10 +257,19 @@ knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 ## DISCUSSION & FUTURE PERSPECTIVES
 
 -   High-quality MAGs with good completeness\
+
 -   No strong genomic differences between groups\
+
 -   Limited metadata and uneven sampling
+
 -   Improve clinical + geographic metadata
 
 -   More focus on theoretically correct analysis (compositional data analysis)
 
 ## CONCLUSION
+
+-   The dataset contains high-quality MAGs with high completeness and low contamination
+
+-   Taxonomy is dominated by a few phyla, with no distinct genomic patterns in endometriosis-associated bacterial groups
+
+-   Sparse and uneven geographic metadata which limits ...
