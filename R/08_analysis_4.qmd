@@ -1,6 +1,8 @@
 ---
 title: "08_analysis_4"
-format: html
+format:
+  html:
+    embed-resources: true
 ---
 
 # Analysis 4 - Distributions between countries
@@ -80,7 +82,7 @@ The resulting heatmaps are saved as png's to the results directory with appropri
 
 ```{r}
 #| echo: false
-#| eval: false
+#| eval: true
 
 ggplot2::ggsave(
   filename = "../results/08_key_plot_1.png",
@@ -259,7 +261,7 @@ Using ggsave to save plots in the results directory.
 
 ```{r}
 #| echo: false
-#| eval: false
+#| eval: true
   
 ggplot2::ggsave(
   filename = "../results/08_key_plot_4.png",
@@ -392,7 +394,7 @@ all_fisher_results
 
 ```{r}
 #| echo: false
-#| eval: false
+#| eval: true
 readr::write_tsv(all_fisher_results, "../results/08_key_table_1.tsv")
 ```
 
