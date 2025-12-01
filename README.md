@@ -34,7 +34,9 @@ github-username: s215098
 
 ## Presentation link
 
-Here is a direct link to our presentation: `https://raw.githack.com/rforbiodatascience25/group_06_project/main/doc/presentation.html`
+Here is a direct link to our presentation:
+
+[`https://raw.githack.com/rforbiodatascience25/group_06_project/main/doc/presentation.html`](https://raw.githack.com/rforbiodatascience25/group_06_project/main/doc/presentation.html)
 
 ## Background
 
