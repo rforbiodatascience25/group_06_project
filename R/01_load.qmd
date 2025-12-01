@@ -1,6 +1,8 @@
 ---
 title: "Load data"
-format: html
+format:
+  html:
+    embed-resources: true
 ---
 
 # Load Data
