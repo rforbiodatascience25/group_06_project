@@ -117,6 +117,7 @@ Aug_data <- readr::read_tsv(
 -   High completeness and low contamination for most genomes
 -   Dataset dominated by a few major bacterial phyla
 -   Genome lengths fall within biologically expected ranges
+-   Dataset dominated by samples from USA.
 :::
 
 . . .
@@ -179,10 +180,10 @@ Investigating the quality of samples.
 ## ANALYSIS 3 - Associated and non-associated-endometriosis MAGs {.scrollable}
 
 ::: incremental
--   Compared endometriosis-associated vs non-associated MAGs
--   Focused on GC content, genome length, completeness & contamination
--   Investigated whether associated MAGs cluster taxonomically
--   Goal: determine if associated MAGs form a genomically distinct group
+-   Compare endometriosis-associated vs non-associated MAGs
+-   Assess phylum distribution and GC content
+-   Investigate if associated MAGs form a distinct genomic group
+-   Evaluate possible taxonomic clustering
 :::
 
 . . .
@@ -190,19 +191,21 @@ Investigating the quality of samples.
 ::: panel-tabset
 ## Phylum distribution
 
-Endometriosis-associated MAGs occur in only a few phyla.\
-Most phyla contain *no* associated MAGs, suggesting limited taxonomic clustering.
+-   Associated MAGs appear in only a few phyla
 
-![](../results/07_key_plot_1.png){width="80%"}
+-   Most phyla contain no associated MAGs → Association is genus-specific, not phylum-wide
+
+![](../results/07_key_plot_1.png){width="70%"}
 
 ------------------------------------------------------------------------
 
 ## GC content
 
-GC content ranges overlap almost completely.\
-No evidence that GC% distinguishes associated vs non-associated MAGs.
+-   GC% distributions overlap almost fully
 
-![](../results/07_key_plot_2.png){width="80%"}
+-   No clear GC signature of association → No genomic differentiation
+
+![](../results/07_key_plot_2.png){width="70%"}
 :::
 
 ## ANALYSIS 4 - Taxa Distribution between countries {.scrollable}
@@ -255,9 +258,9 @@ knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 
 ## DISCUSSION & FUTURE PERSPECTIVES
 
--   High-quality MAGs with good completeness\
+-   High-quality MAGs with good completeness
 
--   No strong genomic differences between groups\
+-   No strong genomic differences between groups
 
 -   Limited metadata and uneven sampling
 
@@ -271,4 +274,4 @@ knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 
 -   Taxonomy is dominated by a few phyla, with no distinct genomic patterns in endometriosis-associated bacterial groups
 
--   Sparse and uneven geographic metadata which limits ...
+-   Sparse and uneven geographic metadata which limits country-based analyses.
