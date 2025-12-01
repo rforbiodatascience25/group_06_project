@@ -423,7 +423,7 @@ genome_metadata_aug |>
 We visualize the distribution of genomes across continents to highlight sampling imbalances.
 
 ```{r}
-genome_metadata_aug |>
+plot_geo <- genome_metadata_aug |>
   dplyr::count(Country) |>
   ggplot2::ggplot(ggplot2::aes(
     x = Country,
@@ -434,6 +434,21 @@ genome_metadata_aug |>
     y     = "Number of genomes",
     title = "Number of genomes per country"
   )
+
+plot_geo
+```
+
+```{r}
+#| echo: false
+#| eval: true
+ggplot2::ggsave(
+  "../results/04_key_plot_4.png",
+  plot = plot_geo,
+  width = 120,
+  height = 90,
+  units = "mm",
+  dpi = 300
+)
 ```
 
 The geographic distribution of genomes is uneven, with certain countries (USA and china) contributing the majority of available data. This reflects sampling bias, where research efforts and sequencing initiatives are concentrated in specific regions.
