@@ -47,7 +47,7 @@ Functions used in this script were sourced from the file "99_proj_func.R".
 
 ### 4.1 normalize()
 
-The function "normalize()" is used for producing a heatmap and doing PCAs. It normalizes the counts of a variable tree_group based on the sample size of the countries to allow for easy production of several heatmaps. The function works by:
+As the sample sizes vary highly between countries in this dataset, we chose to normalize the taxa counts to allow for comparison between them. This was implemented in the function "normalize()", which is used for producing both heatmaps and PCAs. It normalizes the counts of a variable tree_group based on the sample size of the countries to allow for easy production of several heatmaps. The function works by:
 
 -   Counting the instances of each group per country.
 
@@ -63,7 +63,7 @@ A function to produce the heatmap based on a group in the lineage. First, the da
 
 ### 5.1 Creating heatmaps
 
-Using the defined heatmap_abundancy_per_country() function to produce heatmaps for some of the "higher" lineage groups, Family, Order, and Phylum, to ensure clearer plots.
+Using the defined heatmap_abundancy_per_country() function to produce heatmaps for some of the "higher" taxa, Family, Order, and Phylum, to ensure clearer plots.
 
 ```{r}
 #| echo: true

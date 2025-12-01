@@ -210,8 +210,8 @@ No evidence that GC% distinguishes associated vs non-associated MAGs.
 
 ::: incremental
 -   Investigating the distribution of taxa in Countries
--   Counted taxa instances for each country and converted to wide format
 -   Filtered for NA in Countries
+-   Counted taxa instances for each country and converted to wide format
 -   Big difference in sample size --\> normalized data
 :::
 
