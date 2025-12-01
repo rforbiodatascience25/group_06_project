@@ -125,4 +125,4 @@ Direct link to the dataset:
 
 During augmentation of the data we are annotating MAGs with endometriosis-associated genera based on the article:
 
-Endobiota Study 2019, "The endobiota study: comparison of vaginal, cervical and gut microbiota between women with stage 3/4 endometriosis and healthy controls" (<https://www.nature.com/articles/s41598-019-39700-6>).
+[1] MacSharry, J., Kovács, Z., Xie, Y. *et al.* Endometriosis specific vaginal microbiota links to urine and serum *N*-glycome. *Sci Rep* **14**, 25372 (2024). <https://doi.org/10.1038/s41598-024-76125-2>.
