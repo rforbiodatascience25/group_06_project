@@ -178,17 +178,6 @@ dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
 </div>
 <p>This plot shows that the majority of the genes have a low contamination between 0 and 1% which indicates that the dataset contains mainly clean bins. Additionally the completeness levels are high. It ranges between 50 and 100% and a big cluster of the genes are between 90 and 100% completeness. This indicates that the dataset assembles are high-quality and that the MAGs are nearly complete. A common standard threshold for the contamination/completeness levels are that high-quality data have a completeness above 90% and a contamination below 5%. In our dataset, a large cluster of genomes fall into this category.</p>
 </section>
-<section id="saving-plot" class="level2">
-<h2 class="anchored" data-anchor-id="saving-plot">4. Saving plot</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"../results/06_key_plot_1.png"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> completeness_contamination_plot,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">16</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">9</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
 </section>
 
 </main>

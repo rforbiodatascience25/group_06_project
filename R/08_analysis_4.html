@@ -140,7 +140,7 @@ dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
 <p>Functions used in this script were sourced from the file “99_proj_func.R”.</p>
 <section id="normalize" class="level3">
 <h3 class="anchored" data-anchor-id="normalize">4.1 normalize()</h3>
-<p>The function “normalize()” is used for producing a heatmap and doing PCAs. It normalizes the counts of a variable tree_group based on the sample size of the countries to allow for easy production of several heatmaps. The function works by:</p>
+<p>As the sample sizes vary highly between countries in this dataset, we chose to normalize the taxa counts to allow for comparison between them. This was implemented in the function “normalize()”, which is used for producing both heatmaps and PCAs. It normalizes the counts of a variable tree_group based on the sample size of the countries to allow for easy production of several heatmaps. The function works by:</p>
 <ul>
 <li><p>Counting the instances of each group per country.</p></li>
 <li><p>Normalizing this count based on the sample size of that country.</p></li>
@@ -156,7 +156,7 @@ dbl (10): Length, N_contigs, N50, GC_content, Completeness, Contamination, r...
 <h2 class="anchored" data-anchor-id="heatmaps-for-exploration-of-abundance-among-countries">5. Heatmaps for exploration of abundance among countries</h2>
 <section id="creating-heatmaps" class="level3">
 <h3 class="anchored" data-anchor-id="creating-heatmaps">5.1 Creating heatmaps</h3>
-<p>Using the defined heatmap_abundancy_per_country() function to produce heatmaps for some of the “higher” lineage groups, Family, Order, and Phylum, to ensure clearer plots.</p>
+<p>Using the defined heatmap_abundancy_per_country() function to produce heatmaps for some of the “higher” taxa, Family, Order, and Phylum, to ensure clearer plots.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>heatmap_family <span class="ot">&lt;-</span> <span class="fu">heatmap_abundance_per_country</span>(<span class="at">tree_group =</span> <span class="st">"Family"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -365,7 +365,7 @@ X-squared = 202.94, df = NA, p-value = 1</code></pre>
     replicates)
 
 data:  tbl
-X-squared = 82.258, df = NA, p-value = 0.7989</code></pre>
+X-squared = 82.258, df = NA, p-value = 0.7995</code></pre>
 </div>
 </div>
 <p>The difference in distribution of species between countries is not significant at all, as the p-value is 0.8.</p>
@@ -379,7 +379,7 @@ X-squared = 82.258, df = NA, p-value = 0.7989</code></pre>
     replicates)
 
 data:  tbl
-X-squared = 11.61, df = NA, p-value = 0.6065</code></pre>
+X-squared = 11.61, df = NA, p-value = 0.6059</code></pre>
 </div>
 </div>
 <p>The difference in distribution of species between countries is not significant, as the p-value is 0.6</p>
@@ -393,26 +393,44 @@ X-squared = 11.61, df = NA, p-value = 0.6065</code></pre>
 <p><strong>Does the proportion of endometriosis-associated genomes differ between countries?</strong></p>
 <p>Countries are compared pairwise. For each comparison, the null hypothesis states that the proportion of endometriosis-associated genomes is the same in both countries, while the alternative hypothesis states that the proportions differ.</p>
 <p>Before running the test, we confirm that the required variables are present:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(genomes_country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Genome"                   "Genome_type"             
+ [3] "Length"                   "N_contigs"               
+ [5] "N50"                      "GC_content"              
+ [7] "Completeness"             "Contamination"           
+ [9] "rRNA_5S"                  "rRNA_16S"                
+[11] "rRNA_23S"                 "tRNAs"                   
+[13] "Country"                  "Continent"               
+[15] "Domain"                   "Phylum"                  
+[17] "Class"                    "Order"                   
+[19] "Family"                   "Genus"                   
+[21] "Species"                  "Completeness_quality"    
+[23] "Contamination_quality"    "Overall_quality"         
+[25] "endometriosis_associated"</code></pre>
+</div>
+</div>
 <p>Both the <code>Country</code> and <code>endometriosis_associated</code> variables are present and we are able to make the analysis.</p>
-<p>As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use the made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that. A function is also made to compute the results and store them in a shared tibble with all the pairs tested against each other. These are stored in the <code>99_proj_func.R</code> script</p>
+<p>As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use are made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that. A function is also made to compute the results and store them in a shared tibble with all the pairs tested against each other. These are stored in the <code>99_proj_func.R</code> script</p>
 <p>We then define the country pairs that we want to compare:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pairs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"USA"</span>, <span class="st">"China"</span>),</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"USA"</span>, <span class="st">"Denmark"</span>),</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"Denmark"</span>, <span class="st">"China"</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pairs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"USA"</span>, <span class="st">"China"</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"USA"</span>, <span class="st">"Denmark"</span>),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"Denmark"</span>, <span class="st">"China"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The functions is then used to compute the fisher exact test between the differen country pairs:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>all_fisher_results <span class="ot">&lt;-</span> <span class="fu">compute_fisher_results</span>(</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data        =</span> genomes_country,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">country_var =</span> <span class="st">"Country"</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_var =</span> <span class="st">"endometriosis_associated"</span>,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairs       =</span> pairs</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>all_fisher_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>all_fisher_results <span class="ot">&lt;-</span> <span class="fu">compute_fisher_results</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data        =</span> genomes_country,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">country_var =</span> <span class="st">"Country"</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_var =</span> <span class="st">"endometriosis_associated"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairs       =</span> pairs</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>all_fisher_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   country1 country2 p_value odds_ratio CI_low CI_high
@@ -422,7 +440,7 @@ X-squared = 11.61, df = NA, p-value = 0.6065</code></pre>
 3 Denmark  China     1           0.576  0.012    5.08</code></pre>
 </div>
 </div>
-<p>The fisher exact tests showed a significant difference in the proportion of endometriosis associated between USA and China with a p-value on 0.02. Usa is having a 2.7 fold higher odds of endometriosis associated genomes.</p>
+<p>The fisher exact tests showed a significant difference in the proportion of endometriosis associated between USA and China with a p-value on 0.02. USA is having a 2.7 fold higher odds of endometriosis associated genomes.</p>
 <p>No significant differences were observed between USA and Denmark (p = 0.155) or between Denmark and China (p = 1). These non-significant results are likely due to the very small number of Danish and Chinese genomes, resulting in wide confidence intervals and low statistical power.</p>
 </section>
 </section>
