@@ -40,11 +40,17 @@ Here is a direct link to our presentation:
 
 ## Background
 
-The human vaginal microbiome plays an essential role in reproductive health and protection against infections. It is usually dominated by *Lactobacillus* species, which help maintain an acidic environment and prevent the growth of harmful microorganisms. However, the vaginal microbiome can differ between people and across health states. Other bacteria, such as Gardnerella, Atopobium, and Prevotella, often appear during dysbiosis or bacterial vaginosis.
+The human vaginal microbiome plays an essential role in reproductive health and protection against infections. It is usually dominated by *Lactobacillus* species. However, the vaginal microbiome can differ between people and across health states. Other bacteria, such as Gardnerella, Atopobium, and Prevotella, often appear during dysbiosis or bacterial vaginosis. [1, 2]
 
 Recent advances in metagenomic sequencing enable researchers to reconstruct individual microbial genomes from complex communities. These reconstructed genomes are called metagenome-assembled genomes (MAGs). MAGs provide new insights into the genetic makeup and functions of microorganisms that cannot be easily grown in the lab. Databases such as MGnify collect MAGs from many human and environmental microbiomes, including the vaginal microbiome, and provide useful but often unstandardized metadata.
 
-The dataset used in this project, called `genomes-all_metadata.tsv`, comes from MGnify’s vaginal microbiome genome catalogue. It contains thousands of bacterial MAGs with information on assembly quality (genome length, N50, GC content, completeness, contamination), taxonomic classification, and limited geographical data. Like many real biological datasets, it includes inconsistencies, missing values, and mixed formats.
+The dataset used in this project, called `genomes-all_metadata.tsv`, comes from MGnify’s vaginal microbiome genome catalogue. It contains thousands of bacterial MAGs with information on assembly quality (genome length, N50, GC content, completeness, contamination), taxonomic classification, and limited geographical data. Like many real biological datasets, it includes inconsistencies, missing values, and mixed formats [3].
+
+[1] MacSharry, J., Kovács, Z., Xie, Y. *et al.* Endometriosis specific vaginal microbiota links to urine and serum *N*-glycome. *Sci Rep* **14**, 25372 (2024). <https://doi.org/10.1038/s41598-024-76125-2>.
+
+[2] Ravel, J., Gajer, P., Abdo, Z. et al. Vaginal microbiome of reproductive-age women. *Proc Natl Acad Sci USA* 108 (Suppl 1), 4680–4687 (2011). <https://doi.org/10.1073/pnas.1002611107>.
+
+[3] MGnify. Human Vaginal Microbiome Genome Catalogue v1.0. European Bioinformatics Institute (EMBL-EBI). (2023). <https://www.ebi.ac.uk/metagenomics/genome-catalogues/human-vaginal-v1-0/>
 
 ### Aim
 
