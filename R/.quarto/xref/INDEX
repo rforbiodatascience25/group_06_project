@@ -1,0 +1,29 @@
+{
+  "02_clean.qmd": {
+    "02_clean.html": "e5a4e560"
+  },
+  "01_load.qmd": {
+    "01_load.html": "13fc1592"
+  },
+  "03_augment.qmd": {
+    "03_augment.html": "f5f7c00b"
+  },
+  "04_describe.qmd": {
+    "04_describe.html": "11a1d3df"
+  },
+  "05_analysis_1.qmd": {
+    "05_analysis_1.html": "09d191bb"
+  },
+  "06_analysis_2.qmd": {
+    "06_analysis_2.html": "51154b7a"
+  },
+  "07_analysis_3.qmd": {
+    "07_analysis_3.html": "db0b9175"
+  },
+  "08_analysis_4.qmd": {
+    "08_analysis_4.html": "618831d4"
+  },
+  "00_all.qmd": {
+    "00_all.html": "e8577028"
+  }
+}

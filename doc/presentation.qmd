@@ -45,7 +45,7 @@ Meta-data from MGnify’s vaginal microbiome genome catalogue [^1]
 ## DATA CLEANING AND WRANGLING {.scrollable}
 
 ::::: {style="margin-top: -15px; margin-bottom: -15px;"}
-**Untidy --\> tidy data**
+**Untidy → tidy data**
 
 :::: {style="margin-left: 1.5em; font-size: 0.9em; line-height: 1.1;"}
 ::: incremental
