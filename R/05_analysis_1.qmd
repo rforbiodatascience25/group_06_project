@@ -22,8 +22,8 @@ library("ape")
 Loading the data into a variable from the `03_dat_aug.tsv` file
 
 ```{r}
-#| echo: true
-#| eval: false
+#| echo: false
+#| eval: true
 genome_metadata_aug<- readr::read_tsv(file = "../data/03_dat_aug.tsv")
 ```
 
