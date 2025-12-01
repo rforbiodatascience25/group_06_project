@@ -117,6 +117,7 @@ Aug_data <- readr::read_tsv(
 -   High completeness and low contamination for most genomes
 -   Dataset dominated by a few major bacterial phyla
 -   Genome lengths fall within biologically expected ranges
+-   Dataset dominated by samples from USA.
 :::
 
 . . .
@@ -255,9 +256,9 @@ knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 
 ## DISCUSSION & FUTURE PERSPECTIVES
 
--   High-quality MAGs with good completeness\
+-   High-quality MAGs with good completeness
 
--   No strong genomic differences between groups\
+-   No strong genomic differences between groups
 
 -   Limited metadata and uneven sampling
 
@@ -271,4 +272,4 @@ knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 
 -   Taxonomy is dominated by a few phyla, with no distinct genomic patterns in endometriosis-associated bacterial groups
 
--   Sparse and uneven geographic metadata which limits ...
+-   Sparse and uneven geographic metadata which limits country-based analyses.
