@@ -256,9 +256,9 @@ knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 
 ## DISCUSSION & FUTURE PERSPECTIVES
 
--   High-quality MAGs with good completeness\
+-   High-quality MAGs with good completeness
 
--   No strong genomic differences between groups\
+-   No strong genomic differences between groups
 
 -   Limited metadata and uneven sampling
 
