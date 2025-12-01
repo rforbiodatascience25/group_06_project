@@ -109,7 +109,7 @@ Aug_data <- readr::read_tsv(
 ```
 :::
 
-## Project organisation by flowchart 
+## PROJECT ORGANISATION BY FLOWCHART
 
 ![](../results/R_project_organisation.png){width="80%"}
 ## DATA DESCRIPTION {.scrollable}
