@@ -194,7 +194,7 @@ Investigating the quality of samples.
 Endometriosis-associated MAGs occur in only a few phyla.\
 Most phyla contain *no* associated MAGs, suggesting limited taxonomic clustering.
 
-![](../results/07_key_plot_1.png){width="80%"}
+![](../results/07_key_plot_1.png){width="70%"}
 
 ------------------------------------------------------------------------
 
@@ -203,7 +203,7 @@ Most phyla contain *no* associated MAGs, suggesting limited taxonomic clustering
 GC content ranges overlap almost completely.\
 No evidence that GC% distinguishes associated vs non-associated MAGs.
 
-![](../results/07_key_plot_2.png){width="80%"}
+![](../results/07_key_plot_2.png){width="70%"}
 :::
 
 ## ANALYSIS 4 - Taxa Distribution between countries {.scrollable}
