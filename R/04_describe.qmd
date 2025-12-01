@@ -1,6 +1,8 @@
 ---
 title: "Description of data"
-format: html
+format:
+  html:
+    embed-resources: true
 ---
 
 # Describe Data
