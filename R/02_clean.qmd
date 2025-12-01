@@ -1,9 +1,13 @@
 ---
 title: "Clean dataset"
-format: html
+format:
+  html:
+    embed-resources: true
 ---
 
-# Load libraries
+# Clean Data
+
+## 1. Load libraries
 
 ```{r}
 #| message: false
@@ -11,7 +15,7 @@ format: html
 library("tidyverse")
 ```
 
-# Load data
+## 2. Load data
 
 Loading the data saved in the 01_dat_load.tsv file
 
@@ -19,7 +23,7 @@ Loading the data saved in the 01_dat_load.tsv file
 genome_metadata <- readr::read_tsv("../data/01_dat_load.tsv")
 ```
 
-# Data preparation
+## 3. Data preparation
 
 Using the `str` command to investigate, what the data looks like:
 
@@ -29,14 +33,14 @@ str(genome_metadata)
 
 The data consist of a data-frame with 618 observations and 20 variables. We recognize that observations with no value found has the identifier "not provided". Additionally one variable contains phylogenetic information that can be split into different variable containing information about the different classes of the evolutionary history.
 
-## Split data
+### 3.1 Split data
 
 We want to split the data in the "lineage" variable into multiple variables to store the information about each of the phylogenetic classes individually. First we investigate the data in the lineage variable:
 
 ```{r}
 genome_metadata |>
-  select(Lineage) |>
-  slice_sample(n = 10)
+  dplyr::select(Lineage) |>
+  dplyr::slice_sample(n = 10)
 ```
 
 By investigating the data it is seen that each string of phylogenetic information consist of identifiers for each of the different classes in the taxonomic rank. These identifiers are:
@@ -61,36 +65,36 @@ We then remove the GTDB suffixes (e.g. "\_A") to streamline taxonomies. Lastly w
 
 ```{r}
 genome_metadata_clean <- genome_metadata |>
-  mutate(
-    across(
+  dplyr::mutate(
+    dplyr::across(
       .cols = where(is.character),
-      .fns  = ~ na_if(.x, "not provided")
+      .fns  = ~ dplyr::na_if(.x, "not provided")
     )
   ) |>
-  mutate(
-    split_lineage = str_split_fixed(Lineage, ";", 7),
+  dplyr::mutate(
+    split_lineage = stringr::str_split_fixed(Lineage, ";", 7),
 
-    Domain  = str_remove(split_lineage[, 1], "d__"),
-    Phylum  = str_remove(split_lineage[, 2], "p__"),
-    Class   = str_remove(split_lineage[, 3], "c__"),
-    Order   = str_remove(split_lineage[, 4], "o__"),
-    Family  = str_remove(split_lineage[, 5], "f__"),
-    Genus   = str_remove(split_lineage[, 6], "g__"),
-    Species = str_remove(split_lineage[, 7], "s__")
+    Domain  = stringr::str_remove(split_lineage[, 1], "d__"),
+    Phylum  = stringr::str_remove(split_lineage[, 2], "p__"),
+    Class   = stringr::str_remove(split_lineage[, 3], "c__"),
+    Order   = stringr::str_remove(split_lineage[, 4], "o__"),
+    Family  = stringr::str_remove(split_lineage[, 5], "f__"),
+    Genus   = stringr::str_remove(split_lineage[, 6], "g__"),
+    Species = stringr::str_remove(split_lineage[, 7], "s__")
   ) |>
-  mutate(
-    across(
+  dplyr::mutate(
+    dplyr::across(
       .cols = c(Domain, Phylum, Class, Order, Family, Genus, Species),
-      .fns  = ~ na_if(.x, "")
+      .fns  = ~ dplyr::na_if(.x, "")
     )
   ) |>
-  mutate(
-    across(
+  dplyr::mutate(
+    dplyr::across(
       .cols = Phylum:Species,
-      .fns  = ~ str_remove_all(as.character(.x), "_[A-Za-z0-9]+")
+      .fns  = ~ stringr::str_remove_all(as.character(.x), "_[A-Za-z0-9]+")
     )
   ) |>
-  select(
+  dplyr::select(
     -split_lineage,
     -Genome_accession,
     -Species_rep,
@@ -101,21 +105,21 @@ genome_metadata_clean <- genome_metadata |>
   )
 ```
 
-## Viewing the data
+### 3.2 Viewing the data
 
 Viewing the top 10 rows of the split data to see the new structure.
 
 ```{r}
 genome_metadata_clean |> 
-  select(Genome, Domain:Species) |> 
-  slice_head(n = 10)
+  dplyr::select(Genome, Domain:Species) |> 
+  dplyr::slice_head(n = 10)
 ```
 
 ```{r}
 view(genome_metadata_clean)
 ```
 
-## Saving the data
+### 3.3 Saving the data
 
 Saving the cleaned data into 02_dat_clean.tsv file located in the data directory.
 

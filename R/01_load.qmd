@@ -1,7 +1,11 @@
 ---
 title: "Load data"
-format: html
+format:
+  html:
+    embed-resources: true
 ---
+
+# Load Data
 
 ## 1. Load libraries
 
@@ -23,7 +27,7 @@ raw_dir   <- "../data/_raw/"
 data_file <- "genomes-all_metadata.tsv"
 
 data_loc  <- "https://ftp.ebi.ac.uk/pub/databases/metagenomics/" |>
-  str_c("mgnify_genomes/human-vaginal/v1.0/")
+  stringr::str_c("mgnify_genomes/human-vaginal/v1.0/")
 
 if (!dir.exists(data_dir)) {
   dir.create(path = data_dir)
@@ -35,7 +39,7 @@ if (!dir.exists(raw_dir)) {
 
 if (!file.exists(file.path(raw_dir, data_file))) {
   download.file(
-    url      = str_c(data_loc, data_file),
+    url      = stringr::str_c(data_loc, data_file),
     destfile = file.path(raw_dir, data_file)
   )
 }

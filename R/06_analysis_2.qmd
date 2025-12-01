@@ -1,6 +1,8 @@
 ---
 title: "06_analysis_2"
-format: html
+format:
+  html:
+    embed-resources: true
 ---
 
 # Analysis 2 - Completeness vs. contamination
@@ -18,8 +20,6 @@ library("tidyverse")
 ## 2. Load data
 
 ```{r}
-#| eval: false
-#| echo: true
 genome_metadata_aug <- readr::read_tsv(file = "../data/03_dat_aug.tsv")
 ```
 
@@ -27,7 +27,7 @@ genome_metadata_aug <- readr::read_tsv(file = "../data/03_dat_aug.tsv")
 
 Scatterplot to show the distribution between the completeness and contamination which is colored by phylum:
 
-```{r}
+```{r, fig.width=8, fig.height=6}
 completeness_contamination_plot <- ggplot2::ggplot(
   data = genome_metadata_aug,
   mapping = ggplot2::aes(
@@ -76,9 +76,9 @@ completeness_contamination_plot
 
 This plot shows that the majority of the genes have a low contamination between 0 and 1% which indicates that the dataset contains mainly clean bins. Additionally the completeness levels are high. It ranges between 50 and 100% and a big cluster of the genes are between 90 and 100% completeness. This indicates that the dataset assembles are high-quality and that the MAGs are nearly complete. A common standard threshold for the contamination/completeness levels are that high-quality data have a completeness above 90% and a contamination below 5%. In our dataset, a large cluster of genomes fall into this category.
 
-## 4. Saving plot
-
 ```{r}
+#| echo: false
+#| eval: true
 ggplot2::ggsave(
   filename = "../results/06_key_plot_1.png",
   plot = completeness_contamination_plot,
