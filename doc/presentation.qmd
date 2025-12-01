@@ -180,10 +180,10 @@ Investigating the quality of samples.
 ## ANALYSIS 3 - Associated and non-associated-endometriosis MAGs {.scrollable}
 
 ::: incremental
--   Compared endometriosis-associated vs non-associated MAGs
--   Focused on GC content, genome length, completeness & contamination
--   Investigated whether associated MAGs cluster taxonomically
--   Goal: determine if associated MAGs form a genomically distinct group
+-   Compare endometriosis-associated vs non-associated MAGs
+-   Assess GC content, genome length, completeness & contamination
+-   Investigate if associated MAGs form a distinct genomic group
+-   Evaluate possible taxonomic clustering
 :::
 
 . . .
@@ -191,8 +191,9 @@ Investigating the quality of samples.
 ::: panel-tabset
 ## Phylum distribution
 
-Endometriosis-associated MAGs occur in only a few phyla.\
-Most phyla contain *no* associated MAGs, suggesting limited taxonomic clustering.
+-   Associated MAGs appear in only a few phyla
+
+-   Most phyla contain no associated MAGs → Association is genus-specific, not phylum-wide
 
 ![](../results/07_key_plot_1.png){width="70%"}
 
@@ -200,8 +201,9 @@ Most phyla contain *no* associated MAGs, suggesting limited taxonomic clustering
 
 ## GC content
 
-GC content ranges overlap almost completely.\
-No evidence that GC% distinguishes associated vs non-associated MAGs.
+-   GC% distributions overlap almost fully
+
+-   No clear GC signature of association → No genomic differentiation
 
 ![](../results/07_key_plot_2.png){width="70%"}
 :::
