@@ -1,6 +1,8 @@
 ---
 title: "05_analysis_1"
-format: html
+format:
+  html:
+    embed-resources: true
 ---
 
 # Analysis 1 - Phylogenetic tree
@@ -22,7 +24,7 @@ library("ape")
 Loading the data into a variable from the `03_dat_aug.tsv` file
 
 ```{r}
-#| echo: false
+#| echo: true
 #| eval: true
 genome_metadata_aug<- readr::read_tsv(file = "../data/03_dat_aug.tsv")
 ```
@@ -118,13 +120,12 @@ phylogenetic_tree_plot <- p +
     plot.title = ggplot2::element_text(hjust = 0.5, face = "bold"),
     plot.caption = ggplot2::element_text(hjust = 0.5, size = 6, color = "grey40"),
     legend.title = ggplot2::element_text(face = "bold"))
-
 phylogenetic_tree_plot
 ```
 
 ```{r}
 #| echo: false
-#| eval: false
+#| eval: true
 ggplot2::ggsave(
   "../results/05_key_plot_1.png",
   phylogenetic_tree_plot,

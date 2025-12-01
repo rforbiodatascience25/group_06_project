@@ -1,6 +1,8 @@
 ---
 title: "06_analysis_2"
-format: html
+format:
+  html:
+    embed-resources: true
 ---
 
 # Analysis 2 - Completeness vs. contamination
@@ -19,7 +21,7 @@ library("tidyverse")
 
 ```{r}
 #| eval: true
-#| echo: false
+#| echo: true
 genome_metadata_aug <- readr::read_tsv(file = "../data/03_dat_aug.tsv")
 ```
 
@@ -27,7 +29,7 @@ genome_metadata_aug <- readr::read_tsv(file = "../data/03_dat_aug.tsv")
 
 Scatterplot to show the distribution between the completeness and contamination which is colored by phylum:
 
-```{r}
+```{r, fig.width=8, fig.height=6}
 completeness_contamination_plot <- ggplot2::ggplot(
   data = genome_metadata_aug,
   mapping = ggplot2::aes(
@@ -78,7 +80,7 @@ This plot shows that the majority of the genes have a low contamination between 
 
 ```{r}
 #| echo: false
-#| eval: false
+#| eval: true
 ggplot2::ggsave(
   filename = "../results/06_key_plot_1.png",
   plot = completeness_contamination_plot,
