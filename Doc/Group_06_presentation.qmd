@@ -131,21 +131,20 @@ This indicates strong taxonomic skew in the dataset.
 
 ------------------------------------------------------------------------
 
-## Completeness distribution
-
-Most genomes have high completeness (\>90%),\
-indicating generally strong assembly quality.
-
-![](../results/04_key_plot_2.png){width="70%"}
-
-------------------------------------------------------------------------
-
 ## Genome length distribution
 
 Genome lengths fall within the expected biological range\
 for vaginal bacterial taxa (typically 1.5–3 Mb).
 
-![](../results/04_key_plot_3.png){width="70%"}
+![](../results/04_key_plot_3.png)
+
+------------------------------------------------------------------------
+
+## Geographic sample distribution
+
+The majority of the data this study are from USA and China. This creates an uneven geographic distribution, which limits how confidently we can compare countries.
+
+![](../results/04_key_plot_4.png)
 :::
 
 ## ANALYSIS 1 - Phylogenetic tree {.scrollable}
