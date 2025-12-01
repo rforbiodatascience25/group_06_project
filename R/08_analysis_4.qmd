@@ -357,15 +357,15 @@ Countries are compared pairwise. For each comparison, the null hypothesis states
 Before running the test, we confirm that the required variables are present:
 
 ```{r}
-#| echo: false
-#| eval: false
+#| echo: true
+#| eval: true
 
 names(genomes_country)
 ```
 
 Both the `Country` and `endometriosis_associated` variables are present and we are able to make the analysis.
 
-As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use the made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that. A function is also made to compute the results and store them in a shared tibble with all the pairs tested against each other. These are stored in the `99_proj_func.R` script
+As we have to run the fisher exact test between the three country combinations, the test is made into a function. The columns that the functions use are made variable, so the function can be used to make a fisher exact test comparing the country with other variables, if we wanted to do that. A function is also made to compute the results and store them in a shared tibble with all the pairs tested against each other. These are stored in the `99_proj_func.R` script
 
 We then define the country pairs that we want to compare:
 
@@ -396,6 +396,6 @@ all_fisher_results
 readr::write_tsv(all_fisher_results, "../results/08_key_table_1.tsv")
 ```
 
-The fisher exact tests showed a significant difference in the proportion of endometriosis associated between USA and China with a p-value on 0.02. Usa is having a 2.7 fold higher odds of endometriosis associated genomes.
+The fisher exact tests showed a significant difference in the proportion of endometriosis associated between USA and China with a p-value on 0.02. USA is having a 2.7 fold higher odds of endometriosis associated genomes.
 
 No significant differences were observed between USA and Denmark (p = 0.155) or between Denmark and China (p = 1). These non-significant results are likely due to the very small number of Danish and Chinese genomes, resulting in wide confidence intervals and low statistical power.
