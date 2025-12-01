@@ -183,7 +183,6 @@ Investigating the quality of samples.
 -   Compare endometriosis-associated vs non-associated MAGs
 -   Assess phylum distribution and GC content
 -   Investigate if associated MAGs form a distinct genomic group
--   Evaluate possible taxonomic clustering
 :::
 
 . . .
