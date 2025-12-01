@@ -3,6 +3,9 @@ title: "Project"
 format:
   html:
     embed-resources: true
+    
+project:
+  output-dir: ../results
 ---
 
 # Load Libraries
