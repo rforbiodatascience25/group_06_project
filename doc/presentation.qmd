@@ -219,17 +219,17 @@ No evidence that GC% distinguishes associated vs non-associated MAGs.
 ::: panel-tabset
 ## Heatmap
 
-Some variation between countries. I.e. Order Bacteroidales, but not much.
+Variation between countries. I.e. Order Bacteroidales.
 
-Could've tested for significance.
+Not tested for significance.
 
-![](../results/08_key_plot_1.png){width="87%"} ![](../results/08_key_plot_2.png){width="87%"} ![](../results/08_key_plot_3.png){width="87%"}
+ ![](../results/08_key_plot_2.png){width="87%"}
 
 ## Principal Component Analysis (PCA)
 
 Only two principal components --\> 100% variance.
 
-![](../results/08_key_plot_4.png){width="60%"}
+![](../results/08_key_plot_4.png){width="50%"}
 
 Clear division of countries.
 
