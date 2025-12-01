@@ -1,4 +1,0 @@
-country1	country2	p_value	odds_ratio	CI_low	CI_high
-USA	China	0.0205	2.67	1.113	7.779
-USA	Denmark	0.1554	4.648	0.738	193.498
-Denmark	China	1	0.576	0.012	5.077
