@@ -34,9 +34,9 @@ github-username: s215098
 
 ## Presentation link
 
-Here is a direct link to our presentation: **(HUSK AT SKIFT LINK UD)**
+Here is a direct link to our presentation:
 
-[`https://raw.githack.com/r4bds/r4bds.github.io/main/lecture_lab03.html`](https://raw.githack.com/r4bds/r4bds.github.io/main/lecture_lab03.html)`.`
+`https://raw.githack.com/rforbiodatascience25/group_06_project/main/doc/presentation.html`
 
 ## Background
 
@@ -56,51 +56,54 @@ In this project we will:
 2.  Describe the cleaned and augmented dataset, including basic summaries of genome quality, taxonomy, and geography.
 3.  Perform exploratory analyses of genome quality and taxonomic composition
 4.  Analyse whether endometriosis-associated MAGs are genomically distinct from non-associated MAGs
-5.  Investigate geographical patterns in taxonomic composition and endometriosis association across countries using heatmaps, PCA and statistical tests. 
+5.  Investigate geographical patterns in taxonomic composition and endometriosis association across countries using heatmaps, PCA and statistical tests.
 
 Through these analyses, we aim to gain a deeper understanding of the genomic diversity of the vaginal microbiome, while showcasing the entire data science workflow using the tidyverse systems in R.
 
 ## Repository Structure
 
-#### data/                       
-- raw/                   
-  - raw_data.xlsx
-- 01_dat_load.tsv         
-- 02_dat_clean.tsv       
-- 03_dat_aug.tsv          
+#### data/
 
+-   raw/
+    -   raw_data.xlsx
+-   01_dat_load.tsv\
+-   02_dat_clean.tsv\
+-   03_dat_aug.tsv
 
-#### R/ 
-- 00_all.qmd              
-- 01_load.qmd            
-- 02_clean.qmd            
-- 03_augment.qmd          
-- 04_describe.qmd         
-- 05_analysis_1.qmd       
-- 06_analysis_2.qmd 
-- 07_analysis_3.qmd 
-- 08_analysis_4.qmd 
-- 99_proj_func.R          
+#### R/
 
-#### results/  
-- *.html
-- 04_key_plot_1.png
-- 04_key_plot_2.png
-- 04_key_plot_3.png
-- 05_key_plot_1.png
-- 06_key_plot_1.png
-- 07_key_plot_1.png
-- 07_key_plot_2.png
-- 08_key_plot_1.png
-- 08_key_plot_2.png
-- 08_key_plot_3.png
-- 08_key_plot_4.png
-- 08_key_plot_5.png
-- 08_key_table_1.png
+-   00_all.qmd\
+-   01_load.qmd\
+-   02_clean.qmd\
+-   03_augment.qmd\
+-   04_describe.qmd\
+-   05_analysis_1.qmd\
+-   06_analysis_2.qmd
+-   07_analysis_3.qmd
+-   08_analysis_4.qmd
+-   99_proj_func.R
 
-#### doc/                        
-- presentation.qmd
-- presentation.html
+#### results/
+
+-   \*.html
+-   04_key_plot_1.png
+-   04_key_plot_2.png
+-   04_key_plot_3.png
+-   05_key_plot_1.png
+-   06_key_plot_1.png
+-   07_key_plot_1.png
+-   07_key_plot_2.png
+-   08_key_plot_1.png
+-   08_key_plot_2.png
+-   08_key_plot_3.png
+-   08_key_plot_4.png
+-   08_key_plot_5.png
+-   08_key_table_1.png
+
+#### doc/
+
+-   presentation.qmd
+-   presentation.html
 
 ## Data retrieval
 
@@ -116,5 +119,4 @@ Direct link to the dataset:
 
 During augmentation of the data we are annotating MAGs with endometriosis-associated genera based on the article:
 
-Endobiota Study 2019, "The endobiota study: comparison of vaginal, cervical and gut microbiota between women with stage 3/4 endometriosis and healthy controls" 
-(<https://www.nature.com/articles/s41598-019-39700-6>). 
+Endobiota Study 2019, "The endobiota study: comparison of vaginal, cervical and gut microbiota between women with stage 3/4 endometriosis and healthy controls" (<https://www.nature.com/articles/s41598-019-39700-6>).
