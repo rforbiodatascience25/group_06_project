@@ -1,6 +1,8 @@
 ---
 title: "08_analysis_4"
-format: html
+format:
+  html:
+    embed-resources: true
 ---
 
 # Analysis 4 - Distributions between countries
