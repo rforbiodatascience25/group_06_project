@@ -31,13 +31,13 @@ library("ggrepel")
 
 Meta-data from MGnify’s vaginal microbiome genome catalogue [^1]
 
+[^1]: MGnify. Human vaginal v1.0 genome catalogue. European Bioinformatics Institute (EBI). https://www.ebi.ac.uk/metagenomics/genome-catalogues/human-vaginal-v1-0.
+
 -   Uncover patterns in genome quality, taxonomic composition, and ecological characteristics.
 
 -   Identify potential patterns for diagnosis of endometriosis via associated pathogens of the vaginal microbiota based on genus:
 
     -   *Anaerococcus, Ureaplasma, Gardnerella, Veillonella, Corynebacterium, Peptoniphilus, Candida, Alloscardovia* [^2]
-
-[^1]: MGnify. Human vaginal v1.0 genome catalogue. European Bioinformatics Institute (EBI). https://www.ebi.ac.uk/metagenomics/genome-catalogues/human-vaginal-v1-0. 
 
 [^2]: MacSharry, J., Kovács, Z., Xie, Y. *et al.* Endometriosis specific vaginal microbiota links to urine and serum *N*-glycome. *Sci Rep* **14**, 25372 (2024). https://doi.org/10.1038/s41598-024-76125-2
 
@@ -113,17 +113,16 @@ Aug_data <- readr::read_tsv(
 
 ## PROJECT ORGANISATION BY FLOWCHART
 
-![](../results/R_project_organisation.png){width="80%"}
-## DATA DESCRIPTION {.scrollable}
+![](../results/R_project_organisation.png){width="80%"} \## DATA DESCRIPTION {.scrollable}
 
 ::: incremental
 -   618 vaginal metagenome-assembled genomes (MAGs)
 -   25 variables covering taxonomy, assembly quality, and geography
 -   High completeness and low contamination for most genomes
+:::
 -   Dataset dominated by a few major bacterial phyla
 -   Genome lengths fall within biologically expected ranges
 -   Dataset dominated by samples from USA.
-:::
 
 . . .
 
@@ -155,11 +154,9 @@ The majority of the data this study are from USA and China. This creates an unev
 
 ## ANALYSIS 1 - Phylogenetic tree {.scrollable}
 
-
 -   Constructed a phylogenetic tree from the taxonomic ranks (*Domain → Species*) in the augmented dataset.
 -   NA values in taxonomy were removed before tree construction.
 -   The tree is colored by **phylum** to show taxonomic clustering.
-
 
 . . .
 
@@ -171,12 +168,10 @@ Investigating the quality of samples.
 
 . . .
 
-
 -   Scatterplot of **completeness (%)** vs. **contamination (%)** for all MAGs
 -   The dashed lines mark the **high-quality** genomes (above 90% completeness and below 5% contamination)
 -   Points are colored by **phylum**
 -   Most MAGs cluster in the high-quality area indicating good assemble quality of the MAGs.
-
 
 . . .
 
@@ -230,7 +225,7 @@ Variation between countries. I.e. Order Bacteroidales.
 
 Not tested for significance.
 
- ![](../results/08_key_plot_2.png){width="87%"}
+![](../results/08_key_plot_2.png){width="87%"}
 
 ## Principal Component Analysis (PCA)
 
@@ -260,22 +255,14 @@ knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 -   Likely due to the limited amount of danish and chinese genomes represented
 :::
 
-## DISCUSSION & FUTURE PERSPECTIVES
-
--   High-quality MAGs with good completeness
-
--   No strong genomic differences between groups
-
--   Limited metadata and uneven sampling
-
--   Improve clinical + geographic metadata
-
--   More focus on theoretically correct analysis (compositional data analysis)
-
-## CONCLUSION
+## DISCUSSION, CONCLUSION & FUTURE PERSPECTIVES
 
 -   The dataset contains high-quality MAGs with high completeness and low contamination
 
 -   Taxonomy is dominated by a few phyla, with no distinct genomic patterns in endometriosis-associated bacterial groups
 
 -   Sparse and uneven geographic metadata which limits country-based analyses.
+
+-   Improve clinical + geographic metadata
+
+-   More focus on theoretically correct analysis (compositional data analysis)
