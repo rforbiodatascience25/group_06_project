@@ -206,13 +206,13 @@ No evidence that GC% distinguishes associated vs non-associated MAGs.
 ![](../results/07_key_plot_2.png){width="80%"}
 :::
 
-## ANALYSIS 4 - Species Distribution between countries {.scrollable}
+## ANALYSIS 4 - Taxa Distribution between countries {.scrollable}
 
 ::: incremental
--   Investigating the distribution of lineage groups in Countries
--   Counted group instances for each country and wide format
+-   Investigating the distribution of taxa in Countries
+-   Counted taxa instances for each country and converted to wide format
 -   Filtered for NA in Countries
--   Big difference in sample size --\> normalize
+-   Big difference in sample size --\> normalized data
 :::
 
 . . .
