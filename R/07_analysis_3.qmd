@@ -137,7 +137,6 @@ ggsave(
   units    = "mm",
   dpi      = 300
 )
-
 ```
 
 The distributions show substantial overlap between the groups. Endometriosis-associated MAGs have a slightly lower median GC content, but the difference is modest and the overall ranges are similar. This indicates that GC composition does not clearly distinguish taxa associated with endometriosis. GC-content distributions are nearly identical, indicating no genomic differences between endometriosis-associated and non-associated MAGs.
@@ -164,9 +163,6 @@ genome_metadata_aug |>
     colour = "Associated"
   ) +
   theme_minimal(base_size = 13)
-
-
-
 ```
 
 The scatterplot shows that MAGs from both groups occupy similar GC–length space. No association-specific cluster is visible, and both groups span comparable genome sizes across the GC spectrum. This suggests that genome size and GC composition are not meaningfully structured by endometriosis association.
@@ -204,8 +200,6 @@ genome_metadata_aug |>
   ) +
   theme_minimal(base_size = 13) +
   theme(legend.position = "none")
-
-
 ```
 
 Both completeness and contamination distributions are nearly identical between associated and non-associated genera. Completeness remains high (\>90%) in both groups, and contamination is consistently low. This confirms that assembly quality is comparable across MAGs and does not bias downstream comparisons between the groups.
