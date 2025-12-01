@@ -92,7 +92,7 @@ phylum_prop_plot
 ggplot2::ggsave(
         filename = "../results/07_key_plot_1.png",
         plot     = phylum_prop_plot,
-        width    = 120,
+        width    = 140,
         height   = 90,
         units    = "mm",
         dpi      = 300
