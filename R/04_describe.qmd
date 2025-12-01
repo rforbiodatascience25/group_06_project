@@ -102,7 +102,7 @@ plot_phylum
 
 ```{r}
 #| echo: false
-#| eval: false
+#| eval: true
 ggplot2::ggsave(
   "../results/04_key_plot_1.png",
   plot = plot_phylum,
@@ -141,7 +141,7 @@ plot_completeness
 
 ```{r}
 #| echo: false
-#| eval: false
+#| eval: true
 ggplot2::ggsave(
   "../results/04_key_plot_2.png",
   plot = plot_completeness,
@@ -311,7 +311,7 @@ plot_length
 
 ```{r}
 #| echo: false
-#| eval: false
+#| eval: true
 ggplot2::ggsave(
   "../results/04_key_plot_3.png",
   plot = plot_length,
