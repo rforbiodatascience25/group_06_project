@@ -181,7 +181,7 @@ Investigating the quality of samples.
 
 ::: incremental
 -   Compare endometriosis-associated vs non-associated MAGs
--   Assess GC content, genome length, completeness & contamination
+-   Assess phylum distribution and GC content
 -   Investigate if associated MAGs form a distinct genomic group
 -   Evaluate possible taxonomic clustering
 :::
