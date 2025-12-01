@@ -34,9 +34,7 @@ github-username: s215098
 
 ## Presentation link
 
-Here is a direct link to our presentation: **(HUSK AT SKIFT LINK UD).**
-
-[`https://raw.githack.com/r4bds/r4bds.github.io/main/lecture_lab03.html`](https://raw.githack.com/r4bds/r4bds.github.io/main/lecture_lab03.html)`.`
+Here is a direct link to our presentation: `https://raw.githack.com/rforbiodatascience25/group_06_project/main/doc/presentation.html`
 
 ## Background
 
