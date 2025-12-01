@@ -1,6 +1,8 @@
 ---
-title: "Analysis Comparative Genomic Analysis of Endometriosis-Associated vs Non-Associated "
-format: html
+title: "Analysis "
+format:
+  html:
+    embed-resources: true
 ---
 
 # Analysis 3 - Comparative Genomic Analysis of Endometriosis-Associated vs Non-Associated MAGs
@@ -20,6 +22,8 @@ library("tidyverse")
 ## 2. Load data
 
 ```{r}
+#| echo: false
+#| eval: true
 genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
 ```
 
@@ -34,45 +38,65 @@ The plot shows how many MAGs occur in each phylum and whether the two groups (as
 ```{r}
 phylum_prop_plot <-
   genome_metadata_aug |>
-    count(Phylum, endometriosis_associated) |>
-    group_by(Phylum) |>
-    mutate(prop = n / sum(n)) |>
-    ggplot(aes(x = Phylum,
-               y = prop,
-               fill = endometriosis_associated)) +
-    geom_col() +
-    scale_fill_brewer(palette = "Set1") +
-    labs(
-      title = "Proportion of endometriosis-\nassociated MAGs by phylum",
-      x     = "Phylum",
-      y     = "Proportion",
-      fill  = "Associated"
-    ) +
-    theme_minimal(base_size = 9) +
-    theme(
-      plot.title      = element_text(size = 11, face = "bold", hjust = 0.5),
-      axis.title.x    = element_text(size = 10, margin = margin(t = 6)),
-      axis.title.y    = element_text(size = 10, margin = margin(r = 6)),
-      axis.text.x     = element_text(size = 8, angle = 45, hjust = 1),
-      axis.text.y     = element_text(size = 8),
-      legend.title    = element_text(size = 9),
-      legend.text     = element_text(size = 8),
+  dplyr::count(Phylum, 
+               endometriosis_associated) |>
+  dplyr::group_by(Phylum) |>
+  dplyr::mutate(prop = n / sum(n)) |>
+  ggplot2::ggplot(ggplot2::aes(x    = Phylum,
+                               y    = prop,
+                               fill = endometriosis_associated
+  )) +
+  ggplot2::geom_col() +
+  ggplot2::scale_fill_brewer(palette = "Set1") +
+  ggplot2::labs(
+    title = "Proportion of endometriosis-\nassociated MAGs by phylum",
+    x     = "Phylum",
+    y     = "Proportion",
+    fill  = "Associated"
+  ) +
+  ggplot2::theme_minimal(base_size = 9) +
+  ggplot2::theme(
+    plot.title      = ggplot2::element_text(size  = 11,
+                                            face  = "bold",
+                                            hjust = 0.5
+    ),
+    axis.title.x    = ggplot2::element_text(size   = 10,
+                                            margin = ggplot2::margin(t = 6)
+    ),
+    axis.title.y    = ggplot2::element_text(size   = 10,
+                                            margin = ggplot2::margin(r = 6)
+    ),
+    axis.text.x     = ggplot2::element_text(size  = 8,
+                                            angle = 45,
+                                            hjust = 1
+    ),
+    axis.text.y     = ggplot2::element_text(size = 8),
+    legend.title    = ggplot2::element_text(size = 9),
+    legend.text     = ggplot2::element_text(size = 8),
+    plot.margin      = ggplot2::margin(t = 20, 
+                                       r = 12, 
+                                       b = 10, 
+                                       l = 10),
+    panel.background = ggplot2::element_rect(fill = "white", 
+                                             colour = NA),
+    plot.background  = ggplot2::element_rect(fill = "white", 
+                                             colour = NA)
+  )
 
-      plot.margin      = margin(t = 20, r = 12, b = 10, l = 10),
-      panel.background = element_rect(fill = "white", colour = NA),
-      plot.background  = element_rect(fill = "white", colour = NA)
-    )
+phylum_prop_plot
+```
 
-ggsave(
-  filename = "../results/07_key_plot_1.png",
-  plot     = phylum_prop_plot,
-  width    = 120,
-  height   = 90,
-  units    = "mm",
-  dpi      = 300
-)
-
-
+```{r}
+#| echo: false
+#| eval: true
+ggplot2::ggsave(
+        filename = "../results/07_key_plot_1.png",
+        plot     = phylum_prop_plot,
+        width    = 120,
+        height   = 90,
+        units    = "mm",
+        dpi      = 300
+      )
 ```
 
 Several phyla contain both “Yes” and “No” MAGs because endometriosis association is defined at the genus level, not the phylum level. Large vaginal phyla such as *Actinomycetota*, *Bacillota* and *Bacteroidota* include many different genera. As a result, these dominant phyla contain mostly non-associated MAGs, along with a smaller number of associated ones. This pattern is expected and reflects the natural structure of the vaginal microbiome rather than a phylum-wide association with the disease.
@@ -102,41 +126,58 @@ To check whether GC differences between associated and non-associated MAGs are i
 ```{r}
 gc_violin_plot <-
   genome_metadata_aug |>
-    ggplot(aes(x = endometriosis_associated,
-               y = GC_content,
-               fill = endometriosis_associated)) +
-    geom_violin(trim = FALSE, alpha = 0.5) +
-    geom_boxplot(width = 0.18,
-                 outlier.size = 0.7,
-                 alpha = 0.9,
-                 colour = "black") +
-    scale_fill_brewer(palette = "Set2") +
-    labs(
-      title = "GC content distributions by endometriosis association",
-      x     = "Endometriosis-associated genus",
-      y     = "GC content (%)"
-    ) +
-    theme_minimal(base_size = 10) +
-    theme(
-      plot.title      = element_text(size = 10, face = "bold", hjust = 0.5),
-      axis.title.x    = element_text(size = 12, margin = margin(t = 8)),
-      axis.title.y    = element_text(size = 12, margin = margin(r = 8)),
-      axis.text.x     = element_text(size = 10),
-      axis.text.y     = element_text(size = 10),
-      legend.position = "none",
+  ggplot2::ggplot(ggplot2::aes(x    = endometriosis_associated,
+                               y    = GC_content,
+                               fill = endometriosis_associated
+  )) +
+  ggplot2::geom_violin(trim  = FALSE,
+                       alpha = 0.5
+  ) +
+  ggplot2::geom_boxplot(width = 0.18,
+                        outlier.size = 0.7,
+                        alpha = 0.9,
+                        colour = "black"
+  ) +
+  ggplot2::scale_fill_brewer(palette = "Set2") +
+  ggplot2::labs(
+    title = "GC content distributions by endometriosis association",
+    x     = "Endometriosis-associated genus",
+    y     = "GC content (%)"
+  ) +
+  ggplot2::theme_minimal(base_size = 10) +
+  ggplot2::theme(plot.title = ggplot2::element_text(size  = 10,
+                                                    face  = "bold",
+                                                    hjust = 0.5
+    ),
+    axis.title.x = ggplot2::element_text(size   = 12,
+                                         margin = ggplot2::margin(t = 8)
+    ),
+    axis.title.y = ggplot2::element_text(size   = 12,
+                                            margin = ggplot2::margin(r = 8)
+    ),
+    axis.text.x = ggplot2::element_text(size = 10),
+    axis.text.y = ggplot2::element_text(size = 10),
+    legend.position = "none",
+    panel.background = ggplot2::element_rect(fill = "white", 
+                                             colour = NA),
+    plot.background = ggplot2::element_rect(fill = "white", 
+                                            colour = NA)
+  )
 
-      panel.background = element_rect(fill = "white", colour = NA),
-      plot.background  = element_rect(fill = "white", colour = NA)
-    )
+gc_violin_plot
+```
 
-ggsave(
-  filename = "../results/07_key_plot_2.png",
-  plot     = gc_violin_plot,
-  width    = 120,
-  height   = 90,
-  units    = "mm",
-  dpi      = 300
-)
+```{r}
+#| echo: false
+#| eval: true
+ggplot2::ggsave(
+        filename = "../results/07_key_plot_2.png",
+        plot     = gc_violin_plot,
+        width    = 120,
+        height   = 90,
+        units    = "mm",
+        dpi      = 300
+      )
 ```
 
 The distributions show substantial overlap between the groups. Endometriosis-associated MAGs have a slightly lower median GC content, but the difference is modest and the overall ranges are similar. This indicates that GC composition does not clearly distinguish taxa associated with endometriosis. GC-content distributions are nearly identical, indicating no genomic differences between endometriosis-associated and non-associated MAGs.
@@ -149,20 +190,22 @@ Next, we test whether genome size relates differently to GC content in endometri
 
 ```{r}
 genome_metadata_aug |>
-  ggplot(aes(x      = GC_content,
-             y      = Length,
-             colour = endometriosis_associated)) +
-  geom_point(alpha = 0.6,
-             size  = 2) +
-  scale_y_log10() +
-  scale_colour_brewer(palette = "Set1") +
-  labs(
+  ggplot2::ggplot(ggplot2::aes(x      = GC_content,
+                               y      = Length,
+                               colour = endometriosis_associated
+  )) +
+  ggplot2::geom_point(alpha = 0.6,
+                      size  = 2
+  ) +
+  ggplot2::scale_y_log10() +
+  ggplot2::scale_colour_brewer(palette = "Set1") +
+  ggplot2::labs(
     x      = "GC content (%)",
     y      = "Genome length (bp, log scale)",
     title  = "GC content vs genome length by endometriosis association",
     colour = "Associated"
   ) +
-  theme_minimal(base_size = 13)
+  ggplot2::theme_minimal(base_size = 13)
 ```
 
 The scatterplot shows that MAGs from both groups occupy similar GC–length space. No association-specific cluster is visible, and both groups span comparable genome sizes across the GC spectrum. This suggests that genome size and GC composition are not meaningfully structured by endometriosis association.
@@ -174,32 +217,39 @@ Finally, we investigate whether endometriosis-associated genera differ in techni
 ```{r}
 
 genome_metadata_aug |>
-  select(endometriosis_associated,
-         Completeness,
-         Contamination) |>
-  pivot_longer(
+  dplyr::select(endometriosis_associated,
+                Completeness,
+                Contamination
+  ) |>
+  tidyr::pivot_longer(
     cols      = c(Completeness, Contamination),
     names_to  = "metric",
     values_to = "value"
   ) |>
-  ggplot(aes(x    = endometriosis_associated,
-             y    = value,
-             fill = endometriosis_associated)) +
-  geom_violin(trim  = FALSE,
-              alpha = 0.5) +
-  geom_boxplot(width        = 0.17,
-               outlier.size = 0.7,
-               alpha        = 0.9) +
-  facet_wrap(~ metric,
-             scales = "free_y") +
-  scale_fill_brewer(palette = "Set2") +
-  labs(
+  ggplot2::ggplot(ggplot2::aes(
+    x    = endometriosis_associated,
+    y    = value,
+    fill = endometriosis_associated
+  )) +
+  ggplot2::geom_violin(
+    trim  = FALSE,
+    alpha = 0.5
+  ) +
+  ggplot2::geom_boxplot(
+    width        = 0.17,
+    outlier.size = 0.7,
+    alpha        = 0.9
+  ) +
+  ggplot2::facet_wrap(~ metric,
+                      scales = "free_y") +
+  ggplot2::scale_fill_brewer(palette = "Set2") +
+  ggplot2::labs(
     x     = "Endometriosis-associated genus",
     y     = "Value (%)",
     title = "MAG completeness and contamination by association status"
   ) +
-  theme_minimal(base_size = 13) +
-  theme(legend.position = "none")
+  ggplot2::theme_minimal(base_size = 13) +
+  ggplot2::theme(legend.position = "none")
 ```
 
 Both completeness and contamination distributions are nearly identical between associated and non-associated genera. Completeness remains high (\>90%) in both groups, and contamination is consistently low. This confirms that assembly quality is comparable across MAGs and does not bias downstream comparisons between the groups.
