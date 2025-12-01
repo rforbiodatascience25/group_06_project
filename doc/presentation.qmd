@@ -150,11 +150,11 @@ The majority of the data this study are from USA and China. This creates an unev
 
 ## ANALYSIS 1 - Phylogenetic tree {.scrollable}
 
-::: incremental
+
 -   Constructed a phylogenetic tree from the taxonomic ranks (*Domain → Species*) in the augmented dataset.
 -   NA values in taxonomy were removed before tree construction.
 -   The tree is colored by **phylum** to show taxonomic clustering.
-:::
+
 
 . . .
 
@@ -166,12 +166,12 @@ Investigating the quality of samples.
 
 . . .
 
-::: incremental
+
 -   Scatterplot of **completeness (%)** vs. **contamination (%)** for all MAGs
 -   The dashed lines mark the **high-quality** genomes (above 90% completeness and below 5% contamination)
 -   Points are colored by **phylum**
 -   Most MAGs cluster in the high-quality area indicating good assemble quality of the MAGs.
-:::
+
 
 . . .
 
