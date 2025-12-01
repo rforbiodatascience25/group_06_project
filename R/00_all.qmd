@@ -117,14 +117,3 @@ quarto_render(input = "08_analysis_4.qmd",
 file.rename(from = "08_analysis_4.html",
             to = "../results/08_analysis_4.html")
 ```
-
-```{r}
-#| echo: false
-#| eval: true
-
-this_file <- "00_all.html"
-
-if (file.exists(this_file)) {
-  file.rename(this_file, file.path("../results", this_file))
-}
-```
