@@ -16,6 +16,7 @@ format:
     smaller: true
     scroll: true
     transition: slide
+    slide-number: true
 editor: visual
 ---
 
@@ -44,7 +45,7 @@ Meta-data from MGnify’s vaginal microbiome genome catalogue [^1]
 ## DATA CLEANING AND WRANGLING {.scrollable}
 
 ::::: {style="margin-top: -15px; margin-bottom: -15px;"}
-**Untidy –\> tidy data**
+**Untidy --\> tidy data**
 
 :::: {style="margin-left: 1.5em; font-size: 0.9em; line-height: 1.1;"}
 ::: incremental
@@ -113,16 +114,15 @@ Aug_data <- readr::read_tsv(
 
 ## PROJECT ORGANISATION BY FLOWCHART
 
-![](../results/R_project_organisation.png){width="80%"} \## DATA DESCRIPTION {.scrollable}
+![](../results/R_project_organisation.png){width="62%"} \
+
+## DATA DESCRIPTION {.scrollable}
 
 ::: incremental
 -   618 vaginal metagenome-assembled genomes (MAGs)
 -   25 variables covering taxonomy, assembly quality, and geography
 -   High completeness and low contamination for most genomes
 :::
--   Dataset dominated by a few major bacterial phyla
--   Genome lengths fall within biologically expected ranges
--   Dataset dominated by samples from USA.
 
 . . .
 
@@ -209,17 +209,18 @@ Investigating the quality of samples.
 
 ## ANALYSIS 4 - Taxa Distribution between countries {.scrollable}
 
-::: incremental
--   Investigating the distribution of taxa in Countries
--   Filtered for NA in Countries
--   Counted taxa instances for each country and converted to wide format
--   Big difference in sample size --\> normalized data
-:::
+-   Investigating the distribution of taxa in Countries.
+-   Filtered for NA in Countries.
+-   Counted taxa instances for each country.
+-   Converted to wide format.
+-   Big difference in sample size --\> normalized data.
 
 . . .
 
 ::: panel-tabset
 ## Heatmap
+
+Proportion of taxon per country.
 
 Variation between countries. I.e. Order Bacteroidales.
 
@@ -229,19 +230,21 @@ Not tested for significance.
 
 ## Principal Component Analysis (PCA)
 
-Only two principal components --\> 100% variance.
+Phylum level.
 
-![](../results/08_key_plot_4.png){width="50%"}
+Only two principal components = 100%.
 
-Clear division of countries.
+![](../results/08_key_plot_4.png){width="45%"}
 
-Along PC1, Fusobacteria and Bacteroidota (order = Bacteroidales). Correlation with heatmap.
+PC1, Fusobacteria and Bacteroidota (order = Bacteroidales).
+
+Correlation with heatmap.
 
 ![](../results/08_key_plot_5.png){width="90%"}
 
 ## Tests
 
-Test to see if there is a significant difference in the proportion of endometriosis-associated genomes between countries
+Test to see if there is a significant difference in the proportion of endometriosis-associated genomes between countries.
 
 ```{r}
 #| echo: false 
@@ -249,14 +252,12 @@ all_fisher_results <- readr::read_tsv(here::here("results/08_key_table_1.tsv"))
 knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 ```
 
--   Significant difference between USA and China
--   USA displayed 2.7 times higher odds of endometriosis-associated genomes
--   No significant difference between USA vs. Denmark or Denmark vs. China
--   Likely due to the limited amount of danish and chinese genomes represented
+-   Significant difference between USA and China.
 :::
 
 ## DISCUSSION, CONCLUSION & FUTURE PERSPECTIVES
 
+::: incremental
 -   The dataset contains high-quality MAGs with high completeness and low contamination
 
 -   Taxonomy is dominated by a few phyla, with no distinct genomic patterns in endometriosis-associated bacterial groups
@@ -266,3 +267,5 @@ knitr::kable(all_fisher_results, caption = "Fisher Exact Test Results")
 -   Improve clinical + geographic metadata
 
 -   More focus on theoretically correct analysis (compositional data analysis)
+:::
+
