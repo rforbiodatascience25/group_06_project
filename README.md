@@ -36,7 +36,7 @@ github-username: s215098
 
 Here is a direct link to our presentation:
 
-`https://raw.githack.com/rforbiodatascience25/group_06_project/main/doc/presentation.html`
+[`https://raw.githack.com/rforbiodatascience25/group_06_project/main/doc/presentation.html`](https://raw.githack.com/rforbiodatascience25/group_06_project/main/doc/presentation.html)
 
 ## Background
 
@@ -66,18 +66,18 @@ Through these analyses, we aim to gain a deeper understanding of the genomic div
 
 -   raw/
     -   raw_data.xlsx
--   01_dat_load.tsv\
--   02_dat_clean.tsv\
+-   01_dat_load.tsv
+-   02_dat_clean.tsv
 -   03_dat_aug.tsv
 
 #### R/
 
--   00_all.qmd\
--   01_load.qmd\
--   02_clean.qmd\
--   03_augment.qmd\
--   04_describe.qmd\
--   05_analysis_1.qmd\
+-   00_all.qmd
+-   01_load.qmd
+-   02_clean.qmd
+-   03_augment.qmd
+-   04_describe.qmd
+-   05_analysis_1.qmd
 -   06_analysis_2.qmd
 -   07_analysis_3.qmd
 -   08_analysis_4.qmd
