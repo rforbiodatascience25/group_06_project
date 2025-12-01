@@ -18,6 +18,7 @@ library("tidyverse")
 Loading the data saved in the 03_dat_aug.tsv file
 
 ```{r}
+#| echo: false
 #| eval: true
 genome_metadata_aug <- readr::read_tsv("../data/03_dat_aug.tsv")
 ```
