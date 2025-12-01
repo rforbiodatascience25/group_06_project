@@ -19,7 +19,11 @@ Below we run the loading script that downloads the raw data and writes `01_dat_l
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render("01_load.qmd")
+quarto_render(input = "01_load.qmd",
+              output_file = "01_load.html")
+
+file.rename(from = "01_load.html",
+            to = "../results/01_load.html")
 ```
 
 # 2. Clean data
@@ -29,7 +33,11 @@ Cleans the loaded data and writes it to `02_dat_clean.tsv`.
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render("02_clean.qmd")
+quarto_render(input = "02_clean.qmd",
+              output_file = "02_clean.html")
+
+file.rename(from = "02_clean.html",
+            to = "../results/02_clean.html")
 ```
 
 # 3. Augment
@@ -39,7 +47,11 @@ Added augmentation the cleaned data and writes it to `03_dat_aug.tsv`.
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render("03_augment.qmd")
+quarto_render(input = "03_augment.qmd",
+              output_file = "03_augment.html")
+
+file.rename(from = "03_augment.html",
+            to = "../results/03_augment.html")
 ```
 
 # 4. Describe
@@ -49,7 +61,11 @@ Describes the cleaned data.
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render("04_describe.qmd")
+quarto_render(input = "04_describe.qmd",
+              output_file = "04_describe.html")
+
+file.rename(from = "04_describe.html",
+            to = "../results/04_describe.html")
 ```
 
 # 5. Analysis 1
@@ -57,7 +73,11 @@ quarto_render("04_describe.qmd")
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render("05_analysis_1.qmd")
+quarto_render(input = "05_analysis_1.qmd",
+              output_file = "05_analysis_1.html")
+
+file.rename(from = "05_analysis_1.html",
+            to = "../results/05_analysis_1.html")
 ```
 
 # 6. Analysis 2
@@ -65,7 +85,11 @@ quarto_render("05_analysis_1.qmd")
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render("06_analysis_2.qmd")
+quarto_render(input = "06_analysis_2.qmd",
+              output_file = "06_analysis_2.html")
+
+file.rename(from = "06_analysis_2.html",
+            to = "../results/06_analysis_2.html")
 ```
 
 # 7. Analysis 3
@@ -73,7 +97,11 @@ quarto_render("06_analysis_2.qmd")
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render("07_analysis_3.qmd")
+quarto_render(input = "07_analysis_3.qmd",
+              output_file = "07_analysis_3.html")
+
+file.rename(from = "07_analysis_3.html",
+            to = "../results/07_analysis_3.html")
 ```
 
 # 8. Analysis 4
@@ -81,5 +109,9 @@ quarto_render("07_analysis_3.qmd")
 ```{r}
 #| echo: false
 #| eval: true
-quarto_render("08_analysis_4.qmd")
+quarto_render(input = "08_analysis_4.qmd",
+              output_file = "08_analysis_4.html")
+
+file.rename(from = "08_analysis_4.html",
+            to = "../results/08_analysis_4.html")
 ```
